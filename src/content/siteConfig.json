@@ -1,0 +1,73 @@
+{
+  "ontology": {
+    "title": "FiCR Ontology",
+    "fullTitle": "Fire Compliance and Risk Analysis Ontology",
+    "description": "FiCR, Fire Compliance and Risk Analysis, is a domain specific semantic model designed to represent fire safety and fire risk relevant physical objects, building elements, equipment, functional roles, and their relationships in existing buildings.",
+    "version": "1.0.0",
+    "namespace": "https://w3id.org/bam/ficr#",
+    "prefix": "ficr",
+    "authors": [
+      "Yu Zhang",
+      "Long Chen",
+      "Dayou Chen"
+    ],
+    "purpose": "FiCR supports the interoperable description, inspection, and assessment of both fire safety compliance and fire risk in existing buildings. It provides a semantic basis for rule based reasoning, risk informed analysis, and fire oriented digital twin applications across building operation and maintenance.",
+    "scope": "FiCR addresses fire safety and fire risk in existing buildings, covering fire relevant physical objects, building elements, equipment, functional roles, performance attributes, and their relationships within the built environment.",
+    "targetAudience": [
+      "Building Information Modeling (BIM) professionals",
+      "Fire safety engineers",
+      "Building inspectors and compliance assessors",
+      "Facility managers",
+      "Insurance risk assessors",
+      "Semantic web developers working with building data"
+    ]
+  },
+  "prefixes": {
+    "ficr": "https://w3id.org/bam/ficr#",
+    "bot": "https://w3id.org/bot#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "vann": "http://purl.org/vocab/vann/",
+    "schema": "https://schema.org/"
+  },
+  "modules": [
+    {
+      "name": "Core Building Elements",
+      "description": "Physical building components including walls, floors, roofs, doors, and windows",
+      "classes": ["Wall", "Floor", "Roof", "Ceiling", "Doorset", "Window", "Beam", "Column", "Slab"]
+    },
+    {
+      "name": "Fire Safety Systems",
+      "description": "Active and passive fire protection systems and equipment",
+      "classes": ["FireSafetySystem", "FireAlarmSystem", "FireSprinklerSystem", "FireDamper", "FireDoorset", "FireStop", "CavityBarrier"]
+    },
+    {
+      "name": "Building Zones and Spaces",
+      "description": "Spatial organization and fire compartmentation",
+      "classes": ["FireCompartment", "ProtectedStairway", "Room", "Space", "Storey", "Corridor", "Shaft"]
+    },
+    {
+      "name": "Fire Safety Roles",
+      "description": "Functional roles for fire safety analysis",
+      "classes": ["FireSafetyRole", "FireSeparatingRole", "FireResistingRole", "FireProtectedRole", "MeansOfEscapeRole"]
+    },
+    {
+      "name": "Compliance and Assessment",
+      "description": "Workflow for compliance checking and risk assessment",
+      "classes": ["Task", "Assessment", "ComplianceAssessment", "RiskAssessment", "EvidenceItem", "AssessmentBasis"]
+    },
+    {
+      "name": "Building Classification",
+      "description": "Purpose groups and usage classifications",
+      "classes": ["PurposeGroup", "UsageType", "UtilizationPurpose", "SpaceUsage"]
+    }
+  ],
+  "citation": {
+    "bibtex": "@misc{ficr2026,\n  title={An ontology for fire compliance and fire risk analysis in digital twins of ex-isting buildings, with LLM-assisted rule instantiation and querying},\n  author={Yu Zhang, Long Chen, Dayou Chen},\n  year={2026},\n  url={https://w3id.org/bam/ficr},\n  note={Semantic model for fire-safety-relevant building elements and compliance assessment}\n}",
+    "text": "Yu Zhang, Long Chen, Dayou Chen (2026). FiCR: Fire Compliance and Risk Analysis Ontology. https://w3id.org/bam/ficr"
+  }
+}

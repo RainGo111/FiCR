@@ -1,0 +1,53 @@
+{
+  "demo": {
+    "title": "FiCR Ontology Demo",
+    "subtitle": "Interactive exploration of fire safety data",
+    "objectives": [
+      "Demonstrate querying FiCR-compliant building data",
+      "Visualize fire compartmentation and escape routes",
+      "Show compliance checking against fire safety regulations",
+      "Explore risk assessment workflows"
+    ],
+    "datasets": [
+      {
+        "name": "Multi-storey Residential Building",
+        "description": "A 4-storey residential building with multiple flats, including fire compartments, protected stairways, and fire safety systems",
+        "elements": "150+ building elements",
+        "spaces": "20+ spaces and zones",
+        "status": "Available in FiCR.ttl"
+      },
+      {
+        "name": "Commercial Office Building",
+        "description": "Office building example with open-plan layouts and fire safety equipment",
+        "status": "Coming soon"
+      }
+    ],
+    "plannedFeatures": [
+      {
+        "title": "SPARQL Query Interface",
+        "description": "Execute custom SPARQL queries against the FiCR dataset",
+        "status": "In development"
+      },
+      {
+        "title": "3D Visualization",
+        "description": "Interactive 3D view of building geometry with fire safety annotations",
+        "status": "Planned"
+      },
+      {
+        "title": "Compliance Dashboard",
+        "description": "Visual dashboard showing compliance status across fire safety requirements",
+        "status": "Planned"
+      },
+      {
+        "title": "Risk Assessment Calculator",
+        "description": "Calculate fire risk metrics (EML, PML) based on building data",
+        "status": "Planned"
+      },
+      {
+        "title": "Export and Integration",
+        "description": "Export data in various formats and integrate with BIM tools",
+        "status": "Planned"
+      }
+    ]
+  }
+}
