@@ -28,12 +28,7 @@ export const Home: React.FC = () => {
     }
   ];
 
-  const stats = [
-    { label: 'Modules', value: siteConfig.modules.length.toString() },
-    { label: 'Authors', value: siteConfig.ontology.authors.length.toString() },
-    { label: 'Version', value: siteConfig.ontology.version },
-    { label: 'Standards', value: 'W3C' }
-  ];
+
 
   return (
     <div className="bg-gradient-to-b from-white to-neutral-50">
@@ -61,14 +56,7 @@ export const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <Card key={index} className="text-center">
-              <div className="text-3xl font-bold text-primary-600 mb-2">{stat.value}</div>
-              <div className="text-sm text-neutral-600">{stat.label}</div>
-            </Card>
-          ))}
-        </div>
+
 
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-neutral-900 text-center mb-8">Key Features</h2>
