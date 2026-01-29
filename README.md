@@ -238,3 +238,5 @@ FiCR Ontology Authors:
 - Mads Holten Rasmussen
 
 Built with modern web technologies and best practices for semantic web applications.
+
+[Deployed via GitHub Actions]
