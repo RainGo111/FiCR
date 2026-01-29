@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/ficr-logo-placeholder.png" alt="FiCR Logo" width="120" style="display:none;" /> <!-- Placeholder if you ever add a logo file -->
+
   
   <h1>🔥 FiCR Ontology Portal</h1>
   
