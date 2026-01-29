@@ -1,48 +1,71 @@
 <div align="center">
+  <img src="public/ficr-logo-placeholder.png" alt="FiCR Logo" width="120" style="display:none;" /> <!-- Placeholder if you ever add a logo file -->
+  
   <h1>🔥 FiCR Ontology Portal</h1>
-  <p>
+  
+  <p align="center">
     <b>Fire Compliance and Risk Analysis (FiCR) Ontology</b>
-    <br/>
-    A modern, interactive portal for exploring fire safety semantic models.
+    <br />
+    <i>A semantic web platform for fire safety engineering and building compliance</i>
   </p>
 
-  <!-- Badges -->
-  <p>
-    <a href="https://RainGo111.github.io/FiCR/">
-      <img src="https://img.shields.io/badge/Live-Demo-2ea44f?style=for-the-badge&logo=github&logoColor=white" alt="Live Demo" />
-    </a>
-    <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
-    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-  </p>
+  <br />
+
+  <!-- Soft Style Live Demo Badge -->
+  <a href="https://RainGo111.github.io/FiCR/">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-Click_to_Open-3b82f6?style=flat-square&logoColor=white" alt="Live Demo" />
+  </a>
+
+  <br />
+  <br />
 </div>
 
 ---
 
-## 🚀 Introduction
+## 📖 About The Project
 
-This project is a modern web portal designed to visualize and document the **FiCR (Fire Compliance and Risk Analysis) Ontology**. It provides researchers and engineers with an interactive way to explore classes, properties, and alignment with other building ontologies (like BOT).
+The **FiCR Ontology Portal** is a specialized web application designed to bridge the gap between complex semantic models and practical fire safety engineering. It serves as a comprehensive interface for the **Fire Compliance and Risk Analysis (FiCR)** ontology, enabling researchers, engineers, and domain experts to explore, understand, and implement fire safety standards in the Semantic Web.
 
-### ✨ Key Features
+This platform provides a user-friendly layer over the raw `.ttl` (Turtle) ontology files, offering interactive visualization, search capabilities, and direct alignment references with other building standards like **BOT (Building Topology Ontology)**.
 
-*   **🔍 Ontology Viewer**: Searchable browser for all FiCR classes and properties.
-*   **📚 Interactive Documentation**: Comprehensive guides and references.
-*   **💡 Usage Examples**: Practical Turtle/RDF examples for fire safety modeling.
-*   **⚡ Modern Stack**: Built with React 18, Vite, and Tailwind CSS for high performance.
+---
+
+## ✨ Core Modules
+
+This application is divided into several key modules designed for different use cases:
+
+### 🔍 Ontology Browser
+An interactive, searchable index of all classes and properties defined in the FiCR namespace.
+*   **Class Hierarchy**: View parent-child relationships.
+*   **Property Definitions**: Detailed domain and range specifications.
+*   **Smart Search**: Instantly find terms without browsing the entire tree.
+
+### 📚 Documentation Hub
+A curated knowledge base explaining the core concepts of FiCR.
+*   **Modules**: Broken down by functional areas (e.g., Risk Assessment, Building Materials, Regulations).
+*   **Best Practices**: Guidelines on how to instantiate the ontology in real-world projects.
+
+### 🔗 Alignments
+Visual and textual explanations of how FiCR connects with the wider Semantic Web ecosystem.
+*   **BOT Integration**: How building topology interfaces with fire zones.
+*   **SOSA/SSN**: Integration with sensor networks for real-time fire detection.
+
+### 💡 Usage Examples
+A collection of "Cookbook" style recipes for common modeling tasks.
+*   **Copy-Paste Ready**: All examples are provided in valid Turtle syntax.
+*   **Scenario Based**: Examples range from simple room definitions to complex evacuation paths.
 
 ---
 
 ## 🛠️ Getting Started
 
 ### Prerequisites
-
 *   Node.js (v16+)
 *   npm
 
-### Installation
+### Installation & Run
 
-1.  **Clone the repo**
+1.  **Clone the repository**
     ```bash
     git clone https://github.com/RainGo111/FiCR.git
     cd FiCR
@@ -53,41 +76,49 @@ This project is a modern web portal designed to visualize and document the **FiC
     npm install
     ```
 
-3.  **Run locally**
+3.  **Start local server**
     ```bash
     npm run dev
     ```
-
-    👉 **[Click here to open: http://localhost:5173](http://localhost:5173)**
 
 ---
 
 ## 📦 Project Structure
 
-```bash
-public/          # Static assets (ficr.ttl ontology file)
-src/
-├── components/  # React components
-├── content/     # JSON configuration (siteConfig, demoConfig)
-├── pages/       # Route pages
-└── utils/       # RDF parsing utilities
+The project follows a clean, modular architecture:
+
+```
+├── public/
+│   └── ficr.ttl                 # The core ontology file (Single Source of Truth)
+├── src/
+│   ├── components/
+│   │   ├── OntologyViewer.tsx   # Core parsing and visualization engine
+│   │   └── ...
+│   ├── content/
+│   │   ├── siteConfig.json      # Global settings (Title, Version, Authors)
+│   │   └── demoConfig.json      # Content for demo pages
+│   ├── pages/                   # Application Routes
+│   └── utils/                   # RDF/Turtle parsing logic
 ```
 
-## 📝 Customization
+## 📝 Customization Guide
 
-You can easily customize the content without touching the code:
-*   **Site Info**: Edit `src/content/siteConfig.json` to change titles, descriptions, or authors.
-*   **Ontology**: Replace `public/ficr.ttl` with your own Turtle file.
+### Changing the Ontology
+To use this portal for a different version of FiCR or a completely new ontology:
+1.  Replace `public/ficr.ttl` with your new file.
+2.  Update metadata in `src/content/siteConfig.json`.
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This portal implementation is available under the MIT License. The FiCR ontology itself retains its own licensing terms.
+### Theming
+The UI is built with **Tailwind CSS**. You can customize the color scheme (e.g., changing the primary compliance color) by editing the `theme.extend.colors` section in `tailwind.config.js`.
 
 ---
-<div align="center">
-  <sub>Built with ❤️ by the FiCR Team</sub>
-</div>
+
+## 📄 License & Acknowledgments
+
+**FiCR Ontology Authors**:
+*   Maxime Lefrançois
+*   Pieter Pauwels
+*   Georg Ferdinand Schneider
+*   Mads Holten Rasmussen
+
+*Portal implementation is licensed under MIT. Ontology content retains its original license.*
