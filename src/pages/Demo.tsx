@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Table, Button, Badge, CodeBlock } from '../components/shared';
-import { Building2, AlertCircle, Loader2, Flame, Box, Layers, Database, Info, Printer, FileText } from 'lucide-react';
+import { Building2, AlertCircle, Loader2, Flame, Box, Layers, Database, Printer, FileText } from 'lucide-react';
 
 interface DemoData {
   building: {
@@ -245,18 +245,7 @@ export const Demo: React.FC = () => {
 
       {demoData && (
         <>
-          <Card className="mb-8 bg-amber-50 border-amber-200">
-            <div className="flex items-start gap-3 text-amber-800">
-              <Info className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-semibold mb-1">Demo Mode</p>
-                <p className="text-sm">
-                  This page demonstrates FiCR ontology queries using example data from demo_ex.json.
-                  Results are derived from static sample data for demonstration purposes.
-                </p>
-              </div>
-            </div>
-          </Card>
+
 
           <Card className="mb-8">
             <div className="flex items-center gap-3 mb-6">
@@ -602,6 +591,11 @@ export const Demo: React.FC = () => {
               </section>
             </div>
           </Card>
+
+          <div className="mt-8 text-center text-sm text-neutral-400 pb-4">
+            <p>Demo Mode: This page demonstrates FiCR ontology queries using example data from <code>demo_ex.json</code>.</p>
+            <p>Results are derived from static sample data for demonstration purposes.</p>
+          </div>
         </>
       )}
     </div>
