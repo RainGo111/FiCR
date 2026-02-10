@@ -2,110 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Film Grain SVG Noise Texture */
+/* Modern Gradient Design */
 @layer base {
   body {
     position: relative;
     overflow-x: hidden;
-  }
-
-  /* SVG Noise Filter - 内联定义避免外部文件引用 */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.08;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    mix-blend-mode: multiply;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Utility Classes for Film Grain Effects */
+/* Utility Classes for Modern Gradient Design */
 @layer utilities {
-  /* 细腻噪点背景 - 用于大面积背景 */
-  .bg-film-grain-light {
-    position: relative;
+  /* 玻璃态效果 */
+  .glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
-  .bg-film-grain-light::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    opacity: 0.06;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 150px 150px;
-    mix-blend-mode: multiply;
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
-  /* 中等噪点 - 用于卡片和容器 */
-  .bg-film-grain-medium {
-    position: relative;
-  }
-
-  .bg-film-grain-medium::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    opacity: 0.1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 125px 125px;
-    mix-blend-mode: overlay;
-  }
-
-  /* 深色噪点 - 用于深色背景 */
-  .bg-film-grain-dark {
-    position: relative;
-  }
-
-  .bg-film-grain-dark::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    opacity: 0.12;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.0' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 150px 150px;
-    mix-blend-mode: soft-light;
-  }
-
-  /* 保持文字清晰 */
-  .text-clear {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* 胶片质感的平滑过渡 */
-  .transition-film {
+  /* 现代平滑过渡 */
+  .transition-smooth {
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* hover 时的柔和亮度变化 */
-  .hover-film-brighten:hover {
-    filter: brightness(1.05);
+  /* 渐变按钮动画 */
+  .gradient-hover {
+    background-size: 200% 200%;
+    transition: background-position 250ms ease;
   }
 
-  .hover-film-darken:hover {
-    filter: brightness(0.95);
+  .gradient-hover:hover {
+    background-position: right center;
+  }
+
+  /* 渐变描边 */
+  .gradient-border {
+    position: relative;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* hover 时的亮度变化 */
+  .hover-brighten:hover {
+    filter: brightness(1.1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
   }
 }
 

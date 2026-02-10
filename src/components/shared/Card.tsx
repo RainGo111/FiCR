@@ -14,18 +14,16 @@ export const Card: React.FC<CardProps> = ({
   hover = false
 }) => {
   const hoverClass = hover
-    ? 'hover:shadow-film-medium hover:-translate-y-0.5 transition-film hover-film-brighten'
+    ? 'hover:shadow-glass-lg hover:-translate-y-1 transition-smooth hover-brighten'
     : '';
   const clickableClass = onClick ? 'cursor-pointer' : '';
 
   return (
     <div
-      className={`bg-film-paper bg-film-grain-medium rounded-2xl shadow-film-soft p-6 ${hoverClass} ${clickableClass} ${className}`}
+      className={`glass rounded-2xl shadow-glass p-6 border border-white/20 ${hoverClass} ${clickableClass} ${className}`}
       onClick={onClick}
     >
-      <div className="relative z-10">
-        {children}
-      </div>
+      {children}
     </div>
   );
 };

@@ -31,14 +31,14 @@ export const Home: React.FC = () => {
 
 
   return (
-    <div className="bg-gradient-to-b from-white to-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-neutral-900 mb-4">
+    <div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-20">
+          <h1 className="text-6xl font-bold text-primary-900 mb-6 tracking-tight">
             {siteConfig.ontology.fullTitle}
           </h1>
-          <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed mb-8">
-            {siteConfig.ontology.description}
+          <p className="text-2xl text-primary-700 max-w-4xl mx-auto leading-relaxed mb-10 font-light">
+            The semantic backbone for intelligent fire safety and risk management in the built environment.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/documentation">
@@ -56,22 +56,20 @@ export const Home: React.FC = () => {
           </div>
         </div>
 
-
-
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-neutral-900 text-center mb-8">Key Features</h2>
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-primary-900 text-center mb-12">Key Features</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {features.map((feature, index) => (
               <Card key={index} hover>
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary-100 text-primary-600 p-3 rounded-xl flex-shrink-0">
+                  <div className="bg-gradient-to-br from-gradient-primary-start to-gradient-primary-end text-white p-3 rounded-xl flex-shrink-0 shadow-soft">
                     {feature.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                    <h3 className="text-xl font-semibold text-primary-900 mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-neutral-600 leading-relaxed">
+                    <p className="text-primary-700 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -81,19 +79,19 @@ export const Home: React.FC = () => {
           </div>
         </div>
 
-        <Card className="bg-gradient-to-r from-primary-50 to-secondary-50 border-2 border-primary-100">
+        <Card className="bg-gradient-to-br from-white/90 via-accent-50/20 to-white/90 border border-white/30 shadow-glass-lg">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+            <h2 className="text-3xl font-bold text-primary-900 mb-6">
               Purpose & Scope
             </h2>
-            <p className="text-neutral-700 leading-relaxed max-w-3xl mx-auto mb-6">
+            <p className="text-primary-800 leading-relaxed max-w-3xl mx-auto mb-8 text-lg">
               {siteConfig.ontology.purpose}
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-3">
               {siteConfig.ontology.targetAudience.map((audience, index) => (
                 <span
                   key={index}
-                  className="bg-white px-4 py-2 rounded-full text-sm text-neutral-700 border border-neutral-200"
+                  className="glass px-4 py-2 rounded-full text-sm font-medium text-primary-800 border border-white/20 shadow-soft"
                 >
                   {audience}
                 </span>

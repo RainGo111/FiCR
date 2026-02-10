@@ -17,14 +17,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <div className={`relative ${className}`}>
       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-        <Search className="h-5 w-5 text-film-warm" />
+        <Search className="h-5 w-5 text-primary-400" />
       </div>
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="block w-full pl-12 pr-4 py-3 border border-film-stone rounded-xl leading-5 bg-film-paper font-sans placeholder-film-warm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent shadow-film-soft transition-film"
+        className="block w-full pl-12 pr-4 py-3 border border-white/20 rounded-xl leading-5 glass font-sans placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent shadow-soft transition-smooth"
       />
     </div>
   );

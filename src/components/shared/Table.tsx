@@ -34,8 +34,8 @@ export const Table: React.FC<TableProps> = ({
 
   if (children) {
     return (
-      <div className={`overflow-x-auto rounded-xl border border-film-sand shadow-film-soft ${className}`}>
-        <table className="min-w-full divide-y divide-film-sand">
+      <div className={`overflow-x-auto rounded-xl border border-white/20 shadow-glass glass ${className}`}>
+        <table className="min-w-full divide-y divide-white/10">
           {children}
         </table>
       </div>
@@ -47,16 +47,16 @@ export const Table: React.FC<TableProps> = ({
   }
 
   return (
-    <div className={`overflow-x-auto rounded-xl border border-film-sand shadow-film-soft bg-film-paper ${className}`}>
-      <table className="min-w-full divide-y divide-film-sand">
-        <thead className="bg-film-cream bg-film-grain-light">
+    <div className={`overflow-x-auto rounded-xl border border-white/20 shadow-glass glass ${className}`}>
+      <table className="min-w-full divide-y divide-white/10">
+        <thead className="bg-white/50">
           <tr>
             {columns.map((column) => (
               <th
                 key={column.key}
                 onClick={() => handleSort(column.key, column.sortable)}
-                className={`px-6 py-3 text-left text-xs font-sans font-medium text-film-charcoal uppercase tracking-wider ${
-                  column.sortable ? 'cursor-pointer hover:bg-film-sand/50 transition-film' : ''
+                className={`px-6 py-3 text-left text-xs font-sans font-medium text-primary-900 uppercase tracking-wider ${
+                  column.sortable ? 'cursor-pointer hover:bg-white/70 transition-smooth' : ''
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -71,11 +71,11 @@ export const Table: React.FC<TableProps> = ({
             ))}
           </tr>
         </thead>
-        <tbody className="bg-film-paper divide-y divide-film-sand">
+        <tbody className="divide-y divide-white/10">
           {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="hover:bg-film-cream/30 transition-film">
+            <tr key={rowIndex} className="hover:bg-white/30 transition-smooth">
               {columns.map((column) => (
-                <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm font-sans text-film-ink">
+                <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm font-sans text-primary-800">
                   {column.render ? column.render(row[column.key], row) : row[column.key]}
                 </td>
               ))}
