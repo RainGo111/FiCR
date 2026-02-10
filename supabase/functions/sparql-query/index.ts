@@ -7,6 +7,10 @@ const corsHeaders = {
     "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
+function toBase64(str: string): string {
+  return btoa(str);
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 200, headers: corsHeaders });
@@ -18,17 +22,25 @@ Deno.serve(async (req: Request) => {
     if (!query || typeof query !== "string") {
       return new Response(
         JSON.stringify({ error: "Missing or invalid 'query' field" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
       );
     }
 
-    const sparqlEndpoint =
-      Deno.env.get("SPARQL_ENDPOINT") ??
+    const graphdbUrl =
+      Deno.env.get("GRAPHDB_URL") ??
       "http://RainWin:7200/repositories/FiCR_Query";
+    const graphdbUser = Deno.env.get("GRAPHDB_USER") ?? "admin";
+    const graphdbPass = Deno.env.get("GRAPHDB_PASS") ?? "Hello@graphdb123!";
 
-    const response = await fetch(sparqlEndpoint, {
+    const basicAuth = toBase64(`${graphdbUser}:${graphdbPass}`);
+
+    const response = await fetch(graphdbUrl, {
       method: "POST",
       headers: {
+        Authorization: `Basic ${basicAuth}`,
         "Content-Type": "application/sparql-query",
         Accept: "application/sparql-results+json",
       },
@@ -36,10 +48,20 @@ Deno.serve(async (req: Request) => {
     });
 
     if (!response.ok) {
-      const text = await response.text();
+      const errorBody = await response.text();
+      console.error(
+        `GraphDB error [${response.status}]:`,
+        errorBody
+      );
       return new Response(
-        JSON.stringify({ error: `SPARQL endpoint error: ${response.status}`, details: text }),
-        { status: response.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({
+          error: `SPARQL endpoint error: ${response.status}`,
+          details: errorBody,
+        }),
+        {
+          status: response.status,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
       );
     }
 
@@ -49,9 +71,14 @@ Deno.serve(async (req: Request) => {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
+    const stack = err instanceof Error ? err.stack : "";
+    console.error("SPARQL proxy error:", message, stack);
     return new Response(
       JSON.stringify({ error: message }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
   }
 });
