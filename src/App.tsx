@@ -1,6 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout';
-import { Home, Documentation, Examples, Demo } from './pages';
+import { Home, Documentation, QueryLab, Demo } from './pages';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/documentation" element={<Documentation />} />
-          <Route path="/examples" element={<Examples />} />
+          <Route path="/query-lab" element={<QueryLab />} />
           <Route path="/demo" element={<Demo />} />
         </Routes>
       </Layout>

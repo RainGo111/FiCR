@@ -5,7 +5,7 @@ import { Flame } from 'lucide-react';
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/documentation', label: 'Documentation' },
-  { path: '/examples', label: 'Examples' },
+  { path: '/query-lab', label: 'Query Lab' },
   { path: '/demo', label: 'Demo' }
 ];
 
