@@ -19,12 +19,12 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   type = 'button'
 }) => {
-  const baseClasses = 'font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseClasses = 'font-sans font-medium rounded-xl transition-smooth focus:outline-none focus:ring-2 focus:ring-offset-2 relative';
 
   const variantClasses = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 disabled:bg-primary-300',
-    secondary: 'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500 disabled:bg-secondary-300',
-    outline: 'bg-white text-primary-700 border-2 border-primary-600 hover:bg-primary-50 focus:ring-primary-500 disabled:border-neutral-300 disabled:text-neutral-400'
+    primary: 'bg-gradient-primary text-white shadow-soft hover:shadow-medium gradient-hover focus:ring-accent-500 disabled:opacity-50 disabled:cursor-not-allowed',
+    secondary: 'bg-gradient-secondary text-white shadow-soft hover:shadow-medium gradient-hover focus:ring-accent-400 disabled:opacity-50 disabled:cursor-not-allowed',
+    outline: 'glass border-2 border-gradient-primary-start text-primary-700 hover:border-accent-600 hover:shadow-soft focus:ring-accent-500 disabled:opacity-50 disabled:cursor-not-allowed'
   };
 
   const sizeClasses = {
@@ -38,7 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className} ${disabled ? 'cursor-not-allowed' : ''}`}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
     >
       {children}
     </button>

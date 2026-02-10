@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button } from '../components/shared';
-import { BookOpen, Shield, Network, ArrowRight, Download, GitBranch, Database } from 'lucide-react';
+import { BookOpen, Shield, Network, GitBranch, Database, Terminal, FileText } from 'lucide-react';
 import siteConfig from '../content/siteConfig.json';
 
 export const Home: React.FC = () => {
@@ -31,47 +31,31 @@ export const Home: React.FC = () => {
 
 
   return (
-    <div className="bg-gradient-to-b from-white to-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-neutral-900 mb-4">
+    <div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-20">
+          <h1 className="text-6xl font-bold text-primary-900 mb-6 tracking-tight">
             {siteConfig.ontology.fullTitle}
           </h1>
-          <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed mb-8">
-            {siteConfig.ontology.description}
+          <p className="text-2xl text-primary-700 max-w-4xl mx-auto leading-relaxed mb-10 font-light">
+            The semantic backbone for intelligent fire safety and risk management in the built environment.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/documentation">
-              <Button size="lg" variant="primary">
-                <BookOpen className="w-5 h-5 mr-2" />
-                Explore Documentation
-              </Button>
-            </Link>
-            <Link to="/demo">
-              <Button size="lg" variant="outline">
-                Try Demo
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-          </div>
         </div>
 
-
-
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-neutral-900 text-center mb-8">Key Features</h2>
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-primary-900 text-center mb-12">Key Features</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {features.map((feature, index) => (
               <Card key={index} hover>
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary-100 text-primary-600 p-3 rounded-xl flex-shrink-0">
+                  <div className="bg-gradient-to-br from-gradient-primary-start to-gradient-primary-end text-white p-3 rounded-xl flex-shrink-0 shadow-soft">
                     {feature.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                    <h3 className="text-xl font-semibold text-primary-900 mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-neutral-600 leading-relaxed">
+                    <p className="text-primary-700 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -81,19 +65,19 @@ export const Home: React.FC = () => {
           </div>
         </div>
 
-        <Card className="bg-gradient-to-r from-primary-50 to-secondary-50 border-2 border-primary-100">
+        <Card className="bg-gradient-to-br from-white/90 via-accent-50/20 to-white/90 border border-white/30 shadow-glass-lg mb-12">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+            <h2 className="text-3xl font-bold text-primary-900 mb-6">
               Purpose & Scope
             </h2>
-            <p className="text-neutral-700 leading-relaxed max-w-3xl mx-auto mb-6">
+            <p className="text-primary-800 leading-relaxed max-w-3xl mx-auto mb-8 text-lg">
               {siteConfig.ontology.purpose}
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-3">
               {siteConfig.ontology.targetAudience.map((audience, index) => (
                 <span
                   key={index}
-                  className="bg-white px-4 py-2 rounded-full text-sm text-neutral-700 border border-neutral-200"
+                  className="glass px-4 py-2 rounded-full text-sm font-medium text-primary-800 border border-white/20 shadow-soft"
                 >
                   {audience}
                 </span>
@@ -102,14 +86,29 @@ export const Home: React.FC = () => {
           </div>
         </Card>
 
-        <div className="text-center mt-12">
-          <a href={`${import.meta.env.BASE_URL}ficr.ttl`} download>
-            <Button variant="secondary">
-              <Download className="w-5 h-5 mr-2" />
-              Download Ontology File
+        {/* Action Buttons */}
+        {/* Action Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 py-8">
+          <Link to="/documentation">
+            <Button size="lg" className="!bg-none !bg-white !text-neutral-900 border-2 !border-primary-600 hover:!bg-primary-50 shadow-sm transition-all font-semibold">
+              <BookOpen className="w-5 h-5 mr-2 text-primary-600" />
+              Explore Documentation
             </Button>
-          </a>
+          </Link>
+          <Link to="/query-lab">
+            <Button size="lg" className="!bg-none !bg-white !text-neutral-900 border-2 !border-primary-600 hover:!bg-primary-50 shadow-sm transition-all font-semibold">
+              <Terminal className="w-5 h-5 mr-2 text-primary-600" />
+              Try Query Lab
+            </Button>
+          </Link>
+          <Link to="/report">
+            <Button size="lg" className="!bg-none !bg-white !text-neutral-900 border-2 !border-primary-600 hover:!bg-primary-50 shadow-sm transition-all font-semibold">
+              View Report
+              <FileText className="w-5 h-5 ml-2 text-primary-600" />
+            </Button>
+          </Link>
         </div>
+
       </div>
     </div>
   );
