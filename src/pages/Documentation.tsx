@@ -143,10 +143,10 @@ export const Documentation: React.FC = () => {
               Fire Compliance and Risk Analysis Ontology
             </p>
             <div className="flex gap-3">
-              <a href={`${import.meta.env.BASE_URL}ficr.ttl`} download>
+              <a href={`${import.meta.env.BASE_URL}ficr_tbox.ttl`} download>
                 <Button variant="primary" size="sm">
                   <Download className="w-4 h-4 mr-2" />
-                  Download TTL
+                  Download FiCR Ontology
                 </Button>
               </a>
             </div>

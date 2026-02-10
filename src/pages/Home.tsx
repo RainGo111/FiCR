@@ -102,14 +102,6 @@ export const Home: React.FC = () => {
           </div>
         </Card>
 
-        <div className="text-center mt-12">
-          <a href={`${import.meta.env.BASE_URL}ficr.ttl`} download>
-            <Button variant="secondary">
-              <Download className="w-5 h-5 mr-2" />
-              Download Ontology File
-            </Button>
-          </a>
-        </div>
       </div>
     </div>
   );

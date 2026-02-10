@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CodeBlock } from '../components/shared';
-import { FileCode, Building, Shield, AlertTriangle } from 'lucide-react';
+import { FileCode, Building, Shield, AlertTriangle, Loader } from 'lucide-react';
+import { loadOntology, ParsedOntology } from '../utils/ttlParser';
 
 export const Examples: React.FC = () => {
+  const [ontology, setOntology] = useState<ParsedOntology | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadOntology()
+      .then((data) => {
+        setOntology(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
   const examples = [
     {
       title: 'Defining a Fire Door',
@@ -97,17 +112,47 @@ export const Examples: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-12">
         <h1 className="text-4xl font-bold text-neutral-900 mb-4">Usage Examples</h1>
-        <p className="text-lg text-neutral-600">
+        <p className="text-lg text-neutral-600 mb-6">
           Practical examples demonstrating how to use FiCR ontology to model fire safety
           information in buildings
         </p>
+
+        {loading ? (
+          <div className="flex items-center gap-3 text-neutral-600">
+            <Loader className="w-5 h-5 animate-spin" />
+            <span>Loading ontology information...</span>
+          </div>
+        ) : ontology && (
+          <Card className="bg-neutral-50 border border-neutral-200">
+            <div className="grid grid-cols-3 gap-6 text-center">
+              <div>
+                <div className="text-3xl font-bold text-neutral-800 mb-1">
+                  {ontology.classes.length}
+                </div>
+                <div className="text-sm text-neutral-600">Classes</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-neutral-800 mb-1">
+                  {ontology.objectProperties.length}
+                </div>
+                <div className="text-sm text-neutral-600">Object Properties</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-neutral-800 mb-1">
+                  {ontology.datatypeProperties.length}
+                </div>
+                <div className="text-sm text-neutral-600">Datatype Properties</div>
+              </div>
+            </div>
+          </Card>
+        )}
       </div>
 
       <div className="space-y-8">
         {examples.map((example, index) => (
           <Card key={index}>
             <div className="flex items-start gap-4 mb-4">
-              <div className="bg-primary-100 text-primary-600 p-3 rounded-xl flex-shrink-0">
+              <div className="bg-neutral-100 text-neutral-700 p-3 rounded-xl flex-shrink-0">
                 {example.icon}
               </div>
               <div>
@@ -126,26 +171,26 @@ export const Examples: React.FC = () => {
       </div>
 
       <div className="mt-12">
-        <Card className="bg-gradient-to-r from-primary-50 to-secondary-50 border-2 border-primary-100">
+        <Card className="bg-neutral-50 border border-neutral-200">
           <h2 className="text-xl font-bold text-neutral-900 mb-4">More Examples</h2>
           <p className="text-neutral-700 leading-relaxed mb-4">
             These examples demonstrate common patterns for using FiCR. For more complex scenarios
-            and real-world datasets, please visit the Demo page or download the complete FiCR.ttl
+            and real-world datasets, please visit the Demo page or download the complete ontology
             file which includes comprehensive example data.
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="/demo"
-              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
+              href="/#/demo"
+              className="inline-flex items-center px-4 py-2 bg-neutral-900 text-white rounded-xl hover:bg-neutral-700 transition-colors"
             >
               Explore Demo
             </a>
             <a
-              href={`${import.meta.env.BASE_URL}ficr.ttl`}
+              href={`${import.meta.env.BASE_URL}ficr_tbox.ttl`}
               download
-              className="inline-flex items-center px-4 py-2 bg-white text-primary-700 border-2 border-primary-600 rounded-xl hover:bg-primary-50 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-white text-neutral-900 border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors"
             >
-              Download Full Ontology
+              Download Ontology
             </a>
           </div>
         </Card>
