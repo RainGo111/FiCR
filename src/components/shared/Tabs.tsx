@@ -20,18 +20,18 @@ export const Tabs: React.FC<TabsProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`border-b border-neutral-200 ${className}`}>
+    <div className={`border-b border-film-sand ${className}`}>
       <nav className="flex space-x-8" aria-label="Tabs">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onChange(tab.id)}
             className={`
-              py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200
+              py-4 px-1 border-b-2 font-sans font-medium text-sm transition-film
               ${
                 activeTab === tab.id
-                  ? 'border-primary-600 text-primary-700'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'
+                  ? 'border-accent-600 text-accent-700'
+                  : 'border-transparent text-film-slate hover:text-film-ink hover:border-film-stone'
               }
             `}
             aria-current={activeTab === tab.id ? 'page' : undefined}

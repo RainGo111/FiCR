@@ -25,19 +25,19 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-soft border border-neutral-200">
+    <div className="relative rounded-xl overflow-hidden shadow-film-soft border border-film-sand bg-film-grain-dark">
       {title && (
-        <div className="bg-neutral-100 px-4 py-2 border-b border-neutral-200 flex justify-between items-center">
-          <span className="text-sm font-medium text-neutral-700">{title}</span>
+        <div className="bg-film-cream px-4 py-2 border-b border-film-sand flex justify-between items-center">
+          <span className="text-sm font-mono font-medium text-film-charcoal">{title}</span>
           <button
             onClick={handleCopy}
-            className="p-1.5 hover:bg-neutral-200 rounded-lg transition-colors duration-200"
+            className="p-1.5 hover:bg-film-sand rounded-lg transition-film"
             aria-label="Copy code"
           >
             {copied ? (
-              <Check className="w-4 h-4 text-secondary-600" />
+              <Check className="w-4 h-4 text-accent-600" />
             ) : (
-              <Copy className="w-4 h-4 text-neutral-600" />
+              <Copy className="w-4 h-4 text-film-slate" />
             )}
           </button>
         </div>
@@ -45,13 +45,13 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       {!title && (
         <button
           onClick={handleCopy}
-          className="absolute top-2 right-2 p-2 bg-neutral-800/80 hover:bg-neutral-700 rounded-lg transition-colors duration-200 z-10"
+          className="absolute top-2 right-2 p-2 bg-film-charcoal/90 hover:bg-film-charcoal rounded-lg transition-film z-10"
           aria-label="Copy code"
         >
           {copied ? (
-            <Check className="w-4 h-4 text-secondary-400" />
+            <Check className="w-4 h-4 text-accent-400" />
           ) : (
-            <Copy className="w-4 h-4 text-white" />
+            <Copy className="w-4 h-4 text-film-paper" />
           )}
         </button>
       )}
@@ -63,7 +63,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           margin: 0,
           padding: '1rem',
           fontSize: '0.875rem',
-          background: '#1e1e1e'
+          background: '#2d2b28',
+          fontFamily: 'SF Mono, Consolas, Monaco, Courier New, monospace'
         }}
       >
         {code}
