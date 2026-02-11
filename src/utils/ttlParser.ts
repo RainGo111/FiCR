@@ -208,7 +208,7 @@ function extractLocalName(uri: string): string {
 
 export async function loadOntology(): Promise<ParsedOntology> {
   try {
-    const response = await fetch(`${import.meta.env.BASE_URL}ficr.ttl`);
+    const response = await fetch(`${import.meta.env.BASE_URL}ficr_tbox.ttl`);
     if (!response.ok) {
       throw new Error(`Failed to load ontology: ${response.statusText}`);
     }

@@ -65,7 +65,11 @@ export const Home: React.FC = () => {
           </div>
         </div>
 
+<<<<<<< HEAD
         <Card className="bg-gradient-to-br from-white/90 via-accent-50/20 to-white/90 border border-white/30 shadow-glass-lg mb-12">
+=======
+        <Card className="bg-gradient-to-br from-white/90 via-accent-50/20 to-white/90 border border-white/30 shadow-glass-lg">
+>>>>>>> 47723d3e83f6e465d6434cb301919fe7437ba3c5
           <div className="text-center">
             <h2 className="text-3xl font-bold text-primary-900 mb-6">
               Purpose & Scope
@@ -86,6 +90,7 @@ export const Home: React.FC = () => {
           </div>
         </Card>
 
+<<<<<<< HEAD
         {/* Action Buttons */}
         {/* Action Buttons */}
         <div className="flex flex-wrap justify-center gap-4 py-8">
@@ -109,6 +114,8 @@ export const Home: React.FC = () => {
           </Link>
         </div>
 
+=======
+>>>>>>> 47723d3e83f6e465d6434cb301919fe7437ba3c5
       </div>
     </div>
   );
