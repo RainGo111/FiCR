@@ -7,12 +7,7 @@ import {
     Upload,
     Sparkles,
     ChevronRight,
-    Building2,
-    Cpu,
-    Globe,
-    Zap,
-    GitBranch,
-    BarChart3
+    Building2
 } from 'lucide-react';
 
 // ============================================================
@@ -63,13 +58,7 @@ const ROADMAP_ITEMS = [
     },
 ];
 
-const TECH_STACK = [
-    { icon: <Cpu size={16} />, label: 'SPARQL 1.1 Engine' },
-    { icon: <Globe size={16} />, label: 'OWL / RDF Knowledge Graph' },
-    { icon: <GitBranch size={16} />, label: 'BOT + FiCR Ontology' },
-    { icon: <BarChart3 size={16} />, label: 'Recharts Visualization' },
-    { icon: <Zap size={16} />, label: 'Vite + React + TS' },
-];
+
 
 // ============================================================
 // Component
@@ -86,11 +75,8 @@ export const Roadmap: React.FC = () => {
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-slate-900 tracking-tight">
-                                FiCR AI Next Gen: Innovation Roadmap
+                                FiCR AI: Innovation Roadmap
                             </h1>
-                            <p className="text-xs text-slate-500 font-mono mt-0.5">
-                                FiCR AI 下一代：创新路线图
-                            </p>
                         </div>
                     </div>
                     <Badge variant="primary" className="flex items-center gap-1">
@@ -186,27 +172,7 @@ export const Roadmap: React.FC = () => {
                     </div>
                 </section>
 
-                {/* ========== Section 2: Tech Stack / 技术栈 ========== */}
-                <section>
-                    <div className="border-l-4 border-indigo-500 pl-4 mb-6">
-                        <h2 className="text-lg font-bold text-slate-900 uppercase tracking-wide">
-                            Technology Foundation
-                        </h2>
-                        <p className="text-xs text-slate-500 mt-0.5">技术基础设施</p>
-                    </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                        {TECH_STACK.map((tech, idx) => (
-                            <Card
-                                key={idx}
-                                className="p-4 border border-slate-200 shadow-sm hover:shadow-md transition-shadow bg-slate-50 text-center"
-                            >
-                                <div className="flex justify-center text-indigo-500 mb-2">{tech.icon}</div>
-                                <span className="text-xs font-bold text-slate-700">{tech.label}</span>
-                            </Card>
-                        ))}
-                    </div>
-                </section>
 
                 {/* ========== Section 3: Vision / 愿景 ========== */}
                 <section>
@@ -218,15 +184,7 @@ export const Roadmap: React.FC = () => {
                             Towards Autonomous Building Intelligence
                         </h3>
                         <p className="text-xs text-slate-500 mb-4">迈向自主化建筑智能</p>
-                        <p className="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                            FiCR envisions a future where building fire compliance is continuously monitored,
-                            automatically audited, and intelligently optimized — linking BIM models, IoT sensors,
-                            and knowledge graphs into a single, living digital twin.
-                        </p>
-                        <p className="text-xs text-slate-400 max-w-2xl mx-auto leading-relaxed mt-2">
-                            FiCR 的愿景：建筑消防合规将实现持续监控、自动审计与智能优化 ——
-                            通过 BIM 模型、IoT 传感器和知识图谱的融合，构建活的数字孪生体。
-                        </p>
+
                     </Card>
                 </section>
 

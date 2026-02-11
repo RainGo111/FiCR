@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Card, Button, Badge } from '../components/shared';
 import {
     Building2,
@@ -7,29 +7,120 @@ import {
     TrendingUp,
     ShieldCheck,
     Info,
-    CheckCircle2,
     ArrowUpDown,
     ShieldAlert,
     DoorOpen,
     Layers,
-    ChevronDown,
-    ChevronUp,
     Filter,
     FileSpreadsheet,
-    Wrench,
-    Loader2
+    Loader2,
+    ChevronUp,
+    ChevronDown,
+    Wrench
 } from 'lucide-react';
 import {
-    PieChart,
-    Pie,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
     Cell,
-    ResponsiveContainer,
-    Legend
+    ResponsiveContainer
 } from 'recharts';
 import { useReactToPrint } from 'react-to-print';
+import { useSparqlQuery } from '../hooks/useSparqlQuery';
+import { QUERY_PREFIXES } from '../content/queries.ts';
 
 // ============================================================
-// Theme & Constants
+// Queries
+// ============================================================
+const QUERY_DEFICITS = `${QUERY_PREFIXES}
+SELECT DISTINCT ?assetType ?elementLabel ?issue ?spaceLabel
+       (xsd:decimal(?actualREI) AS ?actualREIValue)
+       (xsd:decimal(?requiredREI) AS ?requiredREIValue)
+       (xsd:decimal(?affectedAsset) AS ?affectedAssetValue)
+WHERE {
+    {
+        ?element a ficr:Wall ; rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
+        ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
+        ficr:req_pg1b_wall ficr:hasREI ?requiredREI .
+        FILTER(?actualREI < ?requiredREI)
+        BIND("Horizontal" AS ?direction) BIND("Wall REI Deficit" AS ?issue) BIND("Wall" AS ?assetType)
+    }
+    UNION
+    {
+        ?element a/rdfs:subClassOf* ficr:Doorset ; rdfs:label ?elementLabel ; ficr:isObscured true .
+        ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
+        BIND("Horizontal" AS ?direction) BIND("Door Obscured/Blocked" AS ?issue) BIND("Door" AS ?assetType)
+        BIND(0 AS ?actualREI) BIND(1 AS ?requiredREI)
+    }
+    UNION
+    {
+        { ?element a ficr:Floor } UNION { ?element a ficr:Slab }
+        ?element rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
+        ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
+        ficr:req_pg1b_floor ficr:hasREI ?requiredREI .
+        FILTER(?actualREI < ?requiredREI)
+        BIND("Vertical" AS ?direction) BIND("Floor REI Deficit" AS ?issue) BIND("Floor/Slab" AS ?assetType)
+    }
+    OPTIONAL { ?space ficr:hasFixedAssetValue ?affectedAsset }
+}
+ORDER BY ?direction ?assetType ?spaceLabel`;
+
+const QUERY_EML = `${QUERY_PREFIXES}
+SELECT (xsd:decimal(MAX(?scenarioEML)) AS ?maximumPossibleLoss_EML)
+WHERE {
+    {
+        SELECT ?riskSpace (SUM(?dv) AS ?scenarioEML)
+        WHERE {
+            {
+                SELECT DISTINCT ?riskSpace ?affectedSpace ?values
+                WHERE {
+                    ?riskSpace a/rdfs:subClassOf* bot:Space ; ficr:hasFixedAssetValue ?originVal .
+                    { BIND(?riskSpace AS ?affectedSpace) BIND(?originVal AS ?values) }
+                    UNION
+                    {
+                        ?riskSpace bot:adjacentZone ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?hVal .
+                        FILTER EXISTS {
+                            { ?riskSpace bot:adjacentElement ?sw . ?affectedSpace bot:adjacentElement ?sw . ?sw a ficr:Wall ; ficr:hasREI ?wV . ficr:req_pg1b_wall ficr:hasREI ?wR . FILTER(?wV < ?wR) }
+                            UNION { ?sd a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . {?riskSpace bot:adjacentElement ?sd} UNION {?affectedSpace bot:adjacentElement ?sd} }
+                        }
+                        BIND(?hVal * 1.0 AS ?values)
+                    }
+                    UNION
+                    {
+                        ?os bot:hasSpace ?riskSpace . {?os ficr:isStoreyBelow ?vs} UNION {?os ficr:isStoreyAbove ?vs}
+                        ?vs bot:hasSpace ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?vVal .
+                        BIND(?vVal * 0.1 AS ?values)
+                    }
+                }
+            }
+            BIND(?values AS ?dv)
+        } GROUP BY ?riskSpace
+    }
+}`;
+
+const QUERY_VAR = `${QUERY_PREFIXES}
+SELECT
+    (xsd:decimal(SUM(?val)) AS ?buildingTotalAssetValue)
+    (xsd:decimal(SUM(?riskVal) / SUM(?val) * 100) AS ?riskPercentage)
+WHERE {
+    {
+        SELECT DISTINCT ?space ?val ?riskVal
+        WHERE {
+            ?space a/rdfs:subClassOf* bot:Space ; ficr:hasFixedAssetValue ?val .
+            BIND(IF( EXISTS {
+                { ?space bot:adjacentElement ?e1 . ?e1 a ficr:Wall ; ficr:hasREI ?r1 . ficr:req_pg1b_wall ficr:hasREI ?rq1 . FILTER(?r1 < ?rq1) }
+                UNION { ?space bot:adjacentElement ?e2 . ?e2 a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . }
+                UNION { ?space bot:adjacentElement ?e3 . { ?e3 a ficr:Floor } UNION { ?e3 a ficr:Slab } ?e3 ficr:hasREI ?r3 . ficr:req_pg1b_floor ficr:hasREI ?rq3 . FILTER(?r3 < ?rq3) }
+            }, ?val, 0) AS ?riskVal)
+        }
+    }
+}`;
+
+// ============================================================
+// Theme & Types
 // ============================================================
 const COLORS = {
     compliant: '#10B981',
@@ -39,16 +130,6 @@ const COLORS = {
     primary: '#4F46E5',
 };
 
-// ============================================================
-// Mock Data — mirrors SPARQL Q1.1, Q2.2, Q4.2, Q4.3
-// ============================================================
-const KPI = {
-    totalAssets: 12500000,
-    eml: 318000,
-    varRatio: 2.54,
-};
-
-/** 合规缺陷目录 — 来自 Q2.2 */
 interface DeficitRow {
     id: string;
     location: string;
@@ -58,31 +139,19 @@ interface DeficitRow {
     issueType: 'wall_rei' | 'floor_rei' | 'door_blocked' | 'shaft_unsealed';
     direction: 'horizontal' | 'vertical';
     affectedValue: number;
+    actualREI: number;
+    requiredREI: number;
 }
 
-const DEFICIT_DATA: DeficitRow[] = [
-    { id: 'DEF-001', location: 'Server Room', failedElement: 'Wall W-01', elementCn: '墙体 W-01', failureDetail: 'REI 30 < 60 mins', issueType: 'wall_rei', direction: 'horizontal', affectedValue: 120000 },
-    { id: 'DEF-002', location: 'L2-Stairwell B', failedElement: 'Door D-12', elementCn: '防火门 D-12', failureDetail: 'Door Blocked Open', issueType: 'door_blocked', direction: 'horizontal', affectedValue: 0 },
-    { id: 'DEF-003', location: 'L3-Server Room', failedElement: 'Floor F-01', elementCn: '楼板 F-01', failureDetail: 'REI 60 < 120 mins', issueType: 'floor_rei', direction: 'vertical', affectedValue: 75000 },
-    { id: 'DEF-004', location: 'Corridor A', failedElement: 'Wall W-04', elementCn: '墙体 W-04', failureDetail: 'REI 60 < 90 mins', issueType: 'wall_rei', direction: 'horizontal', affectedValue: 45000 },
-    { id: 'DEF-005', location: 'Riser Shaft 2', failedElement: 'Shaft Seal S-02', elementCn: '管井封堵 S-02', failureDetail: 'Unsealed Penetration', issueType: 'shaft_unsealed', direction: 'vertical', affectedValue: 65000 },
-    { id: 'DEF-006', location: 'Kitchen', failedElement: 'Wall W-07', elementCn: '墙体 W-07', failureDetail: 'REI 30 < 60 mins', issueType: 'wall_rei', direction: 'horizontal', affectedValue: 85000 },
-    { id: 'DEF-007', location: 'L1-Exit Route', failedElement: 'Door D-03', elementCn: '防火门 D-03', failureDetail: 'Door Blocked Open', issueType: 'door_blocked', direction: 'horizontal', affectedValue: 0 },
-    { id: 'DEF-008', location: 'Storage A', failedElement: 'Floor F-04', elementCn: '楼板 F-04', failureDetail: 'REI 30 < 60 mins', issueType: 'floor_rei', direction: 'vertical', affectedValue: 35000 },
-    { id: 'DEF-009', location: 'Office 201', failedElement: 'Wall W-09', elementCn: '墙体 W-09', failureDetail: 'REI 60 < 90 mins', issueType: 'wall_rei', direction: 'horizontal', affectedValue: 28000 },
-    { id: 'DEF-010', location: 'Riser Shaft 1', failedElement: 'Shaft Seal S-01', elementCn: '管井封堵 S-01', failureDetail: 'Unsealed Penetration', issueType: 'shaft_unsealed', direction: 'vertical', affectedValue: 52000 },
-    { id: 'DEF-011', location: 'Lobby', failedElement: 'Door D-01', elementCn: '防火门 D-01', failureDetail: 'Door Blocked Open', issueType: 'door_blocked', direction: 'horizontal', affectedValue: 0 },
-    { id: 'DEF-012', location: 'L4-Plant Room', failedElement: 'Floor F-06', elementCn: '楼板 F-06', failureDetail: 'REI 60 < 120 mins', issueType: 'floor_rei', direction: 'vertical', affectedValue: 95000 },
-];
-
-const RISK_DISTRIBUTION = [
-    { name: 'Compliant / 合规', value: 85 },
-    { name: 'Minor Deficit / 轻微缺陷', value: 10 },
-    { name: 'High Risk / 高风险', value: 5 },
-];
+interface KPIData {
+    totalAssets: number;
+    eml: number;
+    varRatio: number;
+    totalRiskValue: number;
+}
 
 // ============================================================
-// AI Mitigation Logic — 整改建议映射
+// Helpers
 // ============================================================
 function getMitigation(issueType: DeficitRow['issueType']): { en: string; cn: string } {
     switch (issueType) {
@@ -106,7 +175,7 @@ function getMitigation(issueType: DeficitRow['issueType']): { en: string; cn: st
 }
 
 function getCriticality(value: number): 'High' | 'Medium' | 'Low' {
-    if (value >= 60000) return 'High';
+    if (value >= 4000) return 'High';
     if (value > 0) return 'Medium';
     return 'Low';
 }
@@ -123,68 +192,30 @@ function getIssueIcon(issueType: DeficitRow['issueType']) {
     }
 }
 
+function mapIssueToType(issue: string): DeficitRow['issueType'] {
+    if (issue?.includes('Wall')) return 'wall_rei';
+    if (issue?.includes('Door')) return 'door_blocked';
+    if (issue?.includes('Floor')) return 'floor_rei';
+    return 'wall_rei'; // Fallback
+}
+
 // ============================================================
-// Filter Types
+// Print Types & Style
 // ============================================================
-type FilterMode = 'all' | 'high' | 'horizontal' | 'vertical';
+type FilterMode = 'all' | 'high' | 'wall' | 'door' | 'floor';
 type SortDir = 'asc' | 'desc';
 
-// ============================================================
-// Print-specific page style — A4 优化
-// NOTE: 此样式仅在打印 iframe 中生效，不影响屏幕显示
-// ============================================================
 const PRINT_PAGE_STYLE = `
+  @page { size: A4 portrait; margin: 18mm 15mm 22mm 15mm; }
   @page {
-    size: A4 portrait;
-    margin: 18mm 15mm 22mm 15mm;
+    @top-center { content: "FiCR Fire Risk Audit — BLD-2024-X1"; font-size: 8pt; color: #94a3b8; font-family: ui-monospace, monospace; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font-size: 8pt; color: #94a3b8; font-family: ui-monospace, monospace; }
+    @bottom-left { content: "Generated: ${new Date().toLocaleDateString('en-GB')}"; font-size: 8pt; color: #94a3b8; font-family: ui-monospace, monospace; }
   }
-
-  /* 打印模式下的 header/footer 通过 running elements 实现 */
-  @page {
-    @top-center {
-      content: "FiCR Fire Risk Audit — BLD-2024-X1";
-      font-size: 8pt;
-      color: #94a3b8;
-      font-family: ui-monospace, monospace;
-    }
-    @bottom-right {
-      content: "Page " counter(page) " of " counter(pages);
-      font-size: 8pt;
-      color: #94a3b8;
-      font-family: ui-monospace, monospace;
-    }
-    @bottom-left {
-      content: "Generated: ${new Date().toLocaleDateString('en-GB')}";
-      font-size: 8pt;
-      color: #94a3b8;
-      font-family: ui-monospace, monospace;
-    }
-  }
-
-  body {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    font-size: 11pt;
-    line-height: 1.5;
-    color: #1e293b;
-  }
-
-  /* 确保 print wrapper 充满所有页面 */
-  .print-wrapper {
-    overflow: visible !important;
-    max-height: none !important;
-  }
-
-  /* 禁止 audit 行被分页截断 */
-  .print-audit-row {
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  /* 隐藏交互元素 */
-  .no-print {
-    display: none !important;
-  }
+  body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; font-size: 11pt; line-height: 1.5; color: #1e293b; }
+  .print-wrapper { overflow: visible !important; max-height: none !important; }
+  .print-audit-row { page-break-inside: avoid; break-inside: avoid; }
+  .no-print { display: none !important; }
 `;
 
 // ============================================================
@@ -196,21 +227,98 @@ export const Report: React.FC = () => {
     const [expandedRow, setExpandedRow] = useState<string | null>(null);
     const [isPrintPreparing, setIsPrintPreparing] = useState(false);
 
-    /** react-to-print 的目标 ref */
+    // Data State
+    const [kpiData, setKpiData] = useState<KPIData | null>(null);
+    const [deficitData, setDeficitData] = useState<DeficitRow[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [fetchError, setFetchError] = useState<string | null>(null);
+
+    const { execute: runSparql } = useSparqlQuery();
+
+    // Data Fetching
+    useEffect(() => {
+        let mounted = true;
+
+        async function loadData() {
+            try {
+                setIsLoading(true);
+                const [deficits, emlRes, varRes] = await Promise.all([
+                    runSparql(QUERY_DEFICITS),
+                    runSparql(QUERY_EML),
+                    runSparql(QUERY_VAR)
+                ]) as [any[] | null, any[] | null, any[] | null];
+
+                if (!mounted) return;
+
+                if (!deficits || !emlRes || !varRes) {
+                    throw new Error("Failed to fetch data from GraphDB.");
+                }
+
+                // Process Deficits
+                const processedDeficits: DeficitRow[] = deficits.map((row: any, idx: number) => ({
+                    id: `DEF-${String(idx + 1).padStart(3, '0')}`,
+                    location: row.spaceLabel || 'Unknown',
+                    failedElement: row.elementLabel || 'Unknown Element',
+                    elementCn: row.elementLabel || '未知构件',
+                    failureDetail: row.issue === 'Door Obscured/Blocked'
+                        ? 'Door Blocked Open'
+                        : `REI ${row.actualREIValue} < ${row.requiredREIValue} mins`,
+                    issueType: mapIssueToType(row.issue),
+                    direction: (row.direction?.toLowerCase() as any) || 'horizontal',
+                    affectedValue: row.affectedAssetValue || 0,
+                    actualREI: row.actualREIValue || 0,
+                    requiredREI: row.requiredREIValue || 0
+                }));
+                setDeficitData(processedDeficits);
+
+                // Process KPIs
+                const totalAssets = varRes[0]?.buildingTotalAssetValue || 0;
+                const emVal = emlRes[0]?.maximumPossibleLoss_EML || 0;
+                const riskPct = varRes[0]?.riskPercentage || 0;
+                const totalRisk = varRes[0]?.totalValueAtRisk || 0;
+
+                setKpiData({
+                    totalAssets,
+                    eml: emVal,
+                    varRatio: parseFloat(riskPct.toFixed(2)),
+                    totalRiskValue: totalRisk
+                });
+
+            } catch (err: any) {
+                if (mounted) setFetchError(err.message || "Failed to load report data");
+            } finally {
+                if (mounted) setIsLoading(false);
+            }
+        }
+
+        loadData();
+        return () => { mounted = false; };
+    }, [runSparql]);
+
     const printRef = useRef<HTMLDivElement>(null);
 
-    // 过滤 + 排序（屏幕显示用）
+    // Derived Data
+    const filterButtons: { key: FilterMode; label: string }[] = [
+        { key: 'all', label: 'All Issues / 全部' },
+        { key: 'wall', label: 'Walls / 墙体' },
+        { key: 'door', label: 'Doors / 防火门' },
+        { key: 'floor', label: 'Floors / 楼板' },
+    ];
+
     const processedData = useMemo(() => {
-        let data = [...DEFICIT_DATA];
+        let data = [...deficitData];
         switch (filter) {
             case 'high':
                 data = data.filter(r => getCriticality(r.affectedValue) === 'High');
                 break;
-            case 'horizontal':
-                data = data.filter(r => r.direction === 'horizontal');
+            case 'wall':
+                data = data.filter(r => r.issueType === 'wall_rei');
                 break;
-            case 'vertical':
-                data = data.filter(r => r.direction === 'vertical');
+            case 'door':
+                data = data.filter(r => r.issueType === 'door_blocked');
+                break;
+            case 'floor':
+                data = data.filter(r => r.issueType === 'floor_rei');
                 break;
         }
         data.sort((a, b) =>
@@ -219,17 +327,44 @@ export const Report: React.FC = () => {
                 : a.affectedValue - b.affectedValue
         );
         return data;
-    }, [sortDir, filter]);
+    }, [deficitData, sortDir, filter]);
 
-    /**
-     * 打印数据 — 始终展示全量、按风险降序排列
-     * NOTE: 不受 filter 影响，确保 PDF 中完整展示所有条目
-     */
     const printData = useMemo(() => {
-        const copy = [...DEFICIT_DATA];
+        const copy = [...deficitData];
         copy.sort((a, b) => b.affectedValue - a.affectedValue);
         return copy;
-    }, []);
+    }, [deficitData]);
+
+    const chartData = useMemo(() => {
+        const walls = deficitData.filter(r => r.issueType === 'wall_rei').reduce((acc, r) => acc + r.affectedValue, 0);
+        const doors = deficitData.filter(r => r.issueType === 'door_blocked').reduce((acc, r) => acc + r.affectedValue, 0);
+        const floors = deficitData.filter(r => r.issueType === 'floor_rei').reduce((acc, r) => acc + r.affectedValue, 0);
+
+        return [
+            { name: 'Walls', value: walls, color: COLORS.risk },
+            { name: 'Doors', value: doors, color: COLORS.warning },
+            { name: 'Floors', value: floors, color: COLORS.primary } // Fallback color
+        ].filter(d => d.value > 0);
+    }, [deficitData]);
+
+    const sidebarMetrics = useMemo(() => {
+        const vulnerableSpaces = new Set(deficitData.map(d => d.location)).size;
+
+        // Find top category
+        const counts = {
+            'Walls': deficitData.filter(r => r.issueType === 'wall_rei').length,
+            'Doors': deficitData.filter(r => r.issueType === 'door_blocked').length,
+            'Floors': deficitData.filter(r => r.issueType === 'floor_rei').length
+        };
+        const topCategory = Object.entries(counts).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+
+        return {
+            totalDeficits: deficitData.length,
+            vulnerableSpaces,
+            topCategory,
+            totalExposure: kpiData?.totalRiskValue || 0
+        };
+    }, [deficitData, kpiData]);
 
     const handlePrint = useReactToPrint({
         contentRef: printRef,
@@ -237,23 +372,45 @@ export const Report: React.FC = () => {
         pageStyle: PRINT_PAGE_STYLE,
         onBeforePrint: async () => {
             setIsPrintPreparing(true);
-            // 给 recharts SVG 时间渲染
             await new Promise(resolve => setTimeout(resolve, 500));
         },
-        onAfterPrint: () => {
-            setIsPrintPreparing(false);
-        },
+        onAfterPrint: () => setIsPrintPreparing(false),
     });
 
     const toggleSort = () => setSortDir(prev => (prev === 'desc' ? 'asc' : 'desc'));
     const toggleExpand = (id: string) => setExpandedRow(prev => (prev === id ? null : id));
 
-    const filterButtons: { key: FilterMode; label: string }[] = [
-        { key: 'all', label: 'All Issues / 全部' },
-        { key: 'high', label: 'High Priority / 高优先' },
-        { key: 'horizontal', label: 'Horizontal / 横向' },
-        { key: 'vertical', label: 'Vertical / 纵向' },
-    ];
+
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <div className="text-center space-y-4">
+                    <Loader2 size={48} className="animate-spin text-indigo-600 mx-auto" />
+                    <p className="text-slate-500 font-medium">Fetching Live Data from GraphDB...</p>
+                    <p className="text-xs text-slate-400">Endpoint: /api/graphdb</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (fetchError || !kpiData) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <Card className="max-w-md p-8 text-center border-rose-200">
+                    <AlertTriangle size={48} className="text-rose-500 mx-auto mb-4" />
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">Connection Failed</h3>
+                    <p className="text-slate-600 mb-6">{fetchError || "Unable to load data."}</p>
+                    <div className="text-xs text-left bg-slate-100 p-4 rounded text-slate-500 font-mono">
+                        Troubleshooting:<br />
+                        1. Ensure GraphDB is running at localhost:7200<br />
+                        2. Check if 'FiCR' repository is active<br />
+                        3. Verify vite.config.ts proxy settings
+                    </div>
+                </Card>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white print:bg-white">
@@ -269,7 +426,7 @@ export const Report: React.FC = () => {
                                 Fire Risk Audit & Mitigation Report
                             </h1>
                             <p className="text-xs text-slate-500 font-mono mt-0.5">
-                                建筑消防风险审计与整改报告
+                                建筑消防风险审计与整改报告 (Live Data)
                             </p>
                             <div className="flex items-center gap-3 text-[11px] text-slate-400 font-mono mt-1">
                                 <span>ID: BLD-2024-X1</span>
@@ -284,8 +441,8 @@ export const Report: React.FC = () => {
                             <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
                                 Global Risk Grade
                             </div>
-                            <div className={`text-lg font-bold font-mono ${KPI.varRatio > 5 ? 'text-rose-600' : KPI.varRatio > 2 ? 'text-amber-600' : 'text-emerald-600'}`}>
-                                {KPI.varRatio < 2 ? 'A — Low' : KPI.varRatio < 5 ? 'B — Moderate' : 'C — High'}
+                            <div className={`text-lg font-bold font-mono ${kpiData.varRatio > 5 ? 'text-rose-600' : kpiData.varRatio > 2 ? 'text-amber-600' : 'text-emerald-600'}`}>
+                                {kpiData.varRatio < 2 ? 'A — Low' : kpiData.varRatio < 5 ? 'B — Moderate' : 'C — High'}
                             </div>
                         </div>
                         <Button
@@ -311,21 +468,20 @@ export const Report: React.FC = () => {
             </header>
 
             <main className="max-w-6xl mx-auto px-6 py-10 space-y-12 font-sans">
-
                 {/* ========== Section 1: Executive Summary ========== */}
                 <section>
                     <SectionHeader en="Executive Summary: Financial Impact" cn="执行摘要：财务影响" borderColor="border-indigo-500" />
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                         <KpiCard
                             label="Total Asset Value / 资产总值"
-                            value={`£${(KPI.totalAssets / 1_000_000).toFixed(2)}M`}
+                            value={`£${(kpiData.totalAssets / 1_000_000).toFixed(2)}M`}
                             desc="Sum of all fire compartment asset values from SPARQL Q1.1"
                             icon={<ShieldCheck size={16} className="text-emerald-500" />}
                             valueColor="text-slate-900"
                         />
                         <KpiCard
                             label="EML / 估计最大损失"
-                            value={`£${(KPI.eml / 1000).toFixed(0)}k`}
+                            value={`£${(kpiData.eml / 1000).toFixed(0)}k`}
                             desc="Worst-case single-scenario loss from Q4.2"
                             icon={<AlertTriangle size={16} className="text-rose-500" />}
                             valueColor="text-rose-600"
@@ -333,7 +489,7 @@ export const Report: React.FC = () => {
                         />
                         <KpiCard
                             label="VaR Ratio / 风险资产占比"
-                            value={`${KPI.varRatio}%`}
+                            value={`${kpiData.varRatio}%`}
                             desc="EML ÷ Total Asset Value (from Q4.3)"
                             icon={<TrendingUp size={16} className="text-amber-500" />}
                             valueColor="text-amber-600"
@@ -371,7 +527,7 @@ export const Report: React.FC = () => {
                             </button>
                         ))}
                         <span className="text-[11px] text-slate-400 ml-2">
-                            {processedData.length} of {DEFICIT_DATA.length} items
+                            {processedData.length} of {deficitData.length} items
                         </span>
                     </div>
 
@@ -399,49 +555,49 @@ export const Report: React.FC = () => {
                         <div className="space-y-4">
                             <Card className="border border-slate-200 shadow-sm p-4">
                                 <h4 className="text-xs font-bold text-slate-500 uppercase mb-3">
-                                    Risk Distribution / 风险分布
+                                    Risk Distribution by Element / 构件风险分布
                                 </h4>
-                                <div className="h-[180px]">
+                                <div className="h-[200px]">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <PieChart>
-                                            <Pie data={RISK_DISTRIBUTION} innerRadius={45} outerRadius={65} paddingAngle={4} dataKey="value">
-                                                <Cell fill={COLORS.compliant} />
-                                                <Cell fill={COLORS.warning} />
-                                                <Cell fill={COLORS.risk} />
-                                            </Pie>
-                                            <Legend
-                                                verticalAlign="bottom"
-                                                height={40}
-                                                iconType="circle"
-                                                iconSize={8}
-                                                formatter={(value: string) => (
-                                                    <span className="text-[11px] text-slate-600">{value}</span>
-                                                )}
+                                        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                            <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
+                                            <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(val) => `£${(val / 1000).toFixed(0)}k`} />
+                                            <Tooltip
+                                                formatter={(val: number | undefined) => [val ? `£${val.toLocaleString()}` : '£0', 'Asset Value']}
+                                                cursor={{ fill: '#f1f5f9' }}
+                                                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                             />
-                                        </PieChart>
+                                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                                {chartData.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                                ))}
+                                            </Bar>
+                                        </BarChart>
                                     </ResponsiveContainer>
                                 </div>
+                                <p className="text-[10px] text-center text-slate-400 mt-2">
+                                    Weighted by Asset Value at Stake (波及资产价值)
+                                </p>
                             </Card>
 
                             <Card className="border border-slate-200 shadow-sm p-4 space-y-3">
-                                <h4 className="text-xs font-bold text-slate-500 uppercase">Summary / 统计</h4>
+                                <h4 className="text-xs font-bold text-slate-500 uppercase">Vulnerable Room Statistics / 空间风险统计</h4>
                                 <div className="space-y-2">
-                                    <StatRow label="Total Items / 缺陷总数" value={`${DEFICIT_DATA.length}`} />
-                                    <StatRow label="High Priority / 高优先" value={`${DEFICIT_DATA.filter(r => getCriticality(r.affectedValue) === 'High').length}`} color="text-rose-600" />
-                                    <StatRow label="Total Exposure / 总暴露" value={`£${DEFICIT_DATA.reduce((s, r) => s + r.affectedValue, 0).toLocaleString()}`} color="text-slate-900" />
-                                    <StatRow label="Horizontal / 横向" value={`${DEFICIT_DATA.filter(r => r.direction === 'horizontal').length}`} />
-                                    <StatRow label="Vertical / 纵向" value={`${DEFICIT_DATA.filter(r => r.direction === 'vertical').length}`} />
+                                    <StatRow label="Total Deficits / 缺陷总数" value={`${sidebarMetrics.totalDeficits}`} />
+                                    <StatRow label="Vulnerable Spaces / 受影响空间" value={`${sidebarMetrics.vulnerableSpaces}`} />
+                                    <StatRow label="Asset Exposure / 风险暴露总值" value={`£${(sidebarMetrics.totalExposure / 1_000_000).toFixed(2)}M`} color="text-rose-600" />
+                                    <StatRow label="Top Risk Category / 主要风险类别" value={sidebarMetrics.topCategory} color="text-slate-900" />
                                 </div>
                             </Card>
 
                             <Card className="border border-slate-200 shadow-sm p-4 bg-indigo-50/50">
                                 <div className="flex items-center gap-2 text-indigo-700 mb-2">
                                     <Info size={14} />
-                                    <span className="text-xs font-bold uppercase">Interaction Tip</span>
+                                    <span className="text-xs font-bold uppercase">Space-Centric Analysis</span>
                                 </div>
                                 <p className="text-xs text-indigo-600 leading-relaxed">
-                                    Click <strong>"Value"</strong> header to sort. Click <strong>▼</strong> to reveal mitigation.
-                                    <br />点击"波及价值"列头排序；点击 ▼ 展开整改建议。
+                                    This report highlights rooms with the highest financial exposure. Prioritize mitigation in <strong>{sidebarMetrics.topCategory}</strong> to reduce overall VaR.
                                 </p>
                             </Card>
                         </div>
@@ -454,14 +610,12 @@ export const Report: React.FC = () => {
             </main>
 
             {/* ================= HIDDEN PRINT WRAPPER ================= */}
-            {/* 
-        NOTE: 此 div 仅供 react-to-print 生成 PDF 使用，屏幕上不可见。
-        所有数据全量展示，所有 mitigation 自动展开，无滚动限制。
-      */}
             <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
-                <div ref={printRef} className="print-wrapper" style={{ background: '#fff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                    <PrintableReport data={printData} />
-                </div>
+                {kpiData && (
+                    <div ref={printRef} className="print-wrapper" style={{ background: '#fff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        <PrintableReport data={printData} kpi={kpiData} />
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -469,9 +623,8 @@ export const Report: React.FC = () => {
 
 // ============================================================
 // PrintableReport — 打印专用完整报告
-// NOTE: 此组件仅渲染在 offscreen div 内，由 react-to-print 发送到打印机/PDF
 // ============================================================
-function PrintableReport({ data }: { data: DeficitRow[] }) {
+function PrintableReport({ data, kpi }: { data: DeficitRow[]; kpi: KPIData }) {
     const today = new Date().toLocaleDateString('en-GB');
 
     return (
@@ -512,9 +665,9 @@ function PrintableReport({ data }: { data: DeficitRow[] }) {
 
             {/* ===== KPIs ===== */}
             <div style={{ display: 'flex', gap: '16px', marginBottom: '28px' }}>
-                <PrintKpiBox label="Total Asset Value / 资产总值" value={`£${(KPI.totalAssets / 1_000_000).toFixed(2)}M`} accent="#10B981" />
-                <PrintKpiBox label="EML / 估计最大损失" value={`£${(KPI.eml / 1000).toFixed(0)}k`} accent="#F43F5E" />
-                <PrintKpiBox label="VaR Ratio / 风险资产占比" value={`${KPI.varRatio}%`} accent="#F59E0B" />
+                <PrintKpiBox label="Total Asset Value / 资产总值" value={`£${(kpi.totalAssets / 1_000_000).toFixed(2)}M`} accent="#10B981" />
+                <PrintKpiBox label="EML / 估计最大损失" value={`£${(kpi.eml / 1000).toFixed(0)}k`} accent="#F43F5E" />
+                <PrintKpiBox label="VaR Ratio / 风险资产占比" value={`${kpi.varRatio}%`} accent="#F59E0B" />
             </div>
 
             {/* ===== Audit Catalog Section Header ===== */}
@@ -749,16 +902,16 @@ function AuditListHeader({ onSort }: { onSort: () => void }) {
     return (
         <div className="bg-slate-50 border-b border-slate-200 px-4 py-2.5 grid grid-cols-12 gap-2 items-center text-[11px] font-bold text-slate-500 uppercase tracking-wide">
             <div className="col-span-1 text-center">Priority</div>
-            <div className="col-span-3">Element / 构件</div>
-            <div className="col-span-2">Location / 位置</div>
-            <div className="col-span-3">Deficit Detail / 缺陷详情</div>
+            <div className="col-span-3">Space / Element</div>
+            <div className="col-span-1"></div>
+            <div className="col-span-4">Deficit Detail / 缺陷详情</div>
             <div className="col-span-2 text-right cursor-pointer hover:text-slate-800 transition-colors select-none" onClick={onSort}>
                 <span className="inline-flex items-center gap-1">
-                    Value / 波及价值
+                    Risk Value
                     <ArrowUpDown size={11} />
                 </span>
             </div>
-            <div className="col-span-1 text-center">Action</div>
+            <div className="col-span-1 text-center">View</div>
         </div>
     );
 }
@@ -789,57 +942,63 @@ function AuditRow({ row, idx, isExpanded, onToggle }: {
                 <div className="col-span-1 flex justify-center">
                     <CriticalityBadge level={crit} />
                 </div>
-                <div className="col-span-3">
-                    <div className="flex items-center gap-1.5">
-                        <span className="text-indigo-500">{getIssueIcon(row.issueType)}</span>
-                        <span className="text-sm font-bold text-slate-800 font-mono">{row.failedElement}</span>
+                {/* Refactored Space/Element Column */}
+                <div className="col-span-4 flex flex-col justify-center">
+                    <span className="text-sm font-bold text-slate-800">{row.location}</span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className={`${row.issueType === 'wall_rei' ? 'text-rose-500' : row.issueType === 'door_blocked' ? 'text-orange-500' : 'text-slate-400'}`}>
+                            {getIssueIcon(row.issueType)}
+                        </span>
+                        <span className="text-xs text-slate-500 font-mono">{row.failedElement}</span>
                     </div>
-                    <span className="text-[11px] text-slate-400 mt-0.5 block">{row.elementCn}</span>
                 </div>
-                <div className="col-span-2">
-                    <span className="text-sm text-slate-600">@ {row.location}</span>
-                </div>
-                <div className="col-span-3">
-                    <span className={`text-sm font-medium flex items-center gap-1 ${row.issueType === 'door_blocked' ? 'text-amber-700' : 'text-rose-600'}`}>
-                        {row.failureDetail}
-                    </span>
+
+                <div className="col-span-4">
+                    {/* 2024-02-11: Updated to show precise failure detail from live data if possible, else generic string */}
+                    <div className="flex flex-col">
+                        <span className={`text-[11px] uppercase font-semibold tracking-wider ${row.issueType === 'door_blocked' ? 'text-orange-600' : 'text-rose-600'}`}>
+                            {row.issueType === 'wall_rei' ? 'Wall REI Fail' : row.issueType === 'floor_rei' ? 'Floor REI Fail' : 'Door Issue'}
+                        </span>
+                        <span className="text-sm font-medium text-slate-700">
+                            {row.failureDetail}
+                        </span>
+                    </div>
                 </div>
                 <div className="col-span-2 text-right">
-                    {row.affectedValue > 0 ? (
-                        <span className="text-sm font-mono font-bold text-slate-900">£{row.affectedValue.toLocaleString()}</span>
-                    ) : (
-                        <span className="text-xs text-slate-400 italic">Life Safety</span>
-                    )}
+                    <span className="text-sm font-mono font-bold text-slate-900 block">
+                        {row.affectedValue > 0 ? `£${row.affectedValue.toLocaleString()}` : '—'}
+                    </span>
+                    <span className="text-[10px] text-slate-400 uppercase tracking-wider">Asset Value</span>
                 </div>
-                <div className="col-span-1 flex justify-center">
-                    <button
-                        onClick={onToggle}
-                        className={`p-1.5 rounded-lg border transition-all ${isExpanded
-                            ? 'bg-indigo-600 border-indigo-600 text-white'
-                            : 'bg-white border-slate-200 text-slate-400 hover:border-indigo-400 hover:text-indigo-500'
-                            }`}
-                        title="View mitigation / 查看整改建议"
+                <div className="col-span-1 text-center">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onToggle()}
+                        className={`h-7 w-7 p-0 rounded-full ${isExpanded ? 'bg-indigo-100 text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
                     >
                         {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                    </button>
+                    </Button>
                 </div>
             </div>
 
+            {/* Mitigation Drawer */}
             {isExpanded && (
-                <div className="bg-indigo-50/50 border-b border-indigo-100 px-4 py-3">
-                    <div className="ml-[8.33%] max-w-xl">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Wrench size={13} className="text-indigo-600" />
-                            <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">
-                                Mitigation Strategy / 整改建议
-                            </span>
+                <div className="bg-indigo-50/50 border-b border-indigo-100 px-12 py-4 animate-in slide-in-from-top-2 duration-200">
+                    <div className="flex gap-4">
+                        <div className="shrink-0 mt-1">
+                            <Wrench size={16} className="text-indigo-500" />
                         </div>
-                        <div className="bg-white rounded-lg p-3 border border-indigo-100 shadow-sm space-y-1.5">
-                            <div className="flex items-start gap-2">
-                                <CheckCircle2 size={13} className="text-emerald-500 mt-0.5 shrink-0" />
-                                <p className="text-xs text-slate-700 leading-relaxed">{mitigation.en}</p>
-                            </div>
-                            <p className="text-xs text-slate-500 pl-5 leading-relaxed">{mitigation.cn}</p>
+                        <div>
+                            <h5 className="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-1">
+                                Mitigation Strategy / 整改建议
+                            </h5>
+                            <p className="text-sm text-slate-700 leading-relaxed mb-1">
+                                {mitigation.en}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                                {mitigation.cn}
+                            </p>
                         </div>
                     </div>
                 </div>
