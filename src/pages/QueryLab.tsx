@@ -88,10 +88,10 @@ export const QueryLab: React.FC = () => {
       {/* Header Section */}
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-display font-bold text-neutral-900 mb-4 tracking-tight">
-          Query Lab
+          FiCR Semantic Reasoning Sandbox
         </h1>
         <p className="text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-          The engine room of FiCR intelligence. Interact directly with the building’s <span className="font-semibold text-primary-700">Semantic Digital Twin</span> using <span className="font-semibold text-primary-700">SPARQL</span> to quantify fire risks and <span className="font-semibold text-primary-700">EML/PML</span> scenarios.
+          Direct programmatic access to the FiCR Knowledge Graph. Interrogate the building’s semantic layer to verify structural integrity and automate the calculation of multi-scenario fire risks.
         </p>
       </div>
 
