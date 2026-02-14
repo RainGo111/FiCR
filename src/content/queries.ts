@@ -82,14 +82,14 @@ WHERE {
         WHERE {
             {
                 ?item a ficr:Wall ; ficr:hasREI ?v . ficr:req_pg1b_wall ficr:hasREI ?r .
-                BIND("Fire Wall" AS ?category) BIND(IF(?v >= ?r, "Compliant", "Non-Compliant") AS ?status)
+                BIND("Fire Wall" AS ?category) BIND(IF(xsd:integer(?v) >= xsd:integer(?r), "Compliant", "Non-Compliant") AS ?status)
             } UNION {
                 ?item a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured ?obs .
                 BIND("Fire Door" AS ?category) BIND(IF(?obs = true, "Non-Compliant (Obscured)", "Compliant") AS ?status)
             } UNION {
                 { ?item a ficr:Floor } UNION { ?item a ficr:Slab }
                 ?item ficr:hasREI ?v . ficr:req_pg1b_floor ficr:hasREI ?r .
-                BIND("Floor Slab" AS ?category) BIND(IF(?v >= ?r, "Compliant", "Non-Compliant") AS ?status)
+                BIND("Floor Slab" AS ?category) BIND(IF(xsd:integer(?v) >= xsd:integer(?r), "Compliant", "Non-Compliant") AS ?status)
             }
         }
     }
@@ -114,7 +114,7 @@ WHERE {
         ?element a ficr:Wall ; rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
         ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
         ficr:req_pg1b_wall ficr:hasREI ?requiredREI .
-        FILTER(?actualREI < ?requiredREI)
+        FILTER(xsd:integer(?actualREI) < xsd:integer(?requiredREI))
         BIND("Horizontal" AS ?direction) BIND("Wall REI Deficit" AS ?issue) BIND("Wall" AS ?assetType)
     }
     UNION
@@ -132,7 +132,7 @@ WHERE {
         ?element rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
         ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
         ficr:req_pg1b_floor ficr:hasREI ?requiredREI .
-        FILTER(?actualREI < ?requiredREI)
+        FILTER(xsd:integer(?actualREI) < xsd:integer(?requiredREI))
         BIND("Vertical" AS ?direction) BIND("Floor REI Deficit" AS ?issue) BIND("Floor/Slab" AS ?assetType)
     }
     
@@ -148,42 +148,32 @@ ORDER BY ?direction ?assetType ?spaceLabel`
         queries: [
             {
                 label: "Q3.1 Vulnerable Spread Paths",
-                description: "Identify horizontal and vertical spread channels / 潜在风险蔓延路径",
+                description: "Identify horizontal (Wall) and vertical (Floor/Slab) structural spread channels / 潜在风险蔓延路径",
                 query: `${QUERY_PREFIXES}
 # --- Q3.1 Vulnerable Spread Paths / 潜在风险蔓延路径 ---
-# Goal: Identify horizontal (Wall/Door) and vertical (Floor/Slab) spread channels.
-# 目标：识别横向（墙/门）与纵向（楼板）的火灾蔓延通道。
+# Goal: Identify horizontal (Wall) and vertical (Floor/Slab) structural spread channels.
+# 目标：识别横向（墙体 REI 失效）与纵向（楼板 REI 失效）的火灾蔓延通道。
+# NOTE: Door obstruction is a maintenance issue, not a structural fire spread trigger.
+# 注意：门遮挡属于维护问题，不构成结构性蔓延通道。
 
 SELECT DISTINCT ?direction ?fromLabel ?toLabel ?elementLabel ?issue
 WHERE {
     {
-        # 1. Horizontal Paths (Wall & Door) / 横向路径（墙与门）
-        # Logic: Spaces are adjacent, and the connecting element is compromised.
-        # 逻辑：空间相邻，且连接构件存在缺陷。
+        # 1. Horizontal Paths (Wall REI Failure) / 横向路径（墙体 REI 失效）
+        # Logic: Spaces are adjacent, and the shared wall has insufficient fire resistance.
+        # 逻辑：空间相邻，且共享墙体耐火极限不足。
         ?s1 bot:adjacentZone ?s2 ; rdfs:label ?fromLabel .
         ?s2 rdfs:label ?toLabel .
         FILTER(STR(?s1) < STR(?s2)) # Remove duplicate reciprocal paths / 消除重复的往返路径
         
-        {
-            # Sub-path: Failed Wall REI / 子路径：墙体耐火极限失效
-            ?s1 bot:adjacentElement ?e . ?s2 bot:adjacentElement ?e .
-            ?e a ficr:Wall ; rdfs:label ?elementLabel ; ficr:hasREI ?v .
-            ficr:req_pg1b_wall ficr:hasREI ?r . FILTER(?v < ?r)
-            BIND("Horizontal" AS ?direction) BIND("Wall REI Failure" AS ?issue)
-        }
-        UNION
-        {
-            # Sub-path: Obscured Fire Door / 子路径：防火门被遮挡/常开
-            # Note: A door on either side of the adjacent boundary triggers the risk.
-            # 注意：邻接边界上的任一扇门失效即触发风险。
-            ?e a/rdfs:subClassOf* ficr:Doorset ; rdfs:label ?elementLabel ; ficr:isObscured true .
-            { ?s1 bot:adjacentElement ?e } UNION { ?s2 bot:adjacentElement ?e }
-            BIND("Horizontal" AS ?direction) BIND("Fire Door Obscured" AS ?issue)
-        }
+        ?s1 bot:adjacentElement ?e . ?s2 bot:adjacentElement ?e .
+        ?e a ficr:Wall ; rdfs:label ?elementLabel ; ficr:hasREI ?v .
+        ficr:req_pg1b_wall ficr:hasREI ?r . FILTER(xsd:integer(?v) < xsd:integer(?r))
+        BIND("Horizontal" AS ?direction) BIND("Wall REI Failure" AS ?issue)
     }
     UNION
     {
-        # 2. Vertical Paths (Floor/Slab) / 纵向路径（楼板）
+        # 2. Vertical Paths (Floor/Slab REI Failure) / 纵向路径（楼板 REI 失效）
         # Logic: Fire spreads between storeys via non-compliant slabs.
         # 逻辑：火灾通过不合规的楼板在楼层间蔓延。
         ?lowerStorey ficr:isStoreyBelow ?upperStorey .
@@ -193,7 +183,7 @@ WHERE {
         ?lowerStorey bot:hasSpace ?s_low . ?s_low bot:adjacentElement ?f .
         { ?f a ficr:Floor } UNION { ?f a ficr:Slab }
         ?f rdfs:label ?elementLabel ; ficr:hasREI ?fv .
-        ficr:req_pg1b_floor ficr:hasREI ?fr . FILTER(?fv < ?fr)
+        ficr:req_pg1b_floor ficr:hasREI ?fr . FILTER(xsd:integer(?fv) < xsd:integer(?fr))
         
         BIND("Vertical" AS ?direction) BIND("Floor REI Failure" AS ?issue)
     }
@@ -232,12 +222,11 @@ WHERE {
             UNION
             {
                 # 2. Horizontal Spread (1.0) / 横向蔓延损失 (100%)
-                # Triggered by failed walls or obscured doors / 由失效墙体或被遮挡防火门触发
+                # Triggered by shared wall with insufficient REI / 由共享墙体 REI 不足触发
                 ?originSpace bot:adjacentZone ?affectedSpace .
                 ?affectedSpace rdfs:label ?affectedSpaceLabel ; ficr:hasFixedAssetValue ?affectedVal .
                 FILTER EXISTS {
-                    { ?originSpace bot:adjacentElement ?e1 . ?affectedSpace bot:adjacentElement ?e1 . ?e1 a ficr:Wall ; ficr:hasREI ?v1 . ficr:req_pg1b_wall ficr:hasREI ?r1 . FILTER(?v1 < ?r1) }
-                    UNION { ?e2 a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . {?originSpace bot:adjacentElement ?e2} UNION {?affectedSpace bot:adjacentElement ?e2} }
+                    ?originSpace bot:adjacentElement ?e1 . ?affectedSpace bot:adjacentElement ?e1 . ?e1 a ficr:Wall ; ficr:hasREI ?v1 . ficr:req_pg1b_wall ficr:hasREI ?r1 . FILTER(xsd:integer(?v1) < xsd:integer(?r1))
                 }
                 BIND(1.0 AS ?lossCoefficient)
                 BIND(?affectedVal * 1.0 AS ?contribution)
@@ -265,74 +254,96 @@ ORDER BY ?originSpaceLabel DESC(?lossAmount)`
 # --- Q4.2: Building Portfolio EML Summary / 全局 EML 风险统计 (CEO 视图) ---
 # Purpose: Calculate the overall risk metrics (EML, Average Loss) for the entire building.
 # 目的：计算整栋建筑的综合风险指标（最大预期损失、平均损失）。
+
 SELECT
-    (xsd:integer(COUNT(DISTINCT ?riskSpace)) AS ?totalScenarios)
-    (xsd:decimal(SUM(?scenarioEML)) AS ?totalPortfolioRisk)
-    (xsd:decimal(AVG(?scenarioEML)) AS ?averageScenarioLoss)
-    (xsd:decimal(MAX(?scenarioEML)) AS ?maximumPossibleLoss_EML)
+    ?totalScenarios
+    (xsd:decimal(ROUND(?totalRisk * 1000) / 1000.0) AS ?totalPortfolioRisk)
+    (xsd:decimal(ROUND(?avgLoss * 1000) / 1000.0) AS ?averageScenarioLoss)
+    (xsd:decimal(ROUND(?maxLoss * 1000) / 1000.0) AS ?maximumPossibleLoss_EML)
 WHERE {
     {
-        SELECT ?riskSpace (SUM(?dv) AS ?scenarioEML)
+        SELECT (COUNT(?scenarioEML) AS ?totalScenarios) 
+               (SUM(?scenarioEML) AS ?totalRisk) 
+               (AVG(?scenarioEML) AS ?avgLoss) 
+               (MAX(?scenarioEML) AS ?maxLoss)
         WHERE {
-            # This subquery encapsulates the exact H2 logic from your source file.
-            # 该子查询封装了原始文件中 H2 的精确计算逻辑。
             {
-                SELECT DISTINCT ?riskSpace ?affectedSpace ?values
+                SELECT ?riskSpace (SUM(?dv) AS ?scenarioEML)
                 WHERE {
-                    ?riskSpace a/rdfs:subClassOf* bot:Space ; ficr:hasFixedAssetValue ?originVal .
-                    { BIND(?riskSpace AS ?affectedSpace) BIND(?originVal AS ?values) }
-                    UNION
                     {
-                        ?riskSpace bot:adjacentZone ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?hVal .
-                        FILTER EXISTS {
-                            { ?riskSpace bot:adjacentElement ?sw . ?affectedSpace bot:adjacentElement ?sw . ?sw a ficr:Wall ; ficr:hasREI ?wV . ficr:req_pg1b_wall ficr:hasREI ?wR . FILTER(?wV < ?wR) }
-                            UNION { ?sd a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . {?riskSpace bot:adjacentElement ?sd} UNION {?affectedSpace bot:adjacentElement ?sd} }
+                        SELECT DISTINCT ?riskSpace ?affectedSpace ?values
+                        WHERE {
+                            ?riskSpace a/rdfs:subClassOf* bot:Space ; ficr:hasFixedAssetValue ?originVal .
+                            { BIND(?riskSpace AS ?affectedSpace) BIND(?originVal AS ?values) }
+                            UNION
+                            {
+                                ?riskSpace bot:adjacentZone ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?hVal .
+                                FILTER EXISTS {
+                                    ?riskSpace bot:adjacentElement ?sw . ?affectedSpace bot:adjacentElement ?sw . ?sw a ficr:Wall ; ficr:hasREI ?wV . ficr:req_pg1b_wall ficr:hasREI ?wR . FILTER(xsd:integer(?wV) < xsd:integer(?wR))
+                                }
+                                BIND(?hVal * 1.0 AS ?values)
+                            }
+                            UNION
+                            {
+                                ?os bot:hasSpace ?riskSpace . {?os ficr:isStoreyBelow ?vs} UNION {?os ficr:isStoreyAbove ?vs}
+                                ?vs bot:hasSpace ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?vVal .
+                                BIND(?vVal * 0.1 AS ?values)
+                            }
                         }
-                        BIND(?hVal * 1.0 AS ?values)
                     }
-                    UNION
-                    {
-                        ?os bot:hasSpace ?riskSpace . {?os ficr:isStoreyBelow ?vs} UNION {?os ficr:isStoreyAbove ?vs}
-                        ?vs bot:hasSpace ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?vVal .
-                        BIND(?vVal * 0.1 AS ?values)
-                    }
-                }
+                    BIND(?values AS ?dv)
+                } GROUP BY ?riskSpace
             }
-            BIND(?values AS ?dv)
-        } GROUP BY ?riskSpace
+        }
     }
 }`
             },
             {
-                label: "Q4.3 Value at Risk (VaR)",
-                description: "Value at Risk (VaR) Analysis / 风险资产占比分析 (投资洞察)",
+                label: "Q4.3 Component Non-Compliance",
+                description: "Component Non-Compliance Analysis / 构件级不合规率分析",
                 query: `${QUERY_PREFIXES}
-# --- Q4.3: Value at Risk (VaR) Analysis / 风险资产占比分析 (投资洞察) ---
-# Purpose: How much asset value is "unprotected" due to non-compliance?
-# 目的：由于构件不合规，有多少比例的资产处于受威胁状态？
+# --- Q4.3: Component Non-Compliance Analysis / 构件级不合规率分析 ---
+# Purpose: What percentage of fire safety components are non-compliant?
+# 目的：各类消防构件的不合规比例是多少？提供比资产价值比更精确的建筑合规概况。
+# NOTE: Door obstruction is tracked separately as a maintenance issue.
+# 注意：门遮挡单独作为维护问题统计，不纳入结构性不合规。
 
 SELECT
-    (xsd:decimal(SUM(?val)) AS ?buildingTotalAssetValue)
-    (xsd:decimal(SUM(?riskVal)) AS ?totalValueAtRisk)
-    (xsd:decimal(SUM(?riskVal) / SUM(?val) * 100) AS ?riskPercentage)
+    (xsd:integer(?tw) AS ?totalWalls)
+    (xsd:integer(?nw) AS ?nonCompliantWalls)
+    (xsd:decimal(ROUND(?nw * 10000.0 / ?tw) / 100.0) AS ?wallNonComplianceRate)
+    (xsd:integer(?tf) AS ?totalFloors)
+    (xsd:integer(?nf) AS ?nonCompliantFloors)
+    (xsd:decimal(ROUND(?nf * 10000.0 / ?tf) / 100.0) AS ?floorNonComplianceRate)
+    (xsd:integer(?td) AS ?totalDoors)
+    (xsd:integer(?od) AS ?obscuredDoors)
+    (xsd:decimal(ROUND(?od * 10000.0 / ?td) / 100.0) AS ?doorObstructionRate)
+    (xsd:integer(?tw + ?tf + ?td) AS ?totalComponents)
+    (xsd:integer(?nw + ?nf + ?od) AS ?totalNonCompliant)
+    (xsd:decimal(ROUND((?nw + ?nf + ?od) * 10000.0 / (?tw + ?tf + ?td)) / 100.0) AS ?overallNonComplianceRate)
 WHERE {
-    {
-        # 使用子查询先锁定唯一的空间及其对应的价值和风险状态
-        # Subquery to isolate unique spaces and their values first
-        SELECT DISTINCT ?space ?val ?riskVal
-        WHERE {
-            ?space a/rdfs:subClassOf* bot:Space ; 
-                   ficr:hasFixedAssetValue ?val .
-            
-            # 判定该空间是否处于风险中
-            # Determine if the space is "at risk"
-            BIND(IF( EXISTS {
-                { ?space bot:adjacentElement ?e1 . ?e1 a ficr:Wall ; ficr:hasREI ?r1 . ficr:req_pg1b_wall ficr:hasREI ?rq1 . FILTER(?r1 < ?rq1) }
-                UNION { ?space bot:adjacentElement ?e2 . ?e2 a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . }
-                UNION { ?space bot:adjacentElement ?e3 . { ?e3 a ficr:Floor } UNION { ?e3 a ficr:Slab } ?e3 ficr:hasREI ?r3 . ficr:req_pg1b_floor ficr:hasREI ?rq3 . FILTER(?r3 < ?rq3) }
-            }, ?val, 0) AS ?riskVal)
-        }
-    }
+    # Subquery 1: Wall counts / 子查询1：墙体统计
+    { SELECT (COUNT(DISTINCT ?w) AS ?tw) WHERE { ?w a ficr:Wall ; ficr:hasREI ?dummy1 . } }
+    # Subquery 2: Non-compliant wall counts / 子查询2：不合规墙体统计
+    { SELECT (COUNT(DISTINCT ?ncw) AS ?nw) WHERE {
+        ?ncw a ficr:Wall ; ficr:hasREI ?wv . ficr:req_pg1b_wall ficr:hasREI ?wr . FILTER(xsd:integer(?wv) < xsd:integer(?wr))
+    } }
+    # Subquery 3: Floor counts / 子查询3：楼板统计
+    { SELECT (COUNT(DISTINCT ?fl) AS ?tf) WHERE {
+        { ?fl a ficr:Floor } UNION { ?fl a ficr:Slab }
+        ?fl ficr:hasREI ?dummy2 .
+    } }
+    # Subquery 4: Non-compliant floor counts / 子查询4：不合规楼板统计
+    { SELECT (COUNT(DISTINCT ?ncf) AS ?nf) WHERE {
+        { ?ncf a ficr:Floor } UNION { ?ncf a ficr:Slab }
+        ?ncf ficr:hasREI ?fv . ficr:req_pg1b_floor ficr:hasREI ?fr . FILTER(xsd:integer(?fv) < xsd:integer(?fr))
+    } }
+    # Subquery 5: Door counts / 子查询5：门统计
+    { SELECT (COUNT(DISTINCT ?dr) AS ?td) WHERE { ?dr a/rdfs:subClassOf* ficr:Doorset . } }
+    # Subquery 6: Obscured door counts / 子查询6：遮挡门统计
+    { SELECT (COUNT(DISTINCT ?odr) AS ?od) WHERE {
+        ?odr a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true .
+    } }
 }`
             }
         ]

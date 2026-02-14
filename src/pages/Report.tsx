@@ -45,7 +45,7 @@ WHERE {
         ?element a ficr:Wall ; rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
         ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
         ficr:req_pg1b_wall ficr:hasREI ?requiredREI .
-        FILTER(?actualREI < ?requiredREI)
+        FILTER(xsd:integer(?actualREI) < xsd:integer(?requiredREI))
         BIND("Horizontal" AS ?direction) BIND("Wall REI Deficit" AS ?issue) BIND("Wall" AS ?assetType)
     }
     UNION
@@ -61,7 +61,7 @@ WHERE {
         ?element rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
         ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
         ficr:req_pg1b_floor ficr:hasREI ?requiredREI .
-        FILTER(?actualREI < ?requiredREI)
+        FILTER(xsd:integer(?actualREI) < xsd:integer(?requiredREI))
         BIND("Vertical" AS ?direction) BIND("Floor REI Deficit" AS ?issue) BIND("Floor/Slab" AS ?assetType)
     }
     OPTIONAL { ?space ficr:hasFixedAssetValue ?affectedAsset }
@@ -83,8 +83,7 @@ WHERE {
                     {
                         ?riskSpace bot:adjacentZone ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?hVal .
                         FILTER EXISTS {
-                            { ?riskSpace bot:adjacentElement ?sw . ?affectedSpace bot:adjacentElement ?sw . ?sw a ficr:Wall ; ficr:hasREI ?wV . ficr:req_pg1b_wall ficr:hasREI ?wR . FILTER(?wV < ?wR) }
-                            UNION { ?sd a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . {?riskSpace bot:adjacentElement ?sd} UNION {?affectedSpace bot:adjacentElement ?sd} }
+                            ?riskSpace bot:adjacentElement ?sw . ?affectedSpace bot:adjacentElement ?sw . ?sw a ficr:Wall ; ficr:hasREI ?wV . ficr:req_pg1b_wall ficr:hasREI ?wR . FILTER(xsd:integer(?wV) < xsd:integer(?wR))
                         }
                         BIND(?hVal * 1.0 AS ?values)
                     }
@@ -101,22 +100,38 @@ WHERE {
     }
 }`;
 
-const QUERY_VAR = `${QUERY_PREFIXES}
+// NOTE: Q4.3 改为构件级不合规率分析，门遮挡作为维护问题单独统计
+const QUERY_COMPLIANCE = `${QUERY_PREFIXES}
 SELECT
-    (xsd:decimal(SUM(?val)) AS ?buildingTotalAssetValue)
-    (xsd:decimal(SUM(?riskVal) / SUM(?val) * 100) AS ?riskPercentage)
+    (xsd:integer(?tw) AS ?totalWalls)
+    (xsd:integer(?nw) AS ?nonCompliantWalls)
+    (xsd:decimal(ROUND(?nw * 10000.0 / ?tw) / 100.0) AS ?wallNonComplianceRate)
+    (xsd:integer(?tf) AS ?totalFloors)
+    (xsd:integer(?nf) AS ?nonCompliantFloors)
+    (xsd:decimal(ROUND(?nf * 10000.0 / ?tf) / 100.0) AS ?floorNonComplianceRate)
+    (xsd:integer(?td) AS ?totalDoors)
+    (xsd:integer(?od) AS ?obscuredDoors)
+    (xsd:decimal(ROUND(?od * 10000.0 / ?td) / 100.0) AS ?doorObstructionRate)
+    (xsd:integer(?tw + ?tf + ?td) AS ?totalComponents)
+    (xsd:integer(?nw + ?nf + ?od) AS ?totalNonCompliant)
+    (xsd:decimal(ROUND((?nw + ?nf + ?od) * 10000.0 / (?tw + ?tf + ?td)) / 100.0) AS ?overallNonComplianceRate)
 WHERE {
-    {
-        SELECT DISTINCT ?space ?val ?riskVal
-        WHERE {
-            ?space a/rdfs:subClassOf* bot:Space ; ficr:hasFixedAssetValue ?val .
-            BIND(IF( EXISTS {
-                { ?space bot:adjacentElement ?e1 . ?e1 a ficr:Wall ; ficr:hasREI ?r1 . ficr:req_pg1b_wall ficr:hasREI ?rq1 . FILTER(?r1 < ?rq1) }
-                UNION { ?space bot:adjacentElement ?e2 . ?e2 a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true . }
-                UNION { ?space bot:adjacentElement ?e3 . { ?e3 a ficr:Floor } UNION { ?e3 a ficr:Slab } ?e3 ficr:hasREI ?r3 . ficr:req_pg1b_floor ficr:hasREI ?rq3 . FILTER(?r3 < ?rq3) }
-            }, ?val, 0) AS ?riskVal)
-        }
-    }
+    { SELECT (COUNT(DISTINCT ?w) AS ?tw) WHERE { ?w a ficr:Wall ; ficr:hasREI ?dummy1 . } }
+    { SELECT (COUNT(DISTINCT ?ncw) AS ?nw) WHERE {
+        ?ncw a ficr:Wall ; ficr:hasREI ?wv . ficr:req_pg1b_wall ficr:hasREI ?wr . FILTER(xsd:integer(?wv) < xsd:integer(?wr))
+    } }
+    { SELECT (COUNT(DISTINCT ?fl) AS ?tf) WHERE {
+        { ?fl a ficr:Floor } UNION { ?fl a ficr:Slab }
+        ?fl ficr:hasREI ?dummy2 .
+    } }
+    { SELECT (COUNT(DISTINCT ?ncf) AS ?nf) WHERE {
+        { ?ncf a ficr:Floor } UNION { ?ncf a ficr:Slab }
+        ?ncf ficr:hasREI ?fv . ficr:req_pg1b_floor ficr:hasREI ?fr . FILTER(xsd:integer(?fv) < xsd:integer(?fr))
+    } }
+    { SELECT (COUNT(DISTINCT ?dr) AS ?td) WHERE { ?dr a/rdfs:subClassOf* ficr:Doorset . } }
+    { SELECT (COUNT(DISTINCT ?odr) AS ?od) WHERE {
+        ?odr a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true .
+    } }
 }`;
 
 // ============================================================
@@ -146,8 +161,10 @@ interface DeficitRow {
 interface KPIData {
     totalAssets: number;
     eml: number;
-    varRatio: number;
-    totalRiskValue: number;
+    // 构件级不合规率（来自 Q4.3）
+    overallNonComplianceRate: number;
+    totalComponents: number;
+    totalNonCompliant: number;
 }
 
 // ============================================================
@@ -242,15 +259,15 @@ export const Report: React.FC = () => {
         async function loadData() {
             try {
                 setIsLoading(true);
-                const [deficits, emlRes, varRes] = await Promise.all([
+                const [deficits, emlRes, complianceRes] = await Promise.all([
                     runSparql(QUERY_DEFICITS),
                     runSparql(QUERY_EML),
-                    runSparql(QUERY_VAR)
+                    runSparql(QUERY_COMPLIANCE)
                 ]) as [any[] | null, any[] | null, any[] | null];
 
                 if (!mounted) return;
 
-                if (!deficits || !emlRes || !varRes) {
+                if (!deficits || !emlRes || !complianceRes) {
                     throw new Error("Failed to fetch data from GraphDB.");
                 }
 
@@ -271,17 +288,16 @@ export const Report: React.FC = () => {
                 }));
                 setDeficitData(processedDeficits);
 
-                // Process KPIs
-                const totalAssets = varRes[0]?.buildingTotalAssetValue || 0;
+                // Process KPIs — Q4.3 现在返回构件级不合规率
                 const emVal = emlRes[0]?.maximumPossibleLoss_EML || 0;
-                const riskPct = varRes[0]?.riskPercentage || 0;
-                const totalRisk = varRes[0]?.totalValueAtRisk || 0;
+                const compData = complianceRes[0] || {};
 
                 setKpiData({
-                    totalAssets,
+                    totalAssets: 0, // NOTE: 总资产值现由 Q1.2 提供，不再从 Q4.3 获取
                     eml: emVal,
-                    varRatio: parseFloat(riskPct.toFixed(2)),
-                    totalRiskValue: totalRisk
+                    overallNonComplianceRate: parseFloat((compData.overallNonComplianceRate || 0).toFixed(2)),
+                    totalComponents: compData.totalComponents || 0,
+                    totalNonCompliant: compData.totalNonCompliant || 0
                 });
 
             } catch (err: any) {
@@ -362,7 +378,7 @@ export const Report: React.FC = () => {
             totalDeficits: deficitData.length,
             vulnerableSpaces,
             topCategory,
-            totalExposure: kpiData?.totalRiskValue || 0
+            totalExposure: deficitData.reduce((sum, d) => sum + d.affectedValue, 0)
         };
     }, [deficitData, kpiData]);
 
@@ -441,8 +457,8 @@ export const Report: React.FC = () => {
                             <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
                                 Global Risk Grade
                             </div>
-                            <div className={`text-lg font-bold font-mono ${kpiData.varRatio > 5 ? 'text-rose-600' : kpiData.varRatio > 2 ? 'text-amber-600' : 'text-emerald-600'}`}>
-                                {kpiData.varRatio < 2 ? 'A — Low' : kpiData.varRatio < 5 ? 'B — Moderate' : 'C — High'}
+                            <div className={`text-lg font-bold font-mono ${kpiData.overallNonComplianceRate > 30 ? 'text-rose-600' : kpiData.overallNonComplianceRate > 10 ? 'text-amber-600' : 'text-emerald-600'}`}>
+                                {kpiData.overallNonComplianceRate < 10 ? 'A — Low' : kpiData.overallNonComplianceRate < 30 ? 'B — Moderate' : 'C — High'}
                             </div>
                         </div>
                         <Button
@@ -473,9 +489,9 @@ export const Report: React.FC = () => {
                     <SectionHeader en="Executive Summary: Financial Impact" cn="执行摘要：财务影响" borderColor="border-indigo-500" />
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                         <KpiCard
-                            label="Total Asset Value / 资产总值"
-                            value={`£${(kpiData.totalAssets / 1_000_000).toFixed(2)}M`}
-                            desc="Sum of all fire compartment asset values from SPARQL Q1.1"
+                            label="Total Components / 总构件数"
+                            value={`${kpiData.totalComponents}`}
+                            desc="Total fire safety components (Walls + Floors + Doors) from Q4.3"
                             icon={<ShieldCheck size={16} className="text-emerald-500" />}
                             valueColor="text-slate-900"
                         />
@@ -488,13 +504,13 @@ export const Report: React.FC = () => {
                             glossary="Estimated Maximum Loss：单次最严重火灾场景下的预估最大损失金额"
                         />
                         <KpiCard
-                            label="VaR Ratio / 风险资产占比"
-                            value={`${kpiData.varRatio}%`}
-                            desc="EML ÷ Total Asset Value (from Q4.3)"
+                            label="Non-Compliance Rate / 不合规率"
+                            value={`${kpiData.overallNonComplianceRate}%`}
+                            desc={`${kpiData.totalNonCompliant} of ${kpiData.totalComponents} components non-compliant (Q4.3)`}
                             icon={<TrendingUp size={16} className="text-amber-500" />}
                             valueColor="text-amber-600"
-                            glossary="Value at Risk Ratio：有多少比例的资产正面临威胁"
-                            badge={<Badge variant="warning">Moderate</Badge>}
+                            glossary="Component Non-Compliance Rate：消防构件中不合规比例（门遮挡单独统计为维护问题）"
+                            badge={<Badge variant={kpiData.overallNonComplianceRate > 30 ? 'warning' : kpiData.overallNonComplianceRate > 10 ? 'warning' : 'success'}>{kpiData.overallNonComplianceRate < 10 ? 'Low' : kpiData.overallNonComplianceRate < 30 ? 'Moderate' : 'High'}</Badge>}
                         />
                     </div>
                 </section>
@@ -597,7 +613,7 @@ export const Report: React.FC = () => {
                                     <span className="text-xs font-bold uppercase">Space-Centric Analysis</span>
                                 </div>
                                 <p className="text-xs text-indigo-600 leading-relaxed">
-                                    This report highlights rooms with the highest financial exposure. Prioritize mitigation in <strong>{sidebarMetrics.topCategory}</strong> to reduce overall VaR.
+                                    This report highlights rooms with the highest financial exposure. Prioritize mitigation in <strong>{sidebarMetrics.topCategory}</strong> to reduce overall non-compliance rate.
                                 </p>
                             </Card>
                         </div>
@@ -665,9 +681,9 @@ function PrintableReport({ data, kpi }: { data: DeficitRow[]; kpi: KPIData }) {
 
             {/* ===== KPIs ===== */}
             <div style={{ display: 'flex', gap: '16px', marginBottom: '28px' }}>
-                <PrintKpiBox label="Total Asset Value / 资产总值" value={`£${(kpi.totalAssets / 1_000_000).toFixed(2)}M`} accent="#10B981" />
+                <PrintKpiBox label="Total Components / 总构件数" value={`${kpi.totalComponents}`} accent="#10B981" />
                 <PrintKpiBox label="EML / 估计最大损失" value={`£${(kpi.eml / 1000).toFixed(0)}k`} accent="#F43F5E" />
-                <PrintKpiBox label="VaR Ratio / 风险资产占比" value={`${kpi.varRatio}%`} accent="#F59E0B" />
+                <PrintKpiBox label="Non-Compliance Rate / 不合规率" value={`${kpi.overallNonComplianceRate}%`} accent="#F59E0B" />
             </div>
 
             {/* ===== Audit Catalog Section Header ===== */}
