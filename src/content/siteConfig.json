@@ -3,7 +3,7 @@
     "title": "FiCR Ontology",
     "fullTitle": "Fire Compliance and Risk Analysis Ontology",
     "description": "FiCR, Fire Compliance and Risk Analysis, is a domain specific semantic model designed to represent fire safety and fire risk relevant physical objects, building elements, equipment, functional roles, and their relationships in existing buildings.",
-    "version": "1.0.0",
+    "version": "0.10.0",
     "namespace": "https://w3id.org/bam/ficr#",
     "prefix": "ficr",
     "authors": [
@@ -38,32 +38,76 @@
     {
       "name": "Core Building Elements",
       "description": "Physical building components including walls, floors, roofs, doors, and windows",
-      "classes": ["Wall", "Floor", "Roof", "Ceiling", "Doorset", "Window", "Beam", "Column", "Slab"]
+      "classes": [
+        "Wall",
+        "Floor",
+        "Roof",
+        "Ceiling",
+        "Doorset",
+        "Window",
+        "Beam",
+        "Column",
+        "Slab"
+      ]
     },
     {
       "name": "Fire Safety Systems",
       "description": "Active and passive fire protection systems and equipment",
-      "classes": ["FireSafetySystem", "FireAlarmSystem", "FireSprinklerSystem", "FireDamper", "FireDoorset", "FireStop", "CavityBarrier"]
+      "classes": [
+        "FireSafetySystem",
+        "FireAlarmSystem",
+        "FireSprinklerSystem",
+        "FireDamper",
+        "FireDoorset",
+        "FireStop",
+        "CavityBarrier"
+      ]
     },
     {
       "name": "Building Zones and Spaces",
       "description": "Spatial organization and fire compartmentation",
-      "classes": ["FireCompartment", "ProtectedStairway", "Room", "Space", "Storey", "Corridor", "Shaft"]
+      "classes": [
+        "FireCompartment",
+        "ProtectedStairway",
+        "Room",
+        "Space",
+        "Storey",
+        "Corridor",
+        "Shaft"
+      ]
     },
     {
       "name": "Fire Safety Roles",
       "description": "Functional roles for fire safety analysis",
-      "classes": ["FireSafetyRole", "FireSeparatingRole", "FireResistingRole", "FireProtectedRole", "MeansOfEscapeRole"]
+      "classes": [
+        "FireSafetyRole",
+        "FireSeparatingRole",
+        "FireResistingRole",
+        "FireProtectedRole",
+        "MeansOfEscapeRole"
+      ]
     },
     {
       "name": "Compliance and Assessment",
       "description": "Workflow for compliance checking and risk assessment",
-      "classes": ["Task", "Assessment", "ComplianceAssessment", "RiskAssessment", "EvidenceItem", "AssessmentBasis"]
+      "classes": [
+        "Task",
+        "Assessment",
+        "ComplianceAssessment",
+        "RiskAssessment",
+        "EvidenceItem",
+        "AssessmentBasis"
+      ]
     },
     {
       "name": "Building Classification",
       "description": "Purpose groups and usage classifications",
-      "classes": ["PurposeGroup", "UsageType", "UtilizationPurpose", "SpaceUsage"]
+      "classes": [
+        "PurposeGroup",
+        "UsageType",
+        "UtilizationPurpose",
+        "SpaceUsage"
+      ]
     }
   ],
   "citation": {
