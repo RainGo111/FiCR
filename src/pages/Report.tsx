@@ -161,10 +161,19 @@ interface DeficitRow {
 interface KPIData {
     totalAssets: number;
     eml: number;
-    // 构件级不合规率（来自 Q4.3）
-    overallNonComplianceRate: number;
+    // Q4.3 构件级不合规率分析
+    totalWalls: number;
+    nonCompliantWalls: number;
+    wallNonComplianceRate: number;
+    totalFloors: number;
+    nonCompliantFloors: number;
+    floorNonComplianceRate: number;
+    totalDoors: number;
+    obscuredDoors: number;
+    doorObstructionRate: number;
     totalComponents: number;
     totalNonCompliant: number;
+    overallNonComplianceRate: number;
 }
 
 // ============================================================
@@ -293,11 +302,20 @@ export const Report: React.FC = () => {
                 const compData = complianceRes[0] || {};
 
                 setKpiData({
-                    totalAssets: 0, // NOTE: 总资产值现由 Q1.2 提供，不再从 Q4.3 获取
+                    totalAssets: 0,
                     eml: emVal,
-                    overallNonComplianceRate: parseFloat((compData.overallNonComplianceRate || 0).toFixed(2)),
+                    totalWalls: compData.totalWalls || 0,
+                    nonCompliantWalls: compData.nonCompliantWalls || 0,
+                    wallNonComplianceRate: parseFloat((compData.wallNonComplianceRate || 0).toFixed(2)),
+                    totalFloors: compData.totalFloors || 0,
+                    nonCompliantFloors: compData.nonCompliantFloors || 0,
+                    floorNonComplianceRate: parseFloat((compData.floorNonComplianceRate || 0).toFixed(2)),
+                    totalDoors: compData.totalDoors || 0,
+                    obscuredDoors: compData.obscuredDoors || 0,
+                    doorObstructionRate: parseFloat((compData.doorObstructionRate || 0).toFixed(2)),
                     totalComponents: compData.totalComponents || 0,
-                    totalNonCompliant: compData.totalNonCompliant || 0
+                    totalNonCompliant: compData.totalNonCompliant || 0,
+                    overallNonComplianceRate: parseFloat((compData.overallNonComplianceRate || 0).toFixed(2))
                 });
 
             } catch (err: any) {
@@ -504,19 +522,98 @@ export const Report: React.FC = () => {
                             glossary="Estimated Maximum Loss：单次最严重火灾场景下的预估最大损失金额"
                         />
                         <KpiCard
-                            label="Non-Compliance Rate / 不合规率"
-                            value={`${kpiData.overallNonComplianceRate}%`}
-                            desc={`${kpiData.totalNonCompliant} of ${kpiData.totalComponents} components non-compliant (Q4.3)`}
+                            label="Non-Compliance / 不合规"
+                            value={`${kpiData.totalNonCompliant} / ${kpiData.totalComponents}`}
+                            desc={`Overall rate: ${kpiData.overallNonComplianceRate}% (see breakdown below)`}
                             icon={<TrendingUp size={16} className="text-amber-500" />}
                             valueColor="text-amber-600"
-                            glossary="Component Non-Compliance Rate：消防构件中不合规比例（门遮挡单独统计为维护问题）"
-                            badge={<Badge variant={kpiData.overallNonComplianceRate > 30 ? 'warning' : kpiData.overallNonComplianceRate > 10 ? 'warning' : 'success'}>{kpiData.overallNonComplianceRate < 10 ? 'Low' : kpiData.overallNonComplianceRate < 30 ? 'Moderate' : 'High'}</Badge>}
+                            glossary="Component Non-Compliance：消防构件不合规数量占比（详见下方分类分析）"
+                            badge={<Badge variant={kpiData.overallNonComplianceRate > 10 ? 'warning' : 'success'}>{kpiData.overallNonComplianceRate < 10 ? 'Low' : kpiData.overallNonComplianceRate < 30 ? 'Moderate' : 'High'}</Badge>}
                         />
                     </div>
                 </section>
 
-                {/* ========== Section 2: Actionable Audit List (Screen) ========== */}
+                {/* ========== Section 1.5: Component Non-Compliance Analysis (Q4.3) ========== */}
                 <section>
+                    <SectionHeader en="Component Non-Compliance Analysis" cn="构件级不合规率分析 (Q4.3)" borderColor="border-rose-500" />
+                    <p className="text-xs text-slate-500 mt-2 mb-4">
+                        Door obstruction is tracked separately as a maintenance issue, not a structural fire spread trigger.
+                        门遮挡单独作为维护问题统计，不纳入结构性不合规。
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                        {/* Overall Rate */}
+                        <Card className="border border-slate-200 shadow-sm p-4 bg-gradient-to-br from-slate-50 to-slate-100">
+                            <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Overall / 综合</div>
+                            <div className={`text-2xl font-bold font-mono ${kpiData.overallNonComplianceRate > 30 ? 'text-rose-600' : kpiData.overallNonComplianceRate > 10 ? 'text-amber-600' : 'text-emerald-600'}`}>
+                                {kpiData.overallNonComplianceRate}%
+                            </div>
+                            <div className="text-[11px] text-slate-500 mt-1">
+                                {kpiData.totalNonCompliant} / {kpiData.totalComponents} components
+                            </div>
+                            <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
+                                <div
+                                    className={`h-1.5 rounded-full ${kpiData.overallNonComplianceRate > 30 ? 'bg-rose-500' : kpiData.overallNonComplianceRate > 10 ? 'bg-amber-500' : 'bg-emerald-500'}`}
+                                    style={{ width: `${Math.min(kpiData.overallNonComplianceRate, 100)}%` }}
+                                />
+                            </div>
+                        </Card>
+
+                        {/* Walls */}
+                        <Card className="border border-slate-200 shadow-sm p-4">
+                            <div className="flex items-center gap-2 mb-1">
+                                <ShieldAlert size={14} className="text-rose-500" />
+                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Walls / 墙体</span>
+                            </div>
+                            <div className={`text-xl font-bold font-mono ${kpiData.wallNonComplianceRate > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                                {kpiData.wallNonComplianceRate}%
+                            </div>
+                            <div className="text-[11px] text-slate-500 mt-1">
+                                {kpiData.nonCompliantWalls} / {kpiData.totalWalls} walls (REI deficit)
+                            </div>
+                            <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
+                                <div className="h-1.5 rounded-full bg-rose-500" style={{ width: `${Math.min(kpiData.wallNonComplianceRate, 100)}%` }} />
+                            </div>
+                        </Card>
+
+                        {/* Floors */}
+                        <Card className="border border-slate-200 shadow-sm p-4">
+                            <div className="flex items-center gap-2 mb-1">
+                                <Layers size={14} className="text-indigo-500" />
+                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Floors / 楼板</span>
+                            </div>
+                            <div className={`text-xl font-bold font-mono ${kpiData.floorNonComplianceRate > 0 ? 'text-indigo-600' : 'text-emerald-600'}`}>
+                                {kpiData.floorNonComplianceRate}%
+                            </div>
+                            <div className="text-[11px] text-slate-500 mt-1">
+                                {kpiData.nonCompliantFloors} / {kpiData.totalFloors} floors (REI deficit)
+                            </div>
+                            <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
+                                <div className="h-1.5 rounded-full bg-indigo-500" style={{ width: `${Math.min(kpiData.floorNonComplianceRate, 100)}%` }} />
+                            </div>
+                        </Card>
+
+                        {/* Doors */}
+                        <Card className="border border-slate-200 shadow-sm p-4">
+                            <div className="flex items-center gap-2 mb-1">
+                                <DoorOpen size={14} className="text-amber-500" />
+                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Doors / 防火门</span>
+                            </div>
+                            <div className={`text-xl font-bold font-mono ${kpiData.doorObstructionRate > 0 ? 'text-amber-600' : 'text-emerald-600'}`}>
+                                {kpiData.doorObstructionRate}%
+                            </div>
+                            <div className="text-[11px] text-slate-500 mt-1">
+                                {kpiData.obscuredDoors} / {kpiData.totalDoors} doors (obscured)
+                            </div>
+                            <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
+                                <div className="h-1.5 rounded-full bg-amber-500" style={{ width: `${Math.min(kpiData.doorObstructionRate, 100)}%` }} />
+                            </div>
+                            <div className="text-[9px] text-slate-400 mt-1.5 italic">Maintenance issue only</div>
+                        </Card>
+                    </div>
+                </section >
+
+                {/* ========== Section 2: Actionable Audit List (Screen) ========== */}
+                < section >
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
                         <SectionHeader en="Actionable Audit List" cn="可操作审计清单 · Deficit Catalog" borderColor="border-amber-500" />
                         <div className="flex items-center gap-2 print:hidden">
@@ -618,22 +715,22 @@ export const Report: React.FC = () => {
                             </Card>
                         </div>
                     </div>
-                </section>
+                </section >
 
                 <footer className="text-center text-slate-400 text-xs py-8 print:hidden border-t border-slate-100 mt-8">
                     <p>Building Fire Risk Intelligence • Powered by FiCR Ontology & SPARQL Engine</p>
                 </footer>
-            </main>
+            </main >
 
             {/* ================= HIDDEN PRINT WRAPPER ================= */}
-            <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+            < div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
                 {kpiData && (
                     <div ref={printRef} className="print-wrapper" style={{ background: '#fff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                         <PrintableReport data={printData} kpi={kpiData} />
                     </div>
                 )}
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
