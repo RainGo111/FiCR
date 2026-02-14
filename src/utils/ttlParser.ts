@@ -185,8 +185,8 @@ function extractMetadata(store: Store): ParsedOntology['metadata'] {
   const description = descriptionQuads.length > 0
     ? descriptionQuads[0].object.value
     : commentQuads.length > 0
-    ? commentQuads[0].object.value
-    : '';
+      ? commentQuads[0].object.value
+      : '';
 
   const versionQuads = store.getQuads(ontologySubject, OWL_VERSION_INFO, null, null);
   const version = versionQuads.length > 0 ? versionQuads[0].object.value : '';
@@ -208,7 +208,7 @@ function extractLocalName(uri: string): string {
 
 export async function loadOntology(): Promise<ParsedOntology> {
   try {
-    const response = await fetch(`${import.meta.env.BASE_URL}ficr_tbox.ttl`);
+    const response = await fetch(`${import.meta.env.BASE_URL}ficr_tbox-0.10.0.ttl`);
     if (!response.ok) {
       throw new Error(`Failed to load ontology: ${response.statusText}`);
     }
