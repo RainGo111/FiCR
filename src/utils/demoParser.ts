@@ -72,7 +72,7 @@ export async function parseDemoTTL(ttlContent: string): Promise<ParsedDemo> {
   const store = new Store();
 
   return new Promise((resolve, reject) => {
-    parser.parse(ttlContent, (error, quad, prefixes) => {
+    parser.parse(ttlContent, (error: any, quad: any, _prefixes: any) => {
       if (error) {
         reject(error);
         return;
@@ -113,7 +113,7 @@ export async function parseDemoTTL(ttlContent: string): Promise<ParsedDemo> {
 
 export async function loadDemo(): Promise<ParsedDemo> {
   try {
-    const response = await fetch(`${import.meta.env.BASE_URL}ficr_demo.ttl`);
+    const response = await fetch(`${import.meta.env.BASE_URL}ficr_demo_0.13.0.ttl`);
     if (!response.ok) {
       throw new Error(`Failed to load demo data: ${response.statusText}`);
     }

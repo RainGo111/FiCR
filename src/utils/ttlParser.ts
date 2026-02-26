@@ -58,7 +58,7 @@ export async function parseTTL(ttlContent: string): Promise<ParsedOntology> {
   const store = new Store();
 
   return new Promise((resolve, reject) => {
-    parser.parse(ttlContent, (error, quad, prefixes) => {
+    parser.parse(ttlContent, (error: any, quad: any, _prefixes: any) => {
       if (error) {
         reject(error);
         return;
@@ -208,7 +208,7 @@ function extractLocalName(uri: string): string {
 
 export async function loadOntology(): Promise<ParsedOntology> {
   try {
-    const response = await fetch(`${import.meta.env.BASE_URL}ficr_tbox-0.10.0.ttl`);
+    const response = await fetch(`${import.meta.env.BASE_URL}ficr_tbox_0.13.0.ttl`);
     if (!response.ok) {
       throw new Error(`Failed to load ontology: ${response.statusText}`);
     }

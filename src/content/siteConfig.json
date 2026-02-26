@@ -3,7 +3,7 @@
     "title": "FiCR Ontology",
     "fullTitle": "Fire Compliance and Risk Analysis Ontology",
     "description": "FiCR, Fire Compliance and Risk Analysis, is a domain specific semantic model designed to represent fire safety and fire risk relevant physical objects, building elements, equipment, functional roles, and their relationships in existing buildings.",
-    "version": "0.10.0",
+    "version": "0.13.0",
     "namespace": "https://w3id.org/bam/ficr#",
     "prefix": "ficr",
     "authors": [

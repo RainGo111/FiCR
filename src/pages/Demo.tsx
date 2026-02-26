@@ -371,7 +371,7 @@ export const Demo: React.FC = () => {
           </Card>
 
           <div className="mt-8 text-center text-sm text-neutral-500 pb-4">
-            <p>Demo data loaded from <code>ficr_demo.ttl</code></p>
+            <p>Demo data loaded from <code>ficr_demo_0.13.0.ttl</code></p>
             <p>This demonstrates FiCR ontology structure with a real building example</p>
           </div>
         </>

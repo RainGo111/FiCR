@@ -4,164 +4,52 @@ import {
     Building2,
     AlertTriangle,
     Download,
-    TrendingUp,
-    ShieldCheck,
-    Info,
-    ArrowUpDown,
     ShieldAlert,
     DoorOpen,
     Layers,
     Filter,
-    FileSpreadsheet,
     Loader2,
     ChevronUp,
     ChevronDown,
-    Wrench
+    Wrench,
+    Shield,
+    AlertCircle
 } from 'lucide-react';
-import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Cell,
-    ResponsiveContainer
-} from 'recharts';
 import { useReactToPrint } from 'react-to-print';
 import { useSparqlQuery } from '../hooks/useSparqlQuery';
-import { QUERY_PREFIXES } from '../content/queries.ts';
+import { PRESET_GROUPS } from '../content/queries';
 
 // ============================================================
 // Queries
 // ============================================================
-const QUERY_DEFICITS = `${QUERY_PREFIXES}
-SELECT DISTINCT ?assetType ?elementLabel ?issue ?spaceLabel
-       (xsd:decimal(?actualREI) AS ?actualREIValue)
-       (xsd:decimal(?requiredREI) AS ?requiredREIValue)
-       (xsd:decimal(?affectedAsset) AS ?affectedAssetValue)
-WHERE {
-    {
-        ?element a ficr:Wall ; rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
-        ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
-        ficr:req_pg1b_wall ficr:hasREI ?requiredREI .
-        FILTER(xsd:integer(?actualREI) < xsd:integer(?requiredREI))
-        BIND("Horizontal" AS ?direction) BIND("Wall REI Deficit" AS ?issue) BIND("Wall" AS ?assetType)
+const getQuery = (labelStarter: string) => {
+    for (const group of PRESET_GROUPS) {
+        for (const q of group.queries) {
+            if (q.label.startsWith(labelStarter)) return q.query;
+        }
     }
-    UNION
-    {
-        ?element a/rdfs:subClassOf* ficr:Doorset ; rdfs:label ?elementLabel ; ficr:isObscured true .
-        ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
-        BIND("Horizontal" AS ?direction) BIND("Door Obscured/Blocked" AS ?issue) BIND("Door" AS ?assetType)
-        BIND(0 AS ?actualREI) BIND(1 AS ?requiredREI)
-    }
-    UNION
-    {
-        { ?element a ficr:Floor } UNION { ?element a ficr:Slab }
-        ?element rdfs:label ?elementLabel ; ficr:hasREI ?actualREI .
-        ?space bot:adjacentElement ?element ; rdfs:label ?spaceLabel .
-        ficr:req_pg1b_floor ficr:hasREI ?requiredREI .
-        FILTER(xsd:integer(?actualREI) < xsd:integer(?requiredREI))
-        BIND("Vertical" AS ?direction) BIND("Floor REI Deficit" AS ?issue) BIND("Floor/Slab" AS ?assetType)
-    }
-    OPTIONAL { ?space ficr:hasFixedAssetValue ?affectedAsset }
-}
-ORDER BY ?direction ?assetType ?spaceLabel`;
-
-const QUERY_EML = `${QUERY_PREFIXES}
-SELECT (xsd:decimal(MAX(?scenarioEML)) AS ?maximumPossibleLoss_EML)
-WHERE {
-    {
-        SELECT ?riskSpace (SUM(?dv) AS ?scenarioEML)
-        WHERE {
-            {
-                SELECT DISTINCT ?riskSpace ?affectedSpace ?values
-                WHERE {
-                    ?riskSpace a/rdfs:subClassOf* bot:Space ; ficr:hasFixedAssetValue ?originVal .
-                    { BIND(?riskSpace AS ?affectedSpace) BIND(?originVal AS ?values) }
-                    UNION
-                    {
-                        ?riskSpace bot:adjacentZone ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?hVal .
-                        FILTER EXISTS {
-                            ?riskSpace bot:adjacentElement ?sw . ?affectedSpace bot:adjacentElement ?sw . ?sw a ficr:Wall ; ficr:hasREI ?wV . ficr:req_pg1b_wall ficr:hasREI ?wR . FILTER(xsd:integer(?wV) < xsd:integer(?wR))
-                        }
-                        BIND(?hVal * 1.0 AS ?values)
-                    }
-                    UNION
-                    {
-                        ?os bot:hasSpace ?riskSpace . {?os ficr:isStoreyBelow ?vs} UNION {?os ficr:isStoreyAbove ?vs}
-                        ?vs bot:hasSpace ?affectedSpace . ?affectedSpace ficr:hasFixedAssetValue ?vVal .
-                        BIND(?vVal * 0.1 AS ?values)
-                    }
-                }
-            }
-            BIND(?values AS ?dv)
-        } GROUP BY ?riskSpace
-    }
-}`;
-
-// NOTE: Q4.3 改为构件级不合规率分析，门遮挡作为维护问题单独统计
-const QUERY_COMPLIANCE = `${QUERY_PREFIXES}
-SELECT
-    (xsd:integer(?tw) AS ?totalWalls)
-    (xsd:integer(?nw) AS ?nonCompliantWalls)
-    (xsd:decimal(ROUND(?nw * 10000.0 / ?tw) / 100.0) AS ?wallNonComplianceRate)
-    (xsd:integer(?tf) AS ?totalFloors)
-    (xsd:integer(?nf) AS ?nonCompliantFloors)
-    (xsd:decimal(ROUND(?nf * 10000.0 / ?tf) / 100.0) AS ?floorNonComplianceRate)
-    (xsd:integer(?td) AS ?totalDoors)
-    (xsd:integer(?od) AS ?obscuredDoors)
-    (xsd:decimal(ROUND(?od * 10000.0 / ?td) / 100.0) AS ?doorObstructionRate)
-    (xsd:integer(?tw + ?tf + ?td) AS ?totalComponents)
-    (xsd:integer(?nw + ?nf + ?od) AS ?totalNonCompliant)
-    (xsd:decimal(ROUND((?nw + ?nf + ?od) * 10000.0 / (?tw + ?tf + ?td)) / 100.0) AS ?overallNonComplianceRate)
-WHERE {
-    { SELECT (COUNT(DISTINCT ?w) AS ?tw) WHERE { ?w a ficr:Wall ; ficr:hasREI ?dummy1 . } }
-    { SELECT (COUNT(DISTINCT ?ncw) AS ?nw) WHERE {
-        ?ncw a ficr:Wall ; ficr:hasREI ?wv . ficr:req_pg1b_wall ficr:hasREI ?wr . FILTER(xsd:integer(?wv) < xsd:integer(?wr))
-    } }
-    { SELECT (COUNT(DISTINCT ?fl) AS ?tf) WHERE {
-        { ?fl a ficr:Floor } UNION { ?fl a ficr:Slab }
-        ?fl ficr:hasREI ?dummy2 .
-    } }
-    { SELECT (COUNT(DISTINCT ?ncf) AS ?nf) WHERE {
-        { ?ncf a ficr:Floor } UNION { ?ncf a ficr:Slab }
-        ?ncf ficr:hasREI ?fv . ficr:req_pg1b_floor ficr:hasREI ?fr . FILTER(xsd:integer(?fv) < xsd:integer(?fr))
-    } }
-    { SELECT (COUNT(DISTINCT ?dr) AS ?td) WHERE { ?dr a/rdfs:subClassOf* ficr:Doorset . } }
-    { SELECT (COUNT(DISTINCT ?odr) AS ?od) WHERE {
-        ?odr a/rdfs:subClassOf* ficr:Doorset ; ficr:isObscured true .
-    } }
-}`;
+    return '';
+};
 
 // ============================================================
 // Theme & Types
 // ============================================================
-const COLORS = {
-    compliant: '#10B981',
-    warning: '#F59E0B',
-    risk: '#F43F5E',
-    neutral: '#64748B',
-    primary: '#4F46E5',
-};
+
 
 interface DeficitRow {
     id: string;
-    location: string;
-    failedElement: string;
-    elementCn: string;
-    failureDetail: string;
-    issueType: 'wall_rei' | 'floor_rei' | 'door_blocked' | 'shaft_unsealed';
-    direction: 'horizontal' | 'vertical';
-    affectedValue: number;
+    direction: string;
+    assetType: string;
+    elementLabel: string;
+    complianceStatus: string;
+    issue: string;
+    issueCn: string;
+    spaceLabel: string;
     actualREI: number;
     requiredREI: number;
 }
 
 interface KPIData {
-    totalAssets: number;
-    eml: number;
-    // Q4.3 构件级不合规率分析
     totalWalls: number;
     nonCompliantWalls: number;
     wallNonComplianceRate: number;
@@ -176,60 +64,52 @@ interface KPIData {
     overallNonComplianceRate: number;
 }
 
+interface RiskUnitPriority {
+    ruLabel: string;
+    totalAssumptions: number;
+    unknownCount: number;
+    compromisedCount: number;
+    evidenceGapCount: number;
+    installStatus: string;
+    alarmStatus: string;
+}
+
 // ============================================================
 // Helpers
 // ============================================================
-function getMitigation(issueType: DeficitRow['issueType']): { en: string; cn: string } {
-    switch (issueType) {
-        case 'wall_rei':
-        case 'floor_rei':
-            return {
-                en: 'Apply fire-rated intumescent coating or install fire-stop mineral wool to meet required REI.',
-                cn: '涂刷防火涂料或安装防火封堵矿棉以满足所需 REI 等级',
-            };
-        case 'door_blocked':
-            return {
-                en: 'Clear all physical obstructions immediately and inspect self-closing mechanisms.',
-                cn: '立即清理障碍物并检查闭门器状态',
-            };
-        case 'shaft_unsealed':
-            return {
-                en: 'Apply professional fire-stopping seals to mechanical penetrations.',
-                cn: '对管井穿墙孔洞进行专业防火封堵',
-            };
+function getMitigation(issueType: string): { en: string; cn: string } {
+    if (issueType.includes('Wall') || issueType.includes('Floor') || issueType.includes('Slab')) {
+        return {
+            en: 'Apply fire-rated intumescent coating or install fire-stop mineral wool to meet required REI.',
+            cn: '涂刷防火涂料或安装防火封堵矿棉以满足所需 REI 等级',
+        };
     }
-}
-
-function getCriticality(value: number): 'High' | 'Medium' | 'Low' {
-    if (value >= 4000) return 'High';
-    if (value > 0) return 'Medium';
-    return 'Low';
-}
-
-function getIssueIcon(issueType: DeficitRow['issueType']) {
-    switch (issueType) {
-        case 'wall_rei':
-        case 'floor_rei':
-            return <ShieldAlert size={14} className="shrink-0" />;
-        case 'door_blocked':
-            return <DoorOpen size={14} className="shrink-0" />;
-        case 'shaft_unsealed':
-            return <Layers size={14} className="shrink-0" />;
+    if (issueType.includes('Door')) {
+        return {
+            en: 'Clear all physical obstructions immediately and inspect self-closing mechanisms.',
+            cn: '立即清理障碍物并检查闭门器状态',
+        };
     }
+    return {
+        en: 'Inspect and consult with fire safety engineer.',
+        cn: '检查并咨询消防安全工程师',
+    };
 }
 
-function mapIssueToType(issue: string): DeficitRow['issueType'] {
-    if (issue?.includes('Wall')) return 'wall_rei';
-    if (issue?.includes('Door')) return 'door_blocked';
-    if (issue?.includes('Floor')) return 'floor_rei';
-    return 'wall_rei'; // Fallback
+function getIssueIcon(issueType: string) {
+    if (issueType.includes('Wall') || issueType.includes('Floor') || issueType.includes('Slab')) {
+        return <ShieldAlert size={14} className="shrink-0" />;
+    }
+    if (issueType.includes('Door')) {
+        return <DoorOpen size={14} className="shrink-0" />;
+    }
+    return <AlertTriangle size={14} className="shrink-0" />;
 }
 
 // ============================================================
 // Print Types & Style
 // ============================================================
-type FilterMode = 'all' | 'high' | 'wall' | 'door' | 'floor';
-type SortDir = 'asc' | 'desc';
+type FilterMode = 'all' | 'wall' | 'door' | 'floor';
 
 const PRINT_PAGE_STYLE = `
   @page { size: A4 portrait; margin: 18mm 15mm 22mm 15mm; }
@@ -248,7 +128,6 @@ const PRINT_PAGE_STYLE = `
 // Main Component
 // ============================================================
 export const Report: React.FC = () => {
-    const [sortDir, setSortDir] = useState<SortDir>('desc');
     const [filter, setFilter] = useState<FilterMode>('all');
     const [expandedRow, setExpandedRow] = useState<string | null>(null);
     const [isPrintPreparing, setIsPrintPreparing] = useState(false);
@@ -256,6 +135,7 @@ export const Report: React.FC = () => {
     // Data State
     const [kpiData, setKpiData] = useState<KPIData | null>(null);
     const [deficitData, setDeficitData] = useState<DeficitRow[]>([]);
+    const [riskUnits, setRiskUnits] = useState<RiskUnitPriority[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [fetchError, setFetchError] = useState<string | null>(null);
 
@@ -268,55 +148,80 @@ export const Report: React.FC = () => {
         async function loadData() {
             try {
                 setIsLoading(true);
-                const [deficits, emlRes, complianceRes] = await Promise.all([
-                    runSparql(QUERY_DEFICITS),
-                    runSparql(QUERY_EML),
-                    runSparql(QUERY_COMPLIANCE)
+                const queryB1 = getQuery('B1:');
+                const queryB2 = getQuery('B2:');
+                const queryC7 = getQuery('C7:');
+
+                if (!queryB1 || !queryB2 || !queryC7) {
+                    throw new Error("Required SPARQL queries not found in PRESET_GROUPS.");
+                }
+
+                const [resB1, resB2, resC7] = await Promise.all([
+                    runSparql(queryB1),
+                    runSparql(queryB2),
+                    runSparql(queryC7)
                 ]) as [any[] | null, any[] | null, any[] | null];
 
                 if (!mounted) return;
 
-                if (!deficits || !emlRes || !complianceRes) {
+                if (!resB1 || !resB2 || !resC7) {
                     throw new Error("Failed to fetch data from GraphDB.");
                 }
 
-                // Process Deficits
-                const processedDeficits: DeficitRow[] = deficits.map((row: any, idx: number) => ({
-                    id: `DEF-${String(idx + 1).padStart(3, '0')}`,
-                    location: row.spaceLabel || 'Unknown',
-                    failedElement: row.elementLabel || 'Unknown Element',
-                    elementCn: row.elementLabel || '未知构件',
-                    failureDetail: row.issue === 'Door Obscured/Blocked'
-                        ? 'Door Blocked Open'
-                        : `REI ${row.actualREIValue} < ${row.requiredREIValue} mins`,
-                    issueType: mapIssueToType(row.issue),
-                    direction: (row.direction?.toLowerCase() as any) || 'horizontal',
-                    affectedValue: row.affectedAssetValue || 0,
-                    actualREI: row.actualREIValue || 0,
-                    requiredREI: row.requiredREIValue || 0
-                }));
-                setDeficitData(processedDeficits);
-
-                // Process KPIs — Q4.3 现在返回构件级不合规率
-                const emVal = emlRes[0]?.maximumPossibleLoss_EML || 0;
-                const compData = complianceRes[0] || {};
-
-                setKpiData({
-                    totalAssets: 0,
-                    eml: emVal,
-                    totalWalls: compData.totalWalls || 0,
-                    nonCompliantWalls: compData.nonCompliantWalls || 0,
-                    wallNonComplianceRate: parseFloat((compData.wallNonComplianceRate || 0).toFixed(2)),
-                    totalFloors: compData.totalFloors || 0,
-                    nonCompliantFloors: compData.nonCompliantFloors || 0,
-                    floorNonComplianceRate: parseFloat((compData.floorNonComplianceRate || 0).toFixed(2)),
-                    totalDoors: compData.totalDoors || 0,
-                    obscuredDoors: compData.obscuredDoors || 0,
-                    doorObstructionRate: parseFloat((compData.doorObstructionRate || 0).toFixed(2)),
-                    totalComponents: compData.totalComponents || 0,
-                    totalNonCompliant: compData.totalNonCompliant || 0,
-                    overallNonComplianceRate: parseFloat((compData.overallNonComplianceRate || 0).toFixed(2))
+                // Process B1 KPI Metrics
+                let tw = 0, nw = 0, tf = 0, nf = 0, td = 0, od = 0;
+                resB1.forEach((row: any) => {
+                    const c = parseInt(row.count) || 0;
+                    const cat = row.category || '';
+                    const stat = row.status || '';
+                    if (cat.includes('Wall')) { tw += c; if (stat.includes('Non-Compliant')) nw += c; }
+                    if (cat.includes('Slab')) { tf += c; if (stat.includes('Non-Compliant')) nf += c; }
+                    if (cat.includes('Doorset')) { td += c; if (stat.includes('Non-Compliant')) od += c; }
                 });
+                const totalComponents = tw + tf + td;
+                const totalNonCompliant = nw + nf + od;
+                setKpiData({
+                    totalWalls: tw,
+                    nonCompliantWalls: nw,
+                    wallNonComplianceRate: tw > 0 ? parseFloat(((nw * 100) / tw).toFixed(2)) : 0,
+                    totalFloors: tf,
+                    nonCompliantFloors: nf,
+                    floorNonComplianceRate: tf > 0 ? parseFloat(((nf * 100) / tf).toFixed(2)) : 0,
+                    totalDoors: td,
+                    obscuredDoors: od,
+                    doorObstructionRate: td > 0 ? parseFloat(((od * 100) / td).toFixed(2)) : 0,
+                    totalComponents,
+                    totalNonCompliant,
+                    overallNonComplianceRate: totalComponents > 0 ? parseFloat(((totalNonCompliant * 100) / totalComponents).toFixed(2)) : 0
+                });
+
+                // Process B2 Deficits
+                const processedDeficits: DeficitRow[] = resB2.map((row: any, idx: number) => ({
+                    id: `DEF-${String(idx + 1).padStart(3, '0')}`,
+                    direction: row.direction || 'Unknown',
+                    assetType: row.assetType || 'Unknown',
+                    elementLabel: row.elementLabel || 'Unknown Element',
+                    complianceStatus: row.complianceStatus || 'Compliant',
+                    issue: row.issue === '--' ? 'Compliant' : row.issue,
+                    issueCn: row.issue.includes('Obscured') ? '门被遮挡' : row.issue.includes('Deficit') ? '防火等级不足' : '正常',
+                    spaceLabel: row.spaceLabel || 'Unknown',
+                    actualREI: parseInt(row.actualREI) || 0,
+                    requiredREI: parseInt(row.requiredREI) || 0
+                }));
+                // We only want non-compliant ones for the audit list.
+                setDeficitData(processedDeficits.filter(d => d.complianceStatus !== 'Compliant'));
+
+                // Process C7 Risk Units First
+                const processedRiskUnits: RiskUnitPriority[] = resC7.map((row: any) => ({
+                    ruLabel: row.ruLabel,
+                    totalAssumptions: parseInt(row.totalAssumptions) || 0,
+                    unknownCount: parseInt(row.unknownCount) || 0,
+                    compromisedCount: parseInt(row.compromisedCount) || 0,
+                    evidenceGapCount: parseInt(row.evidenceGapCount) || 0,
+                    installStatus: row.installStatus || 'Unknown',
+                    alarmStatus: row.alarmStatus || 'Unknown'
+                }));
+                setRiskUnits(processedRiskUnits);
 
             } catch (err: any) {
                 if (mounted) setFetchError(err.message || "Failed to load report data");
@@ -331,7 +236,6 @@ export const Report: React.FC = () => {
 
     const printRef = useRef<HTMLDivElement>(null);
 
-    // Derived Data
     const filterButtons: { key: FilterMode; label: string }[] = [
         { key: 'all', label: 'All Issues / 全部' },
         { key: 'wall', label: 'Walls / 墙体' },
@@ -342,63 +246,18 @@ export const Report: React.FC = () => {
     const processedData = useMemo(() => {
         let data = [...deficitData];
         switch (filter) {
-            case 'high':
-                data = data.filter(r => getCriticality(r.affectedValue) === 'High');
-                break;
             case 'wall':
-                data = data.filter(r => r.issueType === 'wall_rei');
+                data = data.filter(r => r.assetType.includes('Wall'));
                 break;
             case 'door':
-                data = data.filter(r => r.issueType === 'door_blocked');
+                data = data.filter(r => r.assetType.includes('Door'));
                 break;
             case 'floor':
-                data = data.filter(r => r.issueType === 'floor_rei');
+                data = data.filter(r => r.assetType.includes('Slab') || r.assetType.includes('Floor'));
                 break;
         }
-        data.sort((a, b) =>
-            sortDir === 'desc'
-                ? b.affectedValue - a.affectedValue
-                : a.affectedValue - b.affectedValue
-        );
         return data;
-    }, [deficitData, sortDir, filter]);
-
-    const printData = useMemo(() => {
-        const copy = [...deficitData];
-        copy.sort((a, b) => b.affectedValue - a.affectedValue);
-        return copy;
-    }, [deficitData]);
-
-    const chartData = useMemo(() => {
-        const walls = deficitData.filter(r => r.issueType === 'wall_rei').reduce((acc, r) => acc + r.affectedValue, 0);
-        const doors = deficitData.filter(r => r.issueType === 'door_blocked').reduce((acc, r) => acc + r.affectedValue, 0);
-        const floors = deficitData.filter(r => r.issueType === 'floor_rei').reduce((acc, r) => acc + r.affectedValue, 0);
-
-        return [
-            { name: 'Walls', value: walls, color: COLORS.risk },
-            { name: 'Doors', value: doors, color: COLORS.warning },
-            { name: 'Floors', value: floors, color: COLORS.primary } // Fallback color
-        ].filter(d => d.value > 0);
-    }, [deficitData]);
-
-    const sidebarMetrics = useMemo(() => {
-        const vulnerableSpaces = new Set(deficitData.map(d => d.location)).size;
-
-        // Find top category
-        const counts = {
-            'Walls': deficitData.filter(r => r.issueType === 'wall_rei').length,
-            'Doors': deficitData.filter(r => r.issueType === 'door_blocked').length,
-            'Floors': deficitData.filter(r => r.issueType === 'floor_rei').length
-        };
-        const topCategory = Object.entries(counts).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-
-        return {
-            totalDeficits: deficitData.length,
-            vulnerableSpaces,
-            topCategory,
-            totalExposure: deficitData.reduce((sum, d) => sum + d.affectedValue, 0)
-        };
-    }, [deficitData, kpiData]);
+    }, [deficitData, filter]);
 
     const handlePrint = useReactToPrint({
         contentRef: printRef,
@@ -411,10 +270,7 @@ export const Report: React.FC = () => {
         onAfterPrint: () => setIsPrintPreparing(false),
     });
 
-    const toggleSort = () => setSortDir(prev => (prev === 'desc' ? 'asc' : 'desc'));
     const toggleExpand = (id: string) => setExpandedRow(prev => (prev === id ? null : id));
-
-
 
     if (isLoading) {
         return (
@@ -448,7 +304,6 @@ export const Report: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-white print:bg-white">
-            {/* ================= SCREEN DISPLAY ================= */}
             <header className="border-b border-slate-200 sticky top-0 z-30 bg-white/95 backdrop-blur-sm print:static">
                 <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
                     <div className="flex items-center gap-4">
@@ -502,40 +357,9 @@ export const Report: React.FC = () => {
             </header>
 
             <main className="max-w-6xl mx-auto px-6 py-10 space-y-12 font-sans">
-                {/* ========== Section 1: Executive Summary ========== */}
+                {/* ========== Section 1: Executive Summary (B1) ========== */}
                 <section>
-                    <SectionHeader en="Executive Summary: Financial Impact" cn="执行摘要：财务影响" borderColor="border-indigo-500" />
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                        <KpiCard
-                            label="Total Components / 总构件数"
-                            value={`${kpiData.totalComponents}`}
-                            desc="Total fire safety components (Walls + Floors + Doors) from Q4.3"
-                            icon={<ShieldCheck size={16} className="text-emerald-500" />}
-                            valueColor="text-slate-900"
-                        />
-                        <KpiCard
-                            label="EML / 估计最大损失"
-                            value={`£${(kpiData.eml / 1000).toFixed(0)}k`}
-                            desc="Worst-case single-scenario loss from Q4.2"
-                            icon={<AlertTriangle size={16} className="text-rose-500" />}
-                            valueColor="text-rose-600"
-                            glossary="Estimated Maximum Loss：单次最严重火灾场景下的预估最大损失金额"
-                        />
-                        <KpiCard
-                            label="Non-Compliance / 不合规"
-                            value={`${kpiData.totalNonCompliant} / ${kpiData.totalComponents}`}
-                            desc={`Overall rate: ${kpiData.overallNonComplianceRate}% (see breakdown below)`}
-                            icon={<TrendingUp size={16} className="text-amber-500" />}
-                            valueColor="text-amber-600"
-                            glossary="Component Non-Compliance：消防构件不合规数量占比（详见下方分类分析）"
-                            badge={<Badge variant={kpiData.overallNonComplianceRate > 10 ? 'warning' : 'success'}>{kpiData.overallNonComplianceRate < 10 ? 'Low' : kpiData.overallNonComplianceRate < 30 ? 'Moderate' : 'High'}</Badge>}
-                        />
-                    </div>
-                </section>
-
-                {/* ========== Section 1.5: Component Non-Compliance Analysis (Q4.3) ========== */}
-                <section>
-                    <SectionHeader en="Component Non-Compliance Analysis" cn="构件级不合规率分析 (Q4.3)" borderColor="border-rose-500" />
+                    <SectionHeader en="Global Compliance Health" cn="全局合规健康概况 (B1)" borderColor="border-emerald-500" />
                     <p className="text-xs text-slate-500 mt-2 mb-4">
                         Door obstruction is tracked separately as a maintenance issue, not a structural fire spread trigger.
                         门遮挡单独作为维护问题统计，不纳入结构性不合规。
@@ -543,12 +367,12 @@ export const Report: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
                         {/* Overall Rate */}
                         <Card className="border border-slate-200 shadow-sm p-4 bg-gradient-to-br from-slate-50 to-slate-100">
-                            <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Overall / 综合</div>
+                            <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Overall / 综合不合规率</div>
                             <div className={`text-2xl font-bold font-mono ${kpiData.overallNonComplianceRate > 30 ? 'text-rose-600' : kpiData.overallNonComplianceRate > 10 ? 'text-amber-600' : 'text-emerald-600'}`}>
                                 {kpiData.overallNonComplianceRate}%
                             </div>
                             <div className="text-[11px] text-slate-500 mt-1">
-                                {kpiData.totalNonCompliant} / {kpiData.totalComponents} components
+                                {kpiData.totalNonCompliant} / {kpiData.totalComponents} Deficits
                             </div>
                             <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
                                 <div
@@ -562,13 +386,13 @@ export const Report: React.FC = () => {
                         <Card className="border border-slate-200 shadow-sm p-4">
                             <div className="flex items-center gap-2 mb-1">
                                 <ShieldAlert size={14} className="text-rose-500" />
-                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Walls / 墙体</span>
+                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Walls / 墙体缺陷率</span>
                             </div>
                             <div className={`text-xl font-bold font-mono ${kpiData.wallNonComplianceRate > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
                                 {kpiData.wallNonComplianceRate}%
                             </div>
                             <div className="text-[11px] text-slate-500 mt-1">
-                                {kpiData.nonCompliantWalls} / {kpiData.totalWalls} walls (REI deficit)
+                                {kpiData.nonCompliantWalls} / {kpiData.totalWalls} walls (REI fail)
                             </div>
                             <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
                                 <div className="h-1.5 rounded-full bg-rose-500" style={{ width: `${Math.min(kpiData.wallNonComplianceRate, 100)}%` }} />
@@ -579,13 +403,13 @@ export const Report: React.FC = () => {
                         <Card className="border border-slate-200 shadow-sm p-4">
                             <div className="flex items-center gap-2 mb-1">
                                 <Layers size={14} className="text-indigo-500" />
-                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Floors / 楼板</span>
+                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Floors / 楼板缺陷率</span>
                             </div>
                             <div className={`text-xl font-bold font-mono ${kpiData.floorNonComplianceRate > 0 ? 'text-indigo-600' : 'text-emerald-600'}`}>
                                 {kpiData.floorNonComplianceRate}%
                             </div>
                             <div className="text-[11px] text-slate-500 mt-1">
-                                {kpiData.nonCompliantFloors} / {kpiData.totalFloors} floors (REI deficit)
+                                {kpiData.nonCompliantFloors} / {kpiData.totalFloors} floors (REI fail)
                             </div>
                             <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
                                 <div className="h-1.5 rounded-full bg-indigo-500" style={{ width: `${Math.min(kpiData.floorNonComplianceRate, 100)}%` }} />
@@ -596,7 +420,7 @@ export const Report: React.FC = () => {
                         <Card className="border border-slate-200 shadow-sm p-4">
                             <div className="flex items-center gap-2 mb-1">
                                 <DoorOpen size={14} className="text-amber-500" />
-                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Doors / 防火门</span>
+                                <span className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Doors / 遮挡维修率</span>
                             </div>
                             <div className={`text-xl font-bold font-mono ${kpiData.doorObstructionRate > 0 ? 'text-amber-600' : 'text-emerald-600'}`}>
                                 {kpiData.doorObstructionRate}%
@@ -607,24 +431,60 @@ export const Report: React.FC = () => {
                             <div className="mt-2 w-full bg-slate-200 rounded-full h-1.5">
                                 <div className="h-1.5 rounded-full bg-amber-500" style={{ width: `${Math.min(kpiData.doorObstructionRate, 100)}%` }} />
                             </div>
-                            <div className="text-[9px] text-slate-400 mt-1.5 italic">Maintenance issue only</div>
                         </Card>
                     </div>
-                </section >
+                </section>
 
-                {/* ========== Section 2: Actionable Audit List (Screen) ========== */}
-                < section >
-                    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
-                        <SectionHeader en="Actionable Audit List" cn="可操作审计清单 · Deficit Catalog" borderColor="border-amber-500" />
-                        <div className="flex items-center gap-2 print:hidden">
-                            <Button variant="outline" size="sm" onClick={() => handlePrint()}>
-                                <FileSpreadsheet size={14} className="mr-1.5" />
-                                Export
-                            </Button>
+                {/* ========== Section 2: Conservative Confidence Assessment (C7) ========== */}
+                <section>
+                    <div className="mb-4">
+                        <SectionHeader en="Risk Unit Conservative Confidence Assessment" cn="风险隔离单元置信度审计 (C7: Worst-First)" borderColor="border-rose-500" />
+                        <p className="text-xs text-slate-500 mt-2">
+                            FiCR 设计理念: 优先暴露最不利单元与证据缺口，避免因资产数据缺失而低估风险。
+                            排序依据：证据缺口数目与未知状态数目。
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {riskUnits.map((ru, idx) => (
+                            <Card key={ru.ruLabel} className={`p-5 border ${idx === 0 ? 'border-rose-300 bg-rose-50/20' : 'border-slate-200 bg-white'}`}>
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <div className={`p-1.5 rounded-lg ${idx === 0 ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 text-slate-600'}`}>
+                                            {idx === 0 ? <AlertCircle size={18} /> : <Shield size={18} />}
+                                        </div>
+                                        <h3 className="text-sm font-bold text-slate-800 break-all pr-2">
+                                            {ru.ruLabel.split('#')[1] || ru.ruLabel}
+                                        </h3>
+                                    </div>
+                                    <Badge variant={idx === 0 ? 'warning' : 'neutral'}>Priority {idx + 1}</Badge>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-2">
+                                        <StatRow label="Evidence Gaps / 审计缺口" value={`${ru.evidenceGapCount}`} color={ru.evidenceGapCount > 0 ? "text-rose-600" : "text-emerald-600"} />
+                                        <StatRow label="Unknown Cond. / 未知状态" value={`${ru.unknownCount}`} color={ru.unknownCount > 0 ? "text-amber-600" : "text-emerald-600"} />
+                                        <StatRow label="Compromised / 确认失效" value={`${ru.compromisedCount}`} color={ru.compromisedCount > 0 ? "text-rose-600" : "text-emerald-600"} />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <StatRow label="Total Assumptions" value={`${ru.totalAssumptions}`} color="text-slate-900" />
+                                        <StatRow label="Sprinkler" value={ru.installStatus} color={ru.installStatus.includes('Unsprinklered') ? "text-rose-600" : "text-amber-600"} />
+                                        <StatRow label="Fire Alarm" value={ru.alarmStatus} color={ru.alarmStatus.includes('Unknown') ? "text-rose-600" : "text-amber-600"} />
+                                    </div>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                </section>
+
+                {/* ========== Section 3: Actionable Audit List (B2) ========== */}
+                <section>
+                    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-4">
+                        <div>
+                            <SectionHeader en="Element Compliance Detail" cn="构件级失效明细清单 (B2)" borderColor="border-amber-500" />
+                            <p className="text-xs text-slate-500 mt-2">Displaying architectural non-compliance elements.</p>
                         </div>
                     </div>
 
-                    {/* Quick Filters */}
                     <div className="flex flex-wrap items-center gap-2 mb-4 print:hidden">
                         <Filter size={14} className="text-slate-400" />
                         {filterButtons.map(fb => (
@@ -644,105 +504,118 @@ export const Report: React.FC = () => {
                         </span>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                        {/* Main Scrollable List */}
-                        <div className="lg:col-span-3">
-                            <Card className="border border-slate-200 shadow-sm overflow-hidden">
-                                <AuditListHeader onSort={toggleSort} />
-                                <div className="max-h-[600px] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#CBD5E1 transparent' }}>
-                                    {processedData.length === 0 && <EmptyState />}
-                                    {processedData.map((row, idx) => (
-                                        <AuditRow
-                                            key={row.id}
-                                            row={row}
-                                            idx={idx}
-                                            isExpanded={expandedRow === row.id}
-                                            onToggle={() => toggleExpand(row.id)}
-                                        />
-                                    ))}
-                                </div>
-                            </Card>
+                    <Card className="border border-slate-200 shadow-sm overflow-hidden">
+                        <div className="bg-slate-50 border-b border-slate-200 px-4 py-2.5 grid grid-cols-12 gap-2 items-center text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                            <div className="col-span-3">Space / Element</div>
+                            <div className="col-span-2">Type</div>
+                            <div className="col-span-4">Issue Description / 缺陷类型</div>
+                            <div className="col-span-2 text-right">Required vs Actual (REI)</div>
+                            <div className="col-span-1 text-center">Action</div>
                         </div>
-
-                        {/* Right Sidebar */}
-                        <div className="space-y-4">
-                            <Card className="border border-slate-200 shadow-sm p-4">
-                                <h4 className="text-xs font-bold text-slate-500 uppercase mb-3">
-                                    Risk Distribution by Element / 构件风险分布
-                                </h4>
-                                <div className="h-[200px]">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                                            <YAxis tick={{ fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(val) => `£${(val / 1000).toFixed(0)}k`} />
-                                            <Tooltip
-                                                formatter={(val: number | undefined) => [val ? `£${val.toLocaleString()}` : '£0', 'Asset Value']}
-                                                cursor={{ fill: '#f1f5f9' }}
-                                                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                                            />
-                                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                                                {chartData.map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={entry.color} />
-                                                ))}
-                                            </Bar>
-                                        </BarChart>
-                                    </ResponsiveContainer>
+                        <div className="max-h-[600px] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#CBD5E1 transparent' }}>
+                            {processedData.length === 0 && (
+                                <div className="px-4 py-12 text-center text-sm text-slate-400">
+                                    No items match the current filter.
                                 </div>
-                                <p className="text-[10px] text-center text-slate-400 mt-2">
-                                    Weighted by Asset Value at Stake (波及资产价值)
-                                </p>
-                            </Card>
+                            )}
+                            {processedData.map((row, idx) => {
+                                const isExpanded = expandedRow === row.id;
+                                const mitigation = getMitigation(row.assetType);
+                                return (
+                                    <div key={row.id}>
+                                        <div className={`px-4 py-3 grid grid-cols-12 gap-2 items-center border-b border-slate-100 transition-colors hover:bg-indigo-50/30 ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
+                                            <div className="col-span-3">
+                                                <span className="text-sm font-bold text-slate-800">{row.spaceLabel}</span>
+                                                <div className="flex items-center gap-1.5 mt-0.5">
+                                                    <span className="text-slate-400">{getIssueIcon(row.assetType)}</span>
+                                                    <span className="text-xs text-slate-500 font-mono">{row.elementLabel}</span>
+                                                </div>
+                                            </div>
+                                            <div className="col-span-2">
+                                                <span className="text-xs font-mono px-2 py-0.5 rounded bg-slate-100 tracking-wide text-slate-600">
+                                                    {row.direction} / {row.assetType}
+                                                </span>
+                                            </div>
+                                            <div className="col-span-4 flex flex-col">
+                                                <span className={`text-[11px] uppercase font-semibold tracking-wider ${row.assetType.includes('Door') ? 'text-orange-600' : 'text-rose-600'}`}>
+                                                    {row.issue}
+                                                </span>
+                                                <span className="text-xs font-medium text-slate-600">
+                                                    {row.issueCn}
+                                                </span>
+                                            </div>
+                                            <div className="col-span-2 text-right flex flex-col">
+                                                {row.assetType.includes('Door') ? (
+                                                    <span className="text-sm font-bold text-orange-600 block">Obscured</span>
+                                                ) : (
+                                                    <span className="text-sm font-mono font-bold text-rose-600 block">
+                                                        {row.actualREI} &lt; {row.requiredREI}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="col-span-1 text-center">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => toggleExpand(row.id)}
+                                                    className={`h-7 w-7 p-0 rounded-full ${isExpanded ? 'bg-indigo-100 text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
+                                                >
+                                                    {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                                                </Button>
+                                            </div>
+                                        </div>
 
-                            <Card className="border border-slate-200 shadow-sm p-4 space-y-3">
-                                <h4 className="text-xs font-bold text-slate-500 uppercase">Vulnerable Room Statistics / 空间风险统计</h4>
-                                <div className="space-y-2">
-                                    <StatRow label="Total Deficits / 缺陷总数" value={`${sidebarMetrics.totalDeficits}`} />
-                                    <StatRow label="Vulnerable Spaces / 受影响空间" value={`${sidebarMetrics.vulnerableSpaces}`} />
-                                    <StatRow label="Asset Exposure / 风险暴露总值" value={`£${(sidebarMetrics.totalExposure / 1_000_000).toFixed(2)}M`} color="text-rose-600" />
-                                    <StatRow label="Top Risk Category / 主要风险类别" value={sidebarMetrics.topCategory} color="text-slate-900" />
-                                </div>
-                            </Card>
-
-                            <Card className="border border-slate-200 shadow-sm p-4 bg-indigo-50/50">
-                                <div className="flex items-center gap-2 text-indigo-700 mb-2">
-                                    <Info size={14} />
-                                    <span className="text-xs font-bold uppercase">Space-Centric Analysis</span>
-                                </div>
-                                <p className="text-xs text-indigo-600 leading-relaxed">
-                                    This report highlights rooms with the highest financial exposure. Prioritize mitigation in <strong>{sidebarMetrics.topCategory}</strong> to reduce overall non-compliance rate.
-                                </p>
-                            </Card>
+                                        {isExpanded && (
+                                            <div className="bg-indigo-50/50 border-b border-indigo-100 px-12 py-4 animate-in slide-in-from-top-2 duration-200">
+                                                <div className="flex gap-4">
+                                                    <div className="shrink-0 mt-1">
+                                                        <Wrench size={16} className="text-indigo-500" />
+                                                    </div>
+                                                    <div>
+                                                        <h5 className="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-1">
+                                                            Mitigation Strategy / 整改建议
+                                                        </h5>
+                                                        <p className="text-sm text-slate-700 leading-relaxed mb-1">
+                                                            {mitigation.en}
+                                                        </p>
+                                                        <p className="text-xs text-slate-500">
+                                                            {mitigation.cn}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
-                    </div>
-                </section >
+                    </Card>
+                </section>
 
                 <footer className="text-center text-slate-400 text-xs py-8 print:hidden border-t border-slate-100 mt-8">
                     <p>Building Fire Risk Intelligence • Powered by FiCR Ontology & SPARQL Engine</p>
                 </footer>
-            </main >
+            </main>
 
-            {/* ================= HIDDEN PRINT WRAPPER ================= */}
-            < div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+            <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
                 {kpiData && (
                     <div ref={printRef} className="print-wrapper" style={{ background: '#fff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                        <PrintableReport data={printData} kpi={kpiData} />
+                        <PrintableReport data={deficitData} kpi={kpiData} riskUnits={riskUnits} />
                     </div>
                 )}
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 
 // ============================================================
 // PrintableReport — 打印专用完整报告
 // ============================================================
-function PrintableReport({ data, kpi }: { data: DeficitRow[]; kpi: KPIData }) {
+function PrintableReport({ data, kpi, riskUnits }: { data: DeficitRow[]; kpi: KPIData, riskUnits: RiskUnitPriority[] }) {
     const today = new Date().toLocaleDateString('en-GB');
 
     return (
         <div style={{ padding: '0', fontSize: '11pt', lineHeight: '1.6', color: '#1e293b' }}>
-            {/* ===== Print Header ===== */}
             <div style={{ borderBottom: '2px solid #4F46E5', paddingBottom: '12px', marginBottom: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
@@ -758,94 +631,85 @@ function PrintableReport({ data, kpi }: { data: DeficitRow[]; kpi: KPIData }) {
                             <div>ID: BLD-2024-X1</div>
                             <div>Date: {today}</div>
                         </div>
-                        <div style={{
-                            display: 'inline-block',
-                            marginTop: '4px',
-                            padding: '2px 10px',
-                            borderRadius: '4px',
-                            fontSize: '10pt',
-                            fontWeight: 700,
-                            fontFamily: 'monospace',
-                            background: '#FEF3C7',
-                            color: '#D97706',
-                            border: '1px solid #FDE68A',
-                        }}>
-                            Grade: B — Moderate
-                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* ===== KPIs ===== */}
             <div style={{ display: 'flex', gap: '16px', marginBottom: '28px' }}>
-                <PrintKpiBox label="Total Components / 总构件数" value={`${kpi.totalComponents}`} accent="#10B981" />
-                <PrintKpiBox label="EML / 估计最大损失" value={`£${(kpi.eml / 1000).toFixed(0)}k`} accent="#F43F5E" />
-                <PrintKpiBox label="Non-Compliance Rate / 不合规率" value={`${kpi.overallNonComplianceRate}%`} accent="#F59E0B" />
+                <PrintKpiBox label="Total Components" value={`${kpi.totalComponents}`} accent="#10B981" />
+                <PrintKpiBox label="Non-Compliant" value={`${kpi.totalNonCompliant}`} accent="#F43F5E" />
+                <PrintKpiBox label="Non-Compliance Rate" value={`${kpi.overallNonComplianceRate}%`} accent="#F59E0B" />
             </div>
 
-            {/* ===== Audit Catalog Section Header ===== */}
-            <div style={{ borderLeft: '4px solid #F59E0B', paddingLeft: '12px', marginBottom: '16px' }}>
+            <div style={{ borderLeft: '4px solid #F43F5E', paddingLeft: '12px', marginBottom: '16px' }}>
                 <h2 style={{ fontSize: '14pt', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, color: '#0f172a' }}>
-                    Actionable Audit List
+                    Confidence Assessment (Worst-First)
                 </h2>
                 <p style={{ fontSize: '9pt', color: '#64748b', margin: '2px 0 0 0' }}>
-                    可操作审计清单 · {data.length} items total
+                    风险置信度审计，按证据缺失程度排序
                 </p>
             </div>
 
-            {/* ===== Full Audit Table ===== */}
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt', marginBottom: '32px' }}>
+                <thead>
+                    <tr style={{ backgroundColor: '#F1F5F9', borderBottom: '2px solid #CBD5E1' }}>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Risk Unit</th>
+                        <th style={{ padding: '8px', textAlign: 'center' }}>Evidence Gaps</th>
+                        <th style={{ padding: '8px', textAlign: 'center' }}>Unknown Cond.</th>
+                        <th style={{ padding: '8px', textAlign: 'center' }}>Compromised</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {riskUnits.map((ru, idx) => (
+                        <tr key={idx} style={{ borderBottom: '1px solid #E2E8F0', backgroundColor: idx === 0 ? '#FEF2F2' : '#FFF' }}>
+                            <td style={{ padding: '8px', fontWeight: 'bold' }}>{ru.ruLabel.split('#')[1] || ru.ruLabel}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', color: ru.evidenceGapCount > 0 ? '#DC2626' : '#10B981', fontWeight: 'bold' }}>{ru.evidenceGapCount}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', color: ru.unknownCount > 0 ? '#D97706' : '#10B981', fontWeight: 'bold' }}>{ru.unknownCount}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', color: ru.compromisedCount > 0 ? '#DC2626' : '#10B981', fontWeight: 'bold' }}>{ru.compromisedCount}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            <div style={{ borderLeft: '4px solid #F59E0B', paddingLeft: '12px', marginBottom: '16px' }}>
+                <h2 style={{ fontSize: '14pt', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, color: '#0f172a' }}>
+                    Component Deficit List
+                </h2>
+                <p style={{ fontSize: '9pt', color: '#64748b', margin: '2px 0 0 0' }}>
+                    合规缺陷清单 · {data.length} items
+                </p>
+            </div>
+
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt' }}>
                 <thead>
                     <tr style={{ backgroundColor: '#F1F5F9', borderBottom: '2px solid #CBD5E1' }}>
-                        <th style={thStyle}>Priority</th>
-                        <th style={{ ...thStyle, textAlign: 'left' }}>Element / 构件</th>
-                        <th style={{ ...thStyle, textAlign: 'left' }}>Location / 位置</th>
-                        <th style={{ ...thStyle, textAlign: 'left' }}>Deficit Detail / 缺陷详情</th>
-                        <th style={{ ...thStyle, textAlign: 'right' }}>Value / 波及价值</th>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Element / 构件</th>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Location / 位置</th>
+                        <th style={{ padding: '8px', textAlign: 'left' }}>Issue / 缺陷内容</th>
+                        <th style={{ padding: '8px', textAlign: 'right' }}>Req vs Act</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((row, idx) => {
-                        const crit = getCriticality(row.affectedValue);
-                        const mitigation = getMitigation(row.issueType);
-
                         return (
                             <React.Fragment key={row.id}>
-                                {/* 主数据行 — 禁止分页截断 */}
                                 <tr className="print-audit-row" style={{
                                     backgroundColor: idx % 2 === 0 ? '#ffffff' : '#F8FAFC',
                                     borderBottom: '1px solid #E2E8F0',
                                     pageBreakInside: 'avoid',
                                 }}>
-                                    <td style={{ ...tdStyle, textAlign: 'center', width: '60px' }}>
-                                        <PrintBadge level={crit} />
+                                    <td style={{ padding: '8px' }}>
+                                        <div style={{ fontWeight: 700, fontFamily: 'monospace' }}>{row.elementLabel}</div>
+                                        <div style={{ fontSize: '8pt', color: '#94a3b8' }}>{row.assetType}</div>
                                     </td>
-                                    <td style={tdStyle}>
-                                        <div style={{ fontWeight: 700, fontFamily: 'monospace' }}>{row.failedElement}</div>
-                                        <div style={{ fontSize: '8pt', color: '#94a3b8' }}>{row.elementCn}</div>
-                                    </td>
-                                    <td style={tdStyle}>@ {row.location}</td>
-                                    <td style={tdStyle}>
-                                        <span style={{ color: row.issueType === 'door_blocked' ? '#B45309' : '#DC2626', fontWeight: 600 }}>
-                                            {row.failureDetail}
+                                    <td style={{ padding: '8px' }}>@ {row.spaceLabel}</td>
+                                    <td style={{ padding: '8px' }}>
+                                        <span style={{ color: row.assetType.includes('Door') ? '#B45309' : '#DC2626', fontWeight: 600 }}>
+                                            {row.issue} ({row.issueCn})
                                         </span>
                                     </td>
-                                    <td style={{ ...tdStyle, textAlign: 'right', fontFamily: 'monospace', fontWeight: 700 }}>
-                                        {row.affectedValue > 0 ? `£${row.affectedValue.toLocaleString()}` : '— Life Safety'}
-                                    </td>
-                                </tr>
-                                {/* 整改建议行 — 自动展开 */}
-                                <tr className="print-audit-row" style={{ pageBreakInside: 'avoid' }}>
-                                    <td colSpan={5} style={{ padding: '6px 12px 10px 72px', backgroundColor: '#EEF2FF', borderBottom: '1px solid #C7D2FE' }}>
-                                        <div style={{ fontSize: '8pt', fontWeight: 700, textTransform: 'uppercase', color: '#4338CA', letterSpacing: '0.05em', marginBottom: '3px' }}>
-                                            ✦ Mitigation Strategy / 整改建议
-                                        </div>
-                                        <div style={{ fontSize: '9.5pt', color: '#334155' }}>
-                                            ✔ {mitigation.en}
-                                        </div>
-                                        <div style={{ fontSize: '9pt', color: '#64748b' }}>
-                                            {mitigation.cn}
-                                        </div>
+                                    <td style={{ padding: '8px', textAlign: 'right', fontFamily: 'monospace', fontWeight: 700 }}>
+                                        {row.assetType.includes('Door') ? 'Obscured' : `${row.actualREI} < ${row.requiredREI}`}
                                     </td>
                                 </tr>
                             </React.Fragment>
@@ -854,16 +718,6 @@ function PrintableReport({ data, kpi }: { data: DeficitRow[]; kpi: KPIData }) {
                 </tbody>
             </table>
 
-            {/* ===== Summary Stats ===== */}
-            <div style={{ marginTop: '24px', padding: '12px 16px', backgroundColor: '#F1F5F9', borderRadius: '8px', display: 'flex', gap: '32px', fontSize: '9.5pt' }}>
-                <div><strong>Total Items:</strong> {data.length}</div>
-                <div><strong>High Priority:</strong> {data.filter(r => getCriticality(r.affectedValue) === 'High').length}</div>
-                <div><strong>Total Exposure:</strong> £{data.reduce((s, r) => s + r.affectedValue, 0).toLocaleString()}</div>
-                <div><strong>Horizontal:</strong> {data.filter(r => r.direction === 'horizontal').length}</div>
-                <div><strong>Vertical:</strong> {data.filter(r => r.direction === 'vertical').length}</div>
-            </div>
-
-            {/* ===== Print Footer ===== */}
             <div style={{ marginTop: '32px', paddingTop: '12px', borderTop: '1px solid #E2E8F0', textAlign: 'center', fontSize: '8pt', color: '#94a3b8' }}>
                 Building Fire Risk Intelligence • Powered by FiCR Ontology & SPARQL Engine • Generated {today}
             </div>
@@ -871,46 +725,6 @@ function PrintableReport({ data, kpi }: { data: DeficitRow[]; kpi: KPIData }) {
     );
 }
 
-// 打印表格辅助样式
-const thStyle: React.CSSProperties = {
-    padding: '8px 12px',
-    fontSize: '8pt',
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    color: '#64748b',
-    textAlign: 'center',
-};
-const tdStyle: React.CSSProperties = {
-    padding: '8px 12px',
-    verticalAlign: 'top',
-};
-
-/** 打印专用 Badge */
-function PrintBadge({ level }: { level: 'High' | 'Medium' | 'Low' }) {
-    const colors: Record<string, { bg: string; text: string; border: string }> = {
-        High: { bg: '#FEE2E2', text: '#DC2626', border: '#FECACA' },
-        Medium: { bg: '#FEF3C7', text: '#D97706', border: '#FDE68A' },
-        Low: { bg: '#F1F5F9', text: '#64748b', border: '#E2E8F0' },
-    };
-    const c = colors[level];
-    return (
-        <span style={{
-            display: 'inline-block',
-            padding: '1px 6px',
-            borderRadius: '3px',
-            fontSize: '8pt',
-            fontWeight: 700,
-            background: c.bg,
-            color: c.text,
-            border: `1px solid ${c.border}`,
-        }}>
-            {level}
-        </span>
-    );
-}
-
-/** 打印专用 KPI 框 */
 function PrintKpiBox({ label, value, accent }: { label: string; value: string; accent: string }) {
     return (
         <div style={{
@@ -930,11 +744,6 @@ function PrintKpiBox({ label, value, accent }: { label: string; value: string; a
     );
 }
 
-// ============================================================
-// Shared Sub-components (Screen + Print)
-// ============================================================
-
-/** 统一的双语 Section Header */
 function SectionHeader({ en, cn, borderColor }: { en: string; cn: string; borderColor: string }) {
     return (
         <div className={`border-l-4 ${borderColor} pl-4`}>
@@ -944,178 +753,11 @@ function SectionHeader({ en, cn, borderColor }: { en: string; cn: string; border
     );
 }
 
-/** Glossary Tooltip */
-function GlossaryTip({ term }: { term: string }) {
-    return (
-        <span className="group relative cursor-help inline-flex">
-            <Info size={11} className="text-slate-400" />
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 p-2 bg-slate-800 text-white text-[11px] rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 leading-relaxed">
-                {term}
-            </span>
-        </span>
-    );
-}
-
-/** Criticality Badge (Screen) */
-function CriticalityBadge({ level }: { level: 'High' | 'Medium' | 'Low' }) {
-    const styles: Record<string, string> = {
-        High: 'bg-rose-100 text-rose-700 border-rose-200',
-        Medium: 'bg-amber-100 text-amber-700 border-amber-200',
-        Low: 'bg-slate-100 text-slate-500 border-slate-200',
-    };
-    return (
-        <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border ${styles[level]}`}>
-            {level}
-        </span>
-    );
-}
-
-/** Stat Row */
 function StatRow({ label, value, color = 'text-slate-700' }: { label: string; value: string; color?: string }) {
     return (
         <div className="flex items-center justify-between">
             <span className="text-[11px] text-slate-500">{label}</span>
             <span className={`text-xs font-mono font-bold ${color}`}>{value}</span>
-        </div>
-    );
-}
-
-/** KPI Card */
-function KpiCard({ label, value, desc, icon, valueColor, glossary, badge }: {
-    label: string;
-    value: string;
-    desc: string;
-    icon: React.ReactNode;
-    valueColor: string;
-    glossary?: string;
-    badge?: React.ReactNode;
-}) {
-    return (
-        <Card className="p-6 bg-slate-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-                    {label}
-                    {glossary && <GlossaryTip term={glossary} />}
-                </span>
-                {icon}
-            </div>
-            <div className="flex items-baseline gap-2">
-                <span className={`text-4xl font-mono font-bold tracking-tighter ${valueColor}`}>
-                    {value}
-                </span>
-                {badge}
-            </div>
-            <p className="text-xs text-slate-500 mt-2">{desc}</p>
-        </Card>
-    );
-}
-
-/** Audit List Column Headers */
-function AuditListHeader({ onSort }: { onSort: () => void }) {
-    return (
-        <div className="bg-slate-50 border-b border-slate-200 px-4 py-2.5 grid grid-cols-12 gap-2 items-center text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-            <div className="col-span-1 text-center">Priority</div>
-            <div className="col-span-3">Space / Element</div>
-            <div className="col-span-1"></div>
-            <div className="col-span-4">Deficit Detail / 缺陷详情</div>
-            <div className="col-span-2 text-right cursor-pointer hover:text-slate-800 transition-colors select-none" onClick={onSort}>
-                <span className="inline-flex items-center gap-1">
-                    Risk Value
-                    <ArrowUpDown size={11} />
-                </span>
-            </div>
-            <div className="col-span-1 text-center">View</div>
-        </div>
-    );
-}
-
-/** Empty State */
-function EmptyState() {
-    return (
-        <div className="px-4 py-12 text-center text-sm text-slate-400">
-            No items match the current filter. / 当前筛选条件下无匹配项。
-        </div>
-    );
-}
-
-/** 单行审计记录 */
-function AuditRow({ row, idx, isExpanded, onToggle }: {
-    row: DeficitRow;
-    idx: number;
-    isExpanded: boolean;
-    onToggle: () => void;
-}) {
-    const crit = getCriticality(row.affectedValue);
-    const mitigation = getMitigation(row.issueType);
-    const isEven = idx % 2 === 0;
-
-    return (
-        <div>
-            <div className={`px-4 py-3 grid grid-cols-12 gap-2 items-center border-b border-slate-100 transition-colors hover:bg-indigo-50/30 cursor-default ${isEven ? 'bg-white' : 'bg-slate-50/40'}`}>
-                <div className="col-span-1 flex justify-center">
-                    <CriticalityBadge level={crit} />
-                </div>
-                {/* Refactored Space/Element Column */}
-                <div className="col-span-4 flex flex-col justify-center">
-                    <span className="text-sm font-bold text-slate-800">{row.location}</span>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className={`${row.issueType === 'wall_rei' ? 'text-rose-500' : row.issueType === 'door_blocked' ? 'text-orange-500' : 'text-slate-400'}`}>
-                            {getIssueIcon(row.issueType)}
-                        </span>
-                        <span className="text-xs text-slate-500 font-mono">{row.failedElement}</span>
-                    </div>
-                </div>
-
-                <div className="col-span-4">
-                    {/* 2024-02-11: Updated to show precise failure detail from live data if possible, else generic string */}
-                    <div className="flex flex-col">
-                        <span className={`text-[11px] uppercase font-semibold tracking-wider ${row.issueType === 'door_blocked' ? 'text-orange-600' : 'text-rose-600'}`}>
-                            {row.issueType === 'wall_rei' ? 'Wall REI Fail' : row.issueType === 'floor_rei' ? 'Floor REI Fail' : 'Door Issue'}
-                        </span>
-                        <span className="text-sm font-medium text-slate-700">
-                            {row.failureDetail}
-                        </span>
-                    </div>
-                </div>
-                <div className="col-span-2 text-right">
-                    <span className="text-sm font-mono font-bold text-slate-900 block">
-                        {row.affectedValue > 0 ? `£${row.affectedValue.toLocaleString()}` : '—'}
-                    </span>
-                    <span className="text-[10px] text-slate-400 uppercase tracking-wider">Asset Value</span>
-                </div>
-                <div className="col-span-1 text-center">
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onToggle()}
-                        className={`h-7 w-7 p-0 rounded-full ${isExpanded ? 'bg-indigo-100 text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
-                    >
-                        {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                    </Button>
-                </div>
-            </div>
-
-            {/* Mitigation Drawer */}
-            {isExpanded && (
-                <div className="bg-indigo-50/50 border-b border-indigo-100 px-12 py-4 animate-in slide-in-from-top-2 duration-200">
-                    <div className="flex gap-4">
-                        <div className="shrink-0 mt-1">
-                            <Wrench size={16} className="text-indigo-500" />
-                        </div>
-                        <div>
-                            <h5 className="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-1">
-                                Mitigation Strategy / 整改建议
-                            </h5>
-                            <p className="text-sm text-slate-700 leading-relaxed mb-1">
-                                {mitigation.en}
-                            </p>
-                            <p className="text-xs text-slate-500">
-                                {mitigation.cn}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
