@@ -6,6 +6,7 @@ const navItems = [
   { path: '/', label: 'Home' },
   { path: '/documentation', label: 'Documentation' },
   { path: '/query-lab', label: 'Query Lab' },
+  { path: '/chatbot', label: 'FiCR Chatbot' },
   { path: '/report', label: 'Report' },
   { path: '/roadmap', label: 'Roadmap' }
 ];

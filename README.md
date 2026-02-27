@@ -1,8 +1,8 @@
 <div align="center">
 
-  
+
   <h1>🔥 FiCR Ontology Portal</h1>
-  
+
   <p align="center">
     <b>Fire Compliance and Risk Analysis (FiCR) Ontology</b>
     <br />
@@ -26,44 +26,54 @@
 
 The **FiCR Ontology Portal** is a specialized web application designed to bridge the gap between complex semantic models and practical fire safety engineering. It serves as a comprehensive interface for the **Fire Compliance and Risk Analysis (FiCR)** ontology, enabling researchers, engineers, and domain experts to explore, understand, and implement fire safety standards in the Semantic Web.
 
-This platform provides a user-friendly layer over the raw `.ttl` (Turtle) ontology files, offering interactive visualization, search capabilities, and direct alignment references with other building standards like **BOT (Building Topology Ontology)**.
+This platform provides:
+- An interactive **Ontology Browser** over the raw `.ttl` ontology files
+- A **SPARQL Query Lab** for live querying against a GraphDB knowledge graph
+- A **FiCR Chatbot** powered by LLM that takes building survey JSON and produces fire compliance reports through an automated pipeline
+- A **Fire Risk Report** page with compliance analysis results
 
 ---
 
 ## ✨ Core Modules
 
-This application is divided into several key modules designed for different use cases:
-
-### 🔍 Ontology Browser
+### 🔍 Ontology Browser (Documentation)
 An interactive, searchable index of all classes and properties defined in the FiCR namespace.
 *   **Class Hierarchy**: View parent-child relationships.
 *   **Property Definitions**: Detailed domain and range specifications.
 *   **Smart Search**: Instantly find terms without browsing the entire tree.
 
-### 📚 Documentation Hub
-A curated knowledge base explaining the core concepts of FiCR.
-*   **Modules**: Broken down by functional areas (e.g., Risk Assessment, Building Materials, Regulations).
-*   **Best Practices**: Guidelines on how to instantiate the ontology in real-world projects.
+### 🧪 SPARQL Query Lab
+Direct programmatic access to the FiCR Knowledge Graph via GraphDB.
+*   **Preset Queries**: Curated SPARQL queries organized by module (Inventory, Compliance, Risk).
+*   **Custom Editor**: Write and execute your own SPARQL queries.
+*   **Live Results**: Interactive results table with URI shortening.
 
-### 🔗 Alignments
-Visual and textual explanations of how FiCR connects with the wider Semantic Web ecosystem.
-*   **BOT Integration**: How building topology interfaces with fire zones.
-*   **SOSA/SSN**: Integration with sensor networks for real-time fire detection.
+### 🤖 FiCR Chatbot
+An LLM-powered fire compliance analysis pipeline with a chat interface.
+*   **Upload** a building survey JSON file (e.g., `duplex_a_survey.json`).
+*   **Automated Pipeline**: Validate JSON → Build RDF knowledge graph → Run 14 SPARQL compliance queries → Generate LLM report.
+*   **Streaming Output**: Report is streamed in real-time from the LLM.
+*   **Download**: Export the generated report as a `.md` file.
+*   **Multi-LLM Support**: Choose from Claude, OpenAI, Gemini, DeepSeek, or Zhipu GLM.
 
-### 💡 Usage Examples
-A collection of "Cookbook" style recipes for common modeling tasks.
-*   **Copy-Paste Ready**: All examples are provided in valid Turtle syntax.
-*   **Scenario Based**: Examples range from simple room definitions to complex evacuation paths.
+### 📊 Fire Risk Report
+A pre-computed compliance report page driven by live GraphDB data.
+*   **KPI Metrics**: Color-coded compliance rates.
+*   **Print-to-PDF**: Generate printable reports.
+
+### 🗺️ Roadmap
+Product roadmap with capability preview.
 
 ---
 
 ## 🛠️ Getting Started
 
 ### Prerequisites
-*   Node.js (v16+)
-*   npm
+*   **Node.js** (v16+) and **npm** — for the frontend
+*   **Python** (3.10+) and **pip** — for the chatbot backend
+*   At least **one LLM API key** (Anthropic, OpenAI, Google, DeepSeek, or Zhipu GLM) — for the chatbot
 
-### Installation & Run
+### Installation
 
 1.  **Clone the repository**
     ```bash
@@ -71,45 +81,120 @@ A collection of "Cookbook" style recipes for common modeling tasks.
     cd FiCR
     ```
 
-2.  **Install dependencies**
+2.  **Install frontend dependencies**
     ```bash
     npm install
     ```
 
-3.  **Start local server**
+3.  **Install backend dependencies**
     ```bash
-    npm run dev
+    cd backend
+    pip install -r requirements.txt
     ```
+
+4.  **Configure LLM API keys**
+    ```bash
+    # In the backend/ directory:
+    cp .env.example .env
+    # Edit .env and add at least one API key
+    ```
+
+### Running Locally
+
+You need **two terminals** to run the full application:
+
+**Terminal 1 — Backend (Python FastAPI)**
+```bash
+cd backend
+uvicorn server:app --port 8000 --reload
+```
+
+**Terminal 2 — Frontend (Vite)**
+```bash
+npm run dev
+```
+
+Then open **http://localhost:5173** in your browser.
+
+### Using the Chatbot
+
+1.  Navigate to the **FiCR Chatbot** page.
+2.  Select an LLM provider and model from the toolbar dropdown.
+3.  Load a sample survey (e.g., "Duplex A") or paste/upload your own survey JSON.
+4.  Click **Analyze** — the pipeline will:
+    - Validate the survey JSON against the `ficr-survey-v1` schema
+    - Convert it to an RDF knowledge graph (ABox)
+    - Run 14 SPARQL compliance queries against the merged TBox + regulatory config
+    - Stream a fire compliance report from the selected LLM
+5.  Once complete, click **Download Report (.md)** to save.
+
+> **Note**: The chatbot requires the Python backend to be running locally. The static pages (Documentation, Roadmap) work without the backend. The Query Lab and Report pages require a running GraphDB instance.
 
 ---
 
 ## 📦 Project Structure
 
-The project follows a clean, modular architecture:
-
 ```
-├── public/
-│   └── ficr.ttl                 # The core ontology file (Single Source of Truth)
-├── src/
+├── public/                          # Static ontology files
+│   ├── ficr_tbox_0.13.0.ttl        # FiCR ontology (TBox)
+│   └── ficr_demo_0.13.0.ttl        # Demo instance data
+├── src/                             # React frontend
 │   ├── components/
-│   │   ├── OntologyViewer.tsx   # Core parsing and visualization engine
-│   │   └── ...
-│   ├── content/
-│   │   ├── siteConfig.json      # Global settings (Title, Version, Authors)
-│   │   └── demoConfig.json      # Content for demo pages
-│   ├── pages/                   # Application Routes
-│   └── utils/                   # RDF/Turtle parsing logic
+│   │   ├── chatbot/                 # Chat UI components
+│   │   ├── documentation/           # Ontology browser components
+│   │   ├── layout/                  # Header, Footer, Layout
+│   │   └── shared/                  # Card, Button, CodeBlock, etc.
+│   ├── pages/                       # Route pages
+│   │   ├── Home.tsx
+│   │   ├── Documentation.tsx
+│   │   ├── QueryLab.tsx
+│   │   ├── Chatbot.tsx              # LLM chatbot page
+│   │   ├── Report.tsx
+│   │   └── Roadmap.tsx
+│   ├── content/                     # Site config, preset queries
+│   ├── hooks/                       # Custom React hooks
+│   └── utils/                       # TTL/RDF parsers
+├── backend/                         # Python pipeline backend
+│   ├── server.py                    # FastAPI server (SSE streaming)
+│   ├── pipeline.py                  # 4-stage pipeline orchestrator
+│   ├── ficr_json_to_rdf.py         # Stage 2: JSON → RDF converter
+│   ├── ficr_sparql_runner.py        # Stage 3: SPARQL query executor
+│   ├── prompts/                     # LLM system prompts
+│   ├── schemas/                     # JSON Schema (ficr-survey-v1)
+│   ├── references/                  # TBox, regulatory config, SPARQL queries, sample data
+│   ├── tests/                       # Schema & SPARQL tests
+│   ├── requirements.txt             # Python dependencies
+│   └── .env.example                 # API key template
+├── supabase/                        # Supabase edge functions
+├── .github/workflows/deploy.yml     # GitHub Pages deployment
+├── package.json                     # Node.js dependencies
+├── vite.config.ts                   # Vite config with API proxies
+└── tailwind.config.js               # Tailwind CSS theme
 ```
 
-## 📝 Customization Guide
+---
 
-### Changing the Ontology
-To use this portal for a different version of FiCR or a completely new ontology:
-1.  Replace `public/ficr.ttl` with your new file.
-2.  Update metadata in `src/content/siteConfig.json`.
+## 🔧 Configuration
 
-### Theming
-The UI is built with **Tailwind CSS**. You can customize the color scheme (e.g., changing the primary compliance color) by editing the `theme.extend.colors` section in `tailwind.config.js`.
+### Frontend Environment (`.env` in project root)
+```env
+GRAPHDB_URL=http://localhost:7200/repositories/FiCR
+GRAPHDB_USER=admin
+GRAPHDB_PASS=root
+CHATBOT_API_URL=http://localhost:8000
+```
+
+### Backend Environment (`backend/.env`)
+Copy from `backend/.env.example` and add your API keys:
+```env
+ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-...
+GOOGLE_API_KEY=AI...
+DEEPSEEK_API_KEY=sk-...
+GLM_API_KEY=...
+```
+
+You only need **one** provider configured to use the chatbot.
 
 ---
 

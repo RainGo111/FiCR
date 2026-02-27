@@ -1,7 +1,0 @@
-
-> vite-react-typescript-starter@0.0.0 typecheck
-> tsc --noEmit -p tsconfig.app.json
-
-src/pages/Report.tsx(210,25): error TS1127: Invalid character.
-src/pages/Report.tsx(210,26): error TS1136: Property assignment expected.
-src/pages/Report.tsx(774,1): error TS1160: Unterminated template literal.

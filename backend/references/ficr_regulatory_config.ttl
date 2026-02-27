@@ -1,0 +1,20 @@
+@prefix ficr: <https://w3id.org/bam/ficr#> .
+@prefix bot:  <https://w3id.org/bot#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/bam/ficr#BDM02_Wall_REI_Requirement_—_PG_1b>
+    a owl:NamedIndividual, ficr:RegulatoryRequirement ;
+    ficr:appliesToPurposeGroup ficr:PurposeGroup1b ;
+    ficr:appliesToElementType  ficr:Wall ;
+    ficr:hasREI                60 ;
+    rdfs:label "BDM02 Wall REI Requirement — PG 1b"@en .
+
+<https://w3id.org/bam/ficr#BDM02_Floor_REI_Requirement_—_PG_1b>
+    a owl:NamedIndividual, ficr:RegulatoryRequirement ;
+    ficr:appliesToPurposeGroup ficr:PurposeGroup1b ;
+    ficr:appliesToElementType  ficr:Slab ;
+    ficr:hasREI                30 ;
+    rdfs:label "BDM02 Floor REI Requirement — PG 1b"@en .

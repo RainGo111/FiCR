@@ -23,6 +23,11 @@ export default defineConfig(({ mode }) => {
             });
           },
         },
+        '/api/chatbot': {
+          target: env.CHATBOT_API_URL || 'http://localhost:8000',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/chatbot/, ''),
+        },
       },
     },
     optimizeDeps: {

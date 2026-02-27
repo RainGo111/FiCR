@@ -1,0 +1,398 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ficr.example.com/schemas/ficr-survey-v1",
+  "title": "FiCR Survey JSON Schema — ficr-survey-v1",
+  "description": "Validates survey JSON produced by LLM #1 for the FiCR fire compliance pipeline.",
+  "type": "object",
+  "required": ["meta", "building", "storeys", "spaces", "elements",
+               "risk_units", "boundary_assumptions", "evidence_log"],
+  "additionalProperties": false,
+
+  "$defs": {
+
+    "local_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+      "description": "Local identifier used as the last segment of instance IRIs."
+    },
+
+    "local_id_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to another object's local id within the same survey."
+    },
+
+    "ficr_space_type": {
+      "enum": [
+        "ficr:RoomSpace",
+        "ficr:StairSpace",
+        "ficr:RoofSpace",
+        "ficr:AtriumSpace",
+        "ficr:BalconySpace",
+        "ficr:CavitySpace",
+        "ficr:DuctSpace",
+        "ficr:ShaftSpace"
+      ]
+    },
+
+    "ficr_storey_type": {
+      "enum": [
+        "ficr:BasementStorey",
+        "ficr:GroundAndAboveStorey"
+      ]
+    },
+
+    "ficr_building_type": {
+      "enum": [
+        "ficr:MultiStoreyBuilding"
+      ]
+    },
+
+    "ficr_purpose_group": {
+      "enum": [
+        "ficr:PurposeGroup1a",
+        "ficr:PurposeGroup1b",
+        "ficr:PurposeGroup1c",
+        "ficr:PurposeGroup2a",
+        "ficr:PurposeGroup2b",
+        "ficr:PurposeGroup3",
+        "ficr:PurposeGroup4",
+        "ficr:PurposeGroup5",
+        "ficr:PurposeGroup6",
+        "ficr:PurposeGroup7a",
+        "ficr:PurposeGroup7b"
+      ]
+    },
+
+    "ficr_space_usage": {
+      "description": "Named individuals from the SpaceUsage hierarchy in ficr_tbox.ttl.",
+      "enum": [
+        "ficr:Auditorium",
+        "ficr:Bathroom",
+        "ficr:BoilerRoom",
+        "ficr:CirculationUsage",
+        "ficr:Corridor",
+        "ficr:EngineRoom",
+        "ficr:Foyer",
+        "ficr:FuelStorage",
+        "ficr:Gallery",
+        "ficr:HabitableRoom",
+        "ficr:Hall",
+        "ficr:Kitchen",
+        "ficr:Lobby",
+        "ficr:PlaceOfSpecialHazard",
+        "ficr:ServiceUsage",
+        "ficr:Storage",
+        "ficr:SwitchGearRoom",
+        "ficr:TransformerRoom",
+        "ficr:Warehouse"
+      ]
+    },
+
+    "ficr_element_type": {
+      "enum": [
+        "ficr:Wall",
+        "ficr:Slab",
+        "ficr:Doorset",
+        "ficr:Ceiling",
+        "ficr:Window"
+      ]
+    },
+
+    "ficr_condition_state": {
+      "enum": [
+        "ficr:Effective",
+        "ficr:Unknown",
+        "ficr:Compromised"
+      ]
+    },
+
+    "ficr_installation_status": {
+      "enum": [
+        "ficr:UnsprinkleredOrNonCompliant",
+        "ficr:SprinkleredInFull",
+        "ficr:SprinkleredWithExceptions",
+        "ficr:Installed"
+      ]
+    },
+
+    "ficr_assumption_type": {
+      "enum": [
+        "ficr:CavityBarrierAssumption",
+        "ficr:CompartmentationAssumption",
+        "ficr:ExternalSpreadAssumption",
+        "ficr:StructuralStabilityAssumption"
+      ]
+    },
+
+    "ficr_evidence_type": {
+      "enum": [
+        "ficr:DocumentBasis",
+        "ficr:ObservedEvidence"
+      ]
+    },
+
+    "ficr_element_usage_role": {
+      "description": "ElementFireSafetyRole named individuals from ficr_tbox.ttl.",
+      "enum": [
+        "ficr:ActiveFireProtectionRole",
+        "ficr:AlternativeExitRole",
+        "ficr:DeadEndRole",
+        "ficr:EvacuationRole",
+        "ficr:ExitPassagewayRole",
+        "ficr:FinalExitRole",
+        "ficr:FireResistingRole",
+        "ficr:FireSeparatingRole",
+        "ficr:FirefightingRole",
+        "ficr:InnerRoomRole",
+        "ficr:MeansOfEscapeRole",
+        "ficr:PassiveFireProtectionRole",
+        "ficr:StoreyExitRole",
+        "ficr:UnprotectedAreaRole"
+      ]
+    },
+
+    "slab_type_enum": {
+      "enum": ["floor_slab", "roof_slab"]
+    },
+
+    "wall_element": {
+      "type": "object",
+      "required": ["id", "label", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id":             { "$ref": "#/$defs/local_id" },
+        "label":          { "type": "string", "minLength": 1 },
+        "type":           { "const": "ficr:Wall" },
+        "rei":            { "type": ["integer", "null"], "minimum": 0 },
+        "is_external":    { "type": ["boolean", "null"] },
+        "is_load_bearing":{ "type": ["boolean", "null"] },
+        "area_m2":        { "type": ["number", "null"], "minimum": 0 },
+        "usage_roles": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ficr_element_usage_role" }
+        }
+      }
+    },
+
+    "slab_element": {
+      "type": "object",
+      "required": ["id", "label", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id":             { "$ref": "#/$defs/local_id" },
+        "label":          { "type": "string", "minLength": 1 },
+        "type":           { "const": "ficr:Slab" },
+        "slab_type":      { "$ref": "#/$defs/slab_type_enum" },
+        "rei":            { "type": ["integer", "null"], "minimum": 0 },
+        "is_external":    { "type": ["boolean", "null"] },
+        "is_load_bearing":{ "type": ["boolean", "null"] },
+        "area_m2":        { "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+
+    "doorset_element": {
+      "type": "object",
+      "required": ["id", "label", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id":             { "$ref": "#/$defs/local_id" },
+        "label":          { "type": "string", "minLength": 1 },
+        "type":           { "const": "ficr:Doorset" },
+        "rei":            { "type": ["integer", "null"], "minimum": 0 },
+        "is_obscured":    { "type": ["boolean", "null"] },
+        "usage_roles": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ficr_element_usage_role" }
+        }
+      }
+    },
+
+    "ceiling_element": {
+      "type": "object",
+      "required": ["id", "label", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id":             { "$ref": "#/$defs/local_id" },
+        "label":          { "type": "string", "minLength": 1 },
+        "type":           { "const": "ficr:Ceiling" },
+        "area_m2":        { "type": ["number", "null"], "minimum": 0 },
+        "thickness_m":    { "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+
+    "window_element": {
+      "type": "object",
+      "required": ["id", "label", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id":             { "$ref": "#/$defs/local_id" },
+        "label":          { "type": "string", "minLength": 1 },
+        "type":           { "const": "ficr:Window" },
+        "is_external":    { "type": ["boolean", "null"] }
+      }
+    }
+  },
+
+  "properties": {
+
+    "meta": {
+      "type": "object",
+      "required": ["schema_version", "project_slug", "purpose_group", "building_name"],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": { "const": "ficr-survey-v1" },
+        "project_slug": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "description": "URL-safe slug used in instance IRIs."
+        },
+        "data_source":    { "type": "string" },
+        "purpose_group":  { "type": "string", "minLength": 1 },
+        "building_name":  { "type": "string", "minLength": 1 },
+        "notes":          { "type": "string" }
+      }
+    },
+
+    "building": {
+      "type": "object",
+      "required": ["id", "label", "type", "purpose_group"],
+      "additionalProperties": false,
+      "properties": {
+        "id":             { "$ref": "#/$defs/local_id" },
+        "label":          { "type": "string", "minLength": 1 },
+        "type":           { "$ref": "#/$defs/ficr_building_type" },
+        "purpose_group":  { "$ref": "#/$defs/ficr_purpose_group" }
+      }
+    },
+
+    "storeys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type", "elevation_m", "building_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "id":            { "$ref": "#/$defs/local_id" },
+          "label":         { "type": "string", "minLength": 1 },
+          "type":          { "$ref": "#/$defs/ficr_storey_type" },
+          "elevation_m":   { "type": "number" },
+          "building_ref":  { "$ref": "#/$defs/local_id_ref" }
+        }
+      }
+    },
+
+    "spaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type", "storey_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "id":            { "$ref": "#/$defs/local_id" },
+          "label":         { "type": "string", "minLength": 1 },
+          "type":          { "$ref": "#/$defs/ficr_space_type" },
+          "storey_ref":    { "$ref": "#/$defs/local_id_ref" },
+          "usage":         {
+            "oneOf": [
+              { "$ref": "#/$defs/ficr_space_usage" },
+              { "type": "null" }
+            ]
+          },
+          "area_m2":       { "type": ["number", "null"], "minimum": 0 },
+          "adjacent_elements": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/local_id_ref" }
+          }
+        }
+      }
+    },
+
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/wall_element" },
+          { "$ref": "#/$defs/slab_element" },
+          { "$ref": "#/$defs/doorset_element" },
+          { "$ref": "#/$defs/ceiling_element" },
+          { "$ref": "#/$defs/window_element" }
+        ]
+      }
+    },
+
+    "risk_units": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "covers_spaces"],
+        "additionalProperties": false,
+        "properties": {
+          "id":             { "$ref": "#/$defs/local_id" },
+          "label":          { "type": "string", "minLength": 1 },
+          "covers_spaces": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/local_id_ref" }
+          },
+          "installation_status": {
+            "oneOf": [
+              { "$ref": "#/$defs/ficr_installation_status" },
+              { "type": "null" }
+            ]
+          },
+          "is_exposed_to": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/local_id_ref" }
+          },
+          "declared_exposure_value": {
+            "type": ["number", "null"],
+            "minimum": 0
+          }
+        }
+      }
+    },
+
+    "boundary_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "assumption_type", "condition_state", "applies_to_risk_unit"],
+        "additionalProperties": false,
+        "properties": {
+          "id":                     { "$ref": "#/$defs/local_id" },
+          "label":                  { "type": "string" },
+          "assumption_type":        { "$ref": "#/$defs/ficr_assumption_type" },
+          "condition_state":        { "$ref": "#/$defs/ficr_condition_state" },
+          "applies_to_risk_unit":   { "$ref": "#/$defs/local_id_ref" },
+          "about_element":          { "$ref": "#/$defs/local_id_ref" },
+          "supported_by_evidence": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/local_id_ref" }
+          }
+        }
+      }
+    },
+
+    "evidence_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "id":              { "$ref": "#/$defs/local_id" },
+          "type":            { "$ref": "#/$defs/ficr_evidence_type" },
+          "label":           { "type": "string" },
+          "document_title":  { "type": ["string", "null"] },
+          "document_uri":    { "type": ["string", "null"], "format": "uri" }
+        }
+      }
+    }
+  }
+}
