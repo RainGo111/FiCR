@@ -1,0 +1,694 @@
+# =============================================================================
+# FiCR COMPETENCY QUERIES — v0.16.0
+# =============================================================================
+#
+# REI compliance thresholds (PG 1b, ADB):
+#   - Wall: REI >= 60 (all storeys)
+#   - Floor (basement):         REI >= 30
+#   - Floor (ground and above): REI >= 60
+#
+# MODULE STRUCTURE:
+#   A — Building Inventory      (A1, A2, A3, A4, A5, A6)
+#   B — Compliance Checking     (B1, B2, B3)
+#   C — Risk-Informed Insights  (C1, C2, C3, C4)
+#   D — Inspection Workflow     (D1, D2)
+#
+# =============================================================================
+
+PREFIX ficr: <https://w3id.org/bam/ficr#>
+PREFIX bot:  <https://w3id.org/bot#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+
+# =============================================================================
+# MODULE A — BUILDING INVENTORY
+# =============================================================================
+
+# --- A1: Building Overview ---------------------------------------------------
+# What are the key identifiers and classification of the building
+# (site, type, purpose group, utilization purpose, storey/space counts)?
+#
+# Constructs exercised:
+#   bot:Site → bot:hasBuilding → bot:Building
+#   ficr:MultiStoreyBuilding / ficr:SingleStoreyBuilding
+#   ficr:hasPurposeGroup → ficr:PurposeGroup
+#   ficr:hasUtilizationPurpose → ficr:UtilizationPurpose
+#   bot:hasStorey → bot:Storey, bot:hasSpace → bot:Space
+
+SELECT ?siteLabel
+       (SAMPLE(STRAFTER(STR(?bt), "#")) AS ?buildingType)
+       (SAMPLE(?pgLabel) AS ?purposeGroup)
+       (SAMPLE(?upLabel) AS ?utilizationPurpose)
+       (COUNT(DISTINCT ?storey) AS ?storeyCount)
+       (COUNT(DISTINCT ?space)  AS ?totalSpaceCount)
+WHERE {
+    ?site a bot:Site ;
+          rdfs:label ?siteLabel ;
+          bot:hasBuilding ?building .
+    ?building a ?bt .
+    FILTER(?bt IN (ficr:MultiStoreyBuilding, ficr:SingleStoreyBuilding))
+    OPTIONAL {
+        ?building ficr:hasPurposeGroup ?pg .
+        BIND(STRAFTER(STR(?pg), "#") AS ?pgLabel)
+    }
+    OPTIONAL {
+        ?building ficr:hasUtilizationPurpose ?up .
+        BIND(STRAFTER(STR(?up), "#") AS ?upLabel)
+    }
+    OPTIONAL { ?building bot:hasStorey ?storey }
+    OPTIONAL {
+        ?building bot:hasStorey ?s .
+        ?s bot:hasSpace ?space .
+    }
+}
+GROUP BY ?siteLabel
+
+
+# --- A2: Storey Inventory and Typology ---------------------------------------
+# What storeys does the building contain, including their OWL-inferred
+# type (BasementStorey / GroundAndAboveStorey), elevation, height,
+# and number of spaces?
+#
+# Constructs exercised:
+#   ficr:BasementStorey  ≡ Storey AND (isAboveGround value false)
+#   ficr:GroundAndAboveStorey ≡ Storey AND (isAboveGround value true)
+#   ficr:hasElevation, ficr:hasStoreyHeight
+#   bot:hasSpace
+
+SELECT ?storeyLabel ?storeyType
+       (xsd:decimal(?elev) AS ?elevation_m)
+       (xsd:decimal(?ht)   AS ?storeyHeight_m)
+       (COUNT(DISTINCT ?space) AS ?spaceCount)
+WHERE {
+    ?building a ficr:MultiStoreyBuilding ;
+              bot:hasStorey ?storey .
+    ?storey rdfs:label ?storeyLabel ;
+            a ?storeyType .
+    FILTER(?storeyType IN (ficr:BasementStorey, ficr:GroundAndAboveStorey))
+    OPTIONAL { ?storey ficr:hasElevation   ?elev }
+    OPTIONAL { ?storey ficr:hasStoreyHeight ?ht  }
+    OPTIONAL { ?storey bot:hasSpace ?space }
+}
+GROUP BY ?storeyLabel ?storeyType ?elev ?ht
+ORDER BY ?elev
+
+
+# --- A3: Space Ledger (Detail) -----------------------------------------------
+# What spaces exist in the building, what are their functional usages,
+# areas, and adjacencies; and how are spaces distributed across
+# usage types?
+#
+# Constructs exercised:
+#   bot:Space subtypes (RoomSpace, StairSpace, RoofSpace)
+#   ficr:hasSpaceUsage → ficr:SpaceUsage
+#   ficr:hasArea
+#   bot:adjacentZone
+#
+
+SELECT DISTINCT
+    ?storeyLabel
+    ?spaceLabel
+    ?adjacentSpaces
+    (xsd:decimal(?area) AS ?areaM2)
+    ?usageLabel
+WHERE {
+    ?storey a/rdfs:subClassOf* bot:Storey ;
+            rdfs:label ?storeyLabel ;
+            bot:hasSpace ?space .
+    ?space  rdfs:label ?spaceLabel .
+    OPTIONAL { ?space ficr:hasArea ?area }
+    OPTIONAL {
+        ?space ficr:hasSpaceUsage ?usage .
+        OPTIONAL { ?usage rdfs:label ?uLabel }
+    }
+    OPTIONAL {
+        SELECT ?space (GROUP_CONCAT(DISTINCT ?adjLbl ; separator=" | ") AS ?adjacentSpaces)
+        WHERE {
+            ?space bot:adjacentZone ?adjSp .
+            ?adjSp rdfs:label ?adjLbl .
+        }
+        GROUP BY ?space
+    }
+    BIND(COALESCE(?uLabel, IF(BOUND(?usage), STRAFTER(STR(?usage), "#"), "")) AS ?usageLabel)
+}
+ORDER BY ?storeyLabel ?spaceLabel
+
+# --- A4: Space Usage Distribution ---------------------------------------------
+# Count of spaces per usage type
+
+SELECT ?usageType (COUNT(DISTINCT ?space) AS ?count)
+WHERE {
+    ?space a/rdfs:subClassOf* bot:Space ;
+           ficr:hasSpaceUsage ?usage .
+    BIND(STRAFTER(STR(?usage), "#") AS ?usageType)
+}
+GROUP BY ?usageType
+ORDER BY DESC(?count)
+
+
+# --- A5: Fire Safety Element Inventory ---------------------------------------
+# What types and quantities of fire-relevant building elements and
+# equipment are present?
+#
+# Constructs exercised:
+#   ficr:FabricElement subtypes (Wall, Slab, Doorset, Window, Stair, ...)
+#   ficr:Equipment subtypes (FireExtinguisher, Alarm)
+#   ficr:BuildingContent (Furnishings)
+
+SELECT ?elementType (COUNT(DISTINCT ?elem) AS ?count)
+WHERE {
+    {
+        ?elem a ficr:Wall .
+        BIND("Wall" AS ?elementType)
+    } UNION {
+        ?elem a/rdfs:subClassOf* ficr:Slab .
+        BIND("FloorSlab/RoofSlab" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Doorset .
+        BIND("Doorset" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Window .
+        BIND("Window" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Opening .
+        BIND("Opening" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Stair .
+        BIND("Stair" AS ?elementType)
+    } UNION {
+        ?elem a ficr:StairFlight .
+        BIND("StairFlight" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Beam .
+        BIND("Beam" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Ceiling .
+        BIND("Ceiling" AS ?elementType)
+    } UNION {
+        ?elem a ficr:WallFoundation .
+        BIND("WallFoundation" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Railing .
+        BIND("Railing" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Furnishings .
+        BIND("Furnishings" AS ?elementType)
+    } UNION {
+        ?elem a ficr:FireExtinguisher .
+        BIND("FireExtinguisher" AS ?elementType)
+    } UNION {
+        ?elem a ficr:Alarm .
+        BIND("Alarm" AS ?elementType)
+    }
+}
+GROUP BY ?elementType
+ORDER BY DESC(?count)
+
+
+# --- A6: Per-Space Fire Protection Breakdown ---------------------------------
+# For each space, what fire-relevant boundary elements (walls, slabs,
+# doorsets) and fire equipment (extinguishers, alarms) are associated?
+#
+# Constructs exercised:
+#   bot:adjacentElement (space–fabric boundary)
+#   ficr:islocatedIn    (equipment–space placement)
+#   Union of FabricElement + Equipment subtypes
+
+SELECT ?spaceLabel ?category ?itemType ?itemLabel
+WHERE {
+    ?space a/rdfs:subClassOf* bot:Space ;
+           rdfs:label ?spaceLabel .
+    {
+        # Boundary fabric elements via bot:adjacentElement
+        ?space bot:adjacentElement ?item .
+        {
+            ?item a ficr:Wall .
+            BIND("BoundaryElement" AS ?category)
+            BIND("Wall" AS ?itemType)
+        } UNION {
+            ?item a/rdfs:subClassOf* ficr:Slab .
+            BIND("BoundaryElement" AS ?category)
+            BIND("Slab" AS ?itemType)
+        } UNION {
+            ?item a ficr:Doorset .
+            BIND("BoundaryElement" AS ?category)
+            BIND("Doorset" AS ?itemType)
+        }
+        OPTIONAL { ?item rdfs:label ?itemLabel }
+    }
+    UNION
+    {
+        # Fire equipment via ficr:islocatedIn
+        ?item ficr:islocatedIn ?space .
+        {
+            ?item a ficr:FireExtinguisher .
+            BIND("FireEquipment" AS ?category)
+            BIND("FireExtinguisher" AS ?itemType)
+        } UNION {
+            ?item a ficr:Alarm .
+            BIND("FireEquipment" AS ?category)
+            BIND("Alarm" AS ?itemType)
+        }
+        OPTIONAL { ?item rdfs:label ?itemLabel }
+    }
+}
+ORDER BY ?spaceLabel ?category ?itemType
+
+
+# =============================================================================
+# MODULE B — COMPLIANCE CHECKING
+# =============================================================================
+
+# --- B1: Compliance Health Score ---------------------------------------------
+# What is the overall compliance status of the building, aggregated
+# by element category (wall REI, floor REI by storey type, doorset
+# accessibility, equipment condition)?
+#
+# Constructs exercised:
+#   ficr:hasREI vs ficr:RegulatoryRequirement.hasREI
+#   ficr:BasementStorey / ficr:GroundAndAboveStorey (storey-aware thresholds)
+#   ficr:isObscured, ficr:isDamaged, ficr:hasServiceExpiryDate
+
+SELECT ?category ?status (COUNT(?item) AS ?count)
+WHERE {
+    {
+        SELECT DISTINCT ?item ?category ?status
+        WHERE {
+            {
+                # Walls — REI compliance
+                ?item a ficr:Wall ; ficr:hasREI ?v .
+                ficr:req_pg1b_wall ficr:hasREI ?r .
+                BIND("Wall — REI" AS ?category)
+                BIND(IF(xsd:integer(?v) >= xsd:integer(?r),
+                        "Compliant", "Non-Compliant") AS ?status)
+            }
+            UNION
+            {
+                # Floor/Slab in Basement — REI compliance (req 30)
+                ?storey a ficr:BasementStorey ;
+                        bot:hasSpace ?space .
+                ?space bot:adjacentElement ?item .
+                ?item a/rdfs:subClassOf* ficr:Slab ;
+                      ficr:hasREI ?v .
+                ficr:req_pg1b_floor_basement ficr:hasREI ?r .
+                BIND("Floor — REI (Basement)" AS ?category)
+                BIND(IF(xsd:integer(?v) >= xsd:integer(?r),
+                        "Compliant", "Non-Compliant") AS ?status)
+            }
+            UNION
+            {
+                # Floor/Slab Above Ground — REI compliance (req 60)
+                ?storey a ficr:GroundAndAboveStorey ;
+                        bot:hasSpace ?space .
+                ?space bot:adjacentElement ?item .
+                ?item a/rdfs:subClassOf* ficr:Slab ;
+                      ficr:hasREI ?v .
+                ficr:req_pg1b_floor_above ficr:hasREI ?r .
+                BIND("Floor — REI (Above Ground)" AS ?category)
+                BIND(IF(xsd:integer(?v) >= xsd:integer(?r),
+                        "Compliant", "Non-Compliant") AS ?status)
+            }
+            UNION
+            {
+                # Doorsets — obscured check
+                ?item a ficr:Doorset ;
+                      ficr:isObscured ?obs .
+                BIND("Doorset — Access" AS ?category)
+                BIND(IF(?obs = true,
+                        "Non-Compliant (Obscured)", "Compliant") AS ?status)
+            }
+            UNION
+            {
+                # Fire equipment — damaged or service expired
+                {
+                    ?item a ficr:FireExtinguisher .
+                    BIND("FireExtinguisher" AS ?eqType)
+                } UNION {
+                    ?item a ficr:Alarm .
+                    BIND("Alarm" AS ?eqType)
+                }
+                OPTIONAL { ?item ficr:isDamaged ?dmg }
+                OPTIONAL { ?item ficr:hasServiceExpiryDate ?expiry }
+                BIND(
+                    IF(BOUND(?dmg) && ?dmg = true, "Non-Compliant (Damaged)",
+                    IF(BOUND(?expiry) && ?expiry < "2026-03-10"^^xsd:date,
+                       "Non-Compliant (Expired)", "Compliant"))
+                    AS ?status)
+                BIND(CONCAT(?eqType, " — Condition") AS ?category)
+            }
+        }
+    }
+}
+GROUP BY ?category ?status
+ORDER BY ?category ?status
+
+
+# --- B2: Element-Level REI Compliance Detail ---------------------------------
+# For each wall and floor/slab element that carries a fire resistance
+# period (REI), what is its actual performance versus the applicable
+# storey-aware regulatory requirement?
+#
+# Scope: Wall and Slab elements with hasREI only.
+#   Doorset accessibility (isObscured) is a different check type,
+#   already captured in B1; it does not involve REI comparison.
+#
+# Constructs exercised:
+#   ficr:hasREI (actual measured value on FabricElement)
+#   ficr:RegulatoryRequirement (req_pg1b_wall, req_pg1b_floor_basement,
+#       req_pg1b_floor_above) with ficr:hasREI (required threshold)
+#   ficr:appliesToPurposeGroup → ficr:PurposeGroup
+#   ficr:BasementStorey / ficr:GroundAndAboveStorey (storey-aware selection)
+
+SELECT DISTINCT
+    ?assetType
+    ?elementLabel
+    ?spaceLabel
+    (xsd:decimal(?rei)    AS ?actualREI)
+    (xsd:decimal(?reqREI) AS ?requiredREI)
+    ?complianceStatus
+    ?issue
+WHERE {
+    {
+        # Walls — REI compliance (all storeys, req 60)
+        ?elem a ficr:Wall ;
+              rdfs:label ?elementLabel ;
+              ficr:hasREI ?rei .
+        ?space bot:adjacentElement ?elem ;
+               rdfs:label ?spaceLabel .
+        ficr:req_pg1b_wall ficr:hasREI ?reqREI .
+        BIND("Wall" AS ?assetType)
+        BIND(IF(xsd:integer(?rei) >= xsd:integer(?reqREI),
+                "Compliant", "Non-Compliant") AS ?complianceStatus)
+        BIND(IF(xsd:integer(?rei) <  xsd:integer(?reqREI),
+                "Wall REI Deficit", "--") AS ?issue)
+    }
+    UNION
+    {
+        # Slab in Basement (req 30)
+        ?storey a ficr:BasementStorey ;
+                bot:hasSpace ?space .
+        ?space bot:adjacentElement ?elem ;
+               rdfs:label ?spaceLabel .
+        ?elem a/rdfs:subClassOf* ficr:Slab ;
+              rdfs:label ?elementLabel ;
+              ficr:hasREI ?rei .
+        ficr:req_pg1b_floor_basement ficr:hasREI ?reqREI .
+        BIND("Slab (Basement)" AS ?assetType)
+        BIND(IF(xsd:integer(?rei) >= xsd:integer(?reqREI),
+                "Compliant", "Non-Compliant") AS ?complianceStatus)
+        BIND(IF(xsd:integer(?rei) <  xsd:integer(?reqREI),
+                "Slab REI Deficit", "--") AS ?issue)
+    }
+    UNION
+    {
+        # Slab Above Ground (req 60)
+        ?storey a ficr:GroundAndAboveStorey ;
+                bot:hasSpace ?space .
+        ?space bot:adjacentElement ?elem ;
+               rdfs:label ?spaceLabel .
+        ?elem a/rdfs:subClassOf* ficr:Slab ;
+              rdfs:label ?elementLabel ;
+              ficr:hasREI ?rei .
+        ficr:req_pg1b_floor_above ficr:hasREI ?reqREI .
+        BIND("Slab (Above Ground)" AS ?assetType)
+        BIND(IF(xsd:integer(?rei) >= xsd:integer(?reqREI),
+                "Compliant", "Non-Compliant") AS ?complianceStatus)
+        BIND(IF(xsd:integer(?rei) <  xsd:integer(?reqREI),
+                "Slab REI Deficit", "--") AS ?issue)
+    }
+}
+ORDER BY ?assetType ?complianceStatus ?elementLabel
+
+
+# --- B3: OWL-Inferred Classification Audit -----------------------------------
+# Which building elements and zones have been automatically
+# reclassified by the OWL reasoner through equivalentClass axioms,
+# and what distinguishing conditions triggered each classification?
+#
+# Constructs exercised:
+#   All 23 equivalentClass definitions
+#   hasElementUsage semantic bridging pattern
+#   isExternal, isAboveGround, containsElement
+#   hasZoneFireSafetyRole, hasSpaceUsage
+#   hasREI (for FireDoorset)
+#
+# Design note: Each VALUES row corresponds to one equivalentClass
+# definition in the TBox.  After Pellet reasoning, instances that
+# satisfy the defining conditions are inferred as members of the
+# defined class.  This query enumerates those inferred memberships.
+
+SELECT ?definedClassName (COUNT(DISTINCT ?instance) AS ?inferredCount) ?triggerCondition
+WHERE {
+    VALUES (?definedClass ?triggerCondition) {
+        # --- Physical elements ---
+        (ficr:ExternalWall           "Wall AND isExternal = true")
+        (ficr:ExternalWallDoor       "Doorset AND isExternal = true")
+        (ficr:ExternalWallWindow     "Window AND isExternal = true")
+        (ficr:CompartmentWall        "Wall AND hasElementUsage some FireSeparatingRole")
+        (ficr:CompartmentFloor       "Floor AND hasElementUsage some FireSeparatingRole")
+        (ficr:FireDamper             "Closing AND hasElementUsage some FireResistingRole")
+        (ficr:FireDoorset            "Doorset AND hasREI restriction")
+        (ficr:ProtectedStairway      "Stair AND hasElementUsage some PassiveFireProtectionRole")
+        (ficr:ProtectedCircuit       "Circuit AND hasElementUsage some PassiveFireProtectionRole")
+
+        # --- Storeys ---
+        (ficr:BasementStorey         "Storey AND isAboveGround = false")
+        (ficr:GroundAndAboveStorey   "Storey AND isAboveGround = true")
+
+        # --- Spaces ---
+        (ficr:BalconySpace           "Space AND isExternal = true")
+        (ficr:ShaftSpace             "Space AND containsElement some VerticalTransportSystem")
+        (ficr:StairSpace             "Space AND containsElement some Stair")
+
+        # --- Fire safety zones ---
+        (ficr:FireCompartment        "Zone AND adjElement some CompartmentFloor AND CompartmentWall")
+        (ficr:ProtectedCorridor      "Zone AND PassiveFireProtection AND hasSpaceUsage Corridor")
+        (ficr:ProtectedEntranceHall  "Zone AND PassiveFireProtection AND hasSpaceUsage EntranceHall")
+        (ficr:ProtectedLobby         "Zone AND PassiveFireProtection AND hasSpaceUsage Lobby")
+        (ficr:ProtectedShaft         "Zone AND PassiveFireProtection AND containsElement VTS")
+        (ficr:ProtectedStairwaySpace "Zone AND PassiveFireProtection AND containsElement Stair")
+
+        # --- Building systems ---
+        (ficr:EvacuationLift         "LiftSystem AND hasElementUsage some EvacuationRole")
+        (ficr:FireFightingLift       "LiftSystem AND hasElementUsage some FirefightingRole")
+        (ficr:FireSprinklerSystem    "PipingSystem AND hasElementUsage some ActiveFireProtectionRole")
+    }
+    OPTIONAL { ?instance a ?definedClass }
+    BIND(STRAFTER(STR(?definedClass), "#") AS ?definedClassName)
+}
+GROUP BY ?definedClass ?definedClassName ?triggerCondition
+ORDER BY DESC(?inferredCount) ?definedClassName
+
+
+# =============================================================================
+# MODULE C — RISK-INFORMED INSIGHTS
+# =============================================================================
+
+# --- C1: Risk Unit Inventory and Spatial Membership --------------------------
+# What risk units exist, which spaces do they cover, and what is
+# their sprinkler installation status?
+#
+# Constructs exercised:
+#   ficr:RiskUnit
+#   ficr:coversSpatialZone → bot:Space
+#   ficr:hasInstallationStatus → ficr:InstallationStatus (SprinklerStatus)
+#   ficr:hasSpaceUsage, ficr:hasArea
+
+SELECT ?ruLabel ?installStatus
+       ?spaceLabel
+       (xsd:decimal(?area) AS ?areaM2)
+       ?usageLabel
+WHERE {
+    ?ru a ficr:RiskUnit ;
+        rdfs:label ?ruLabel .
+    OPTIONAL {
+        ?ru ficr:hasInstallationStatus ?is .
+        BIND(STRAFTER(STR(?is), "#") AS ?installStatus)
+    }
+    OPTIONAL {
+        ?ru ficr:coversSpatialZone ?space .
+        ?space rdfs:label ?spaceLabel .
+        OPTIONAL { ?space ficr:hasArea ?area }
+        OPTIONAL {
+            ?space ficr:hasSpaceUsage ?usage .
+            OPTIONAL { ?usage rdfs:label ?uLabel }
+        }
+        BIND(COALESCE(?uLabel, IF(BOUND(?usage), STRAFTER(STR(?usage), "#"), "")) AS ?usageLabel)
+    }
+}
+ORDER BY ?ruLabel ?spaceLabel
+
+
+# --- C2: Boundary Assumption Condition Distribution --------------------------
+# For each risk unit, how are boundary assumptions distributed
+# across condition states (Effective / Compromised / Unknown)?
+#
+# Constructs exercised:
+#   ficr:BoundaryAssumption
+#   ficr:appliesToRiskUnit → ficr:RiskUnit
+#   ficr:hasAssumptionType → ficr:AssumptionType
+#   ficr:hasConditionState → ficr:ConditionState (Effective / Compromised / Unknown)
+
+SELECT ?ruLabel ?conditionState (COUNT(DISTINCT ?ba) AS ?count)
+WHERE {
+    ?ru a ficr:RiskUnit ;
+        rdfs:label ?ruLabel .
+    ?ba a ficr:BoundaryAssumption ;
+        ficr:appliesToRiskUnit ?ru ;
+        ficr:hasConditionState ?cs .
+    BIND(STRAFTER(STR(?cs), "#") AS ?conditionState)
+}
+GROUP BY ?ruLabel ?conditionState
+ORDER BY ?ruLabel ?conditionState
+
+
+# --- C3: Evidence Completeness and Actionable Gaps ---------------------------
+# For each boundary assumption, what evidence supports it; and which
+# assumptions in Unknown state lack any evidence (i.e. actionable
+# inspection gaps)?
+#
+# Constructs exercised:
+#   ficr:supportedByEvidence → ficr:EvidenceItem
+#   ficr:EvidenceItem subtypes (DocumentBasis, ObservedEvidence)
+#   ficr:documentTitle, ficr:documentURI
+#   FILTER NOT EXISTS for gap detection
+
+SELECT ?ruLabel
+       ?assumptionLabel
+       ?assumptionType
+       ?conditionState
+       ?evidenceType
+       ?docTitle
+       (IF(!BOUND(?ev) && ?conditionState = "Unknown", "EVIDENCE GAP", "--") AS ?gapFlag)
+WHERE {
+    ?ru a ficr:RiskUnit ;
+        rdfs:label ?ruLabel .
+    ?ba a ficr:BoundaryAssumption ;
+        ficr:appliesToRiskUnit ?ru ;
+        ficr:hasConditionState ?cs .
+    BIND(STRAFTER(STR(?cs), "#") AS ?conditionState)
+    OPTIONAL { ?ba rdfs:label ?assumptionLabel }
+    OPTIONAL {
+        ?ba ficr:hasAssumptionType ?at .
+        BIND(STRAFTER(STR(?at), "#") AS ?assumptionType)
+    }
+    OPTIONAL {
+        ?ba ficr:supportedByEvidence ?ev .
+        OPTIONAL {
+            ?ev rdf:type ?et .
+            FILTER(?et != owl:NamedIndividual)
+            BIND(STRAFTER(STR(?et), "#") AS ?evidenceType)
+        }
+        OPTIONAL { ?ev ficr:documentTitle ?docTitle }
+    }
+}
+ORDER BY ?ruLabel ?assumptionType ?conditionState
+
+
+# --- C4: Risk Unit Conservative Confidence Assessment — Worst-First ----------
+# Which risk units have the greatest uncertainty and should be
+# prioritised for inspection, based on counts of Unknown assumptions,
+# Compromised assumptions, and evidence gaps?
+#
+# Constructs exercised:
+#   Aggregation across BoundaryAssumption + ConditionState + EvidenceItem
+#   ficr:hasInstallationStatus (sprinkler status as risk modifier)
+#   Worst-first ranking by evidence gap count then unknown count
+
+SELECT ?ruLabel
+       ?totalAssumptions ?unknownCount ?compromisedCount
+       ?evidenceGapCount ?installStatus
+WHERE {
+    { SELECT ?ru ?ruLabel
+             (COUNT(DISTINCT ?ba)  AS ?totalAssumptions)
+             (COUNT(DISTINCT ?unk) AS ?unknownCount)
+             (COUNT(DISTINCT ?cmp) AS ?compromisedCount)
+      WHERE {
+        ?ru a ficr:RiskUnit ; rdfs:label ?ruLabel .
+        ?ba a ficr:BoundaryAssumption ; ficr:appliesToRiskUnit ?ru .
+        OPTIONAL { ?ba ficr:hasConditionState ficr:Unknown .    BIND(?ba AS ?unk) }
+        OPTIONAL { ?ba ficr:hasConditionState ficr:Compromised . BIND(?ba AS ?cmp) }
+      } GROUP BY ?ru ?ruLabel }
+
+    { SELECT ?ru (COUNT(DISTINCT ?gap) AS ?evidenceGapCount) WHERE {
+        ?ru a ficr:RiskUnit .
+        ?ba a ficr:BoundaryAssumption ;
+            ficr:appliesToRiskUnit ?ru ;
+            ficr:hasConditionState ficr:Unknown .
+        FILTER NOT EXISTS { ?ba ficr:supportedByEvidence ?ev }
+        BIND(?ba AS ?gap)
+      } GROUP BY ?ru }
+
+    OPTIONAL { ?ru ficr:hasInstallationStatus ?is .
+               BIND(STRAFTER(STR(?is), "#") AS ?installStatus) }
+}
+ORDER BY DESC(?evidenceGapCount) DESC(?unknownCount)
+
+
+# =============================================================================
+# MODULE D — INSPECTION WORKFLOW
+# =============================================================================
+
+# --- D1: Inspection Workflow Summary -----------------------------------------
+# What inspection events have occurred, what tasks were triggered,
+# and what assessments were produced?
+#
+# Constructs exercised:
+#   ficr:Event (RoutineTriggerEvent, ComplianceRequestTriggerEvent, AnomalyTriggerEvent)
+#   ficr:triggersTask → ficr:Task subtypes
+#   ficr:producesAssessment → ficr:Assessment subtypes
+#   ficr:plannedStartTime, ficr:plannedEndTime
+
+SELECT ?eventLabel ?taskLabel ?taskType ?startTime ?endTime
+       ?assessmentLabel ?assessmentType
+WHERE {
+    ?event a/rdfs:subClassOf* ficr:Event ;
+           rdfs:label ?eventLabel ;
+           ficr:triggersTask ?task .
+    ?task rdfs:label ?taskLabel ;
+          a ?taskType .
+    FILTER(?taskType IN (ficr:ComplianceCheckingTask,
+                         ficr:EquipmentInspectionTask,
+                         ficr:FireRiskAssessmentTask))
+    OPTIONAL { ?task ficr:plannedStartTime ?startTime }
+    OPTIONAL { ?task ficr:plannedEndTime ?endTime }
+    OPTIONAL {
+        ?task ficr:producesAssessment ?assessment .
+        ?assessment rdfs:label ?assessmentLabel ;
+                    a ?assessmentType .
+        FILTER(?assessmentType IN (ficr:ComplianceChecking, ficr:RiskAnalysis))
+    }
+}
+ORDER BY ?startTime
+
+
+# --- D2: Compliance Assessment Results with Regulatory Basis -----------------
+# What compliance assessments were performed, what were their results,
+# and which regulatory source was used as basis?
+#
+# Constructs exercised:
+#   ficr:ComplianceChecking → ficr:hasComplianceResult → ficr:ComplianceResult
+#   ficr:basedOnRegulation → ficr:RegulatorySource
+#   ficr:hasAssessmentBasis → ficr:AssessmentBasis (EvidenceItem)
+
+SELECT ?assessmentLabel ?resultType ?regulatorySourceLabel ?evidenceLabel
+WHERE {
+    ?assessment a ficr:ComplianceChecking ;
+                rdfs:label ?assessmentLabel ;
+                ficr:hasComplianceResult ?result .
+    ?result a ?resultType .
+    FILTER(?resultType IN (ficr:CompliantResult, ficr:NonCompliantResult,
+                           ficr:UndeterminedResult))
+    OPTIONAL {
+        ?assessment ficr:basedOnRegulation ?source .
+        ?source rdfs:label ?regulatorySourceLabel .
+    }
+    OPTIONAL {
+        ?assessment ficr:hasAssessmentBasis ?evidence .
+        ?evidence rdfs:label ?evidenceLabel .
+    }
+}
+ORDER BY ?assessmentLabel

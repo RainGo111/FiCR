@@ -1,0 +1,2250 @@
+{
+  "meta": {
+    "schema_version": "ficr-survey-v1",
+    "project_slug": "duplex_a",
+    "data_source": "FieldSurvey:2025-02-26",
+    "purpose_group": "PurposeGroup1b",
+    "building_name": "Duplex A",
+    "notes": "De-IFC'd survey data."
+  },
+  "building": {
+    "id": "BLD-DA",
+    "label": "Duplex A",
+    "type": "MultiStoreyBuilding",
+    "purpose_group": "PurposeGroup1b"
+  },
+  "storeys": [
+    {
+      "id": "S-FDN",
+      "label": "T/FDN",
+      "type": "BasementStorey",
+      "elevation_m": -1.25,
+      "storey_height_m": -1.25,
+      "storey_above": null,
+      "storey_below": "S-L1",
+      "building_ref": "BLD-DA"
+    },
+    {
+      "id": "S-L1",
+      "label": "Level 1",
+      "type": "GroundAndAboveStorey",
+      "elevation_m": 0.0,
+      "storey_height_m": 3.1,
+      "storey_above": "S-FDN",
+      "storey_below": "S-L2",
+      "building_ref": "BLD-DA"
+    },
+    {
+      "id": "S-L2",
+      "label": "Level 2",
+      "type": "GroundAndAboveStorey",
+      "elevation_m": 3.1,
+      "storey_height_m": 6.0,
+      "storey_above": "S-L1",
+      "storey_below": "S-ROOF",
+      "building_ref": "BLD-DA"
+    },
+    {
+      "id": "S-ROOF",
+      "label": "Roof",
+      "type": "GroundAndAboveStorey",
+      "elevation_m": 6.0,
+      "storey_height_m": 6.609,
+      "storey_above": "S-L2",
+      "storey_below": null,
+      "building_ref": "BLD-DA"
+    }
+  ],
+  "spaces": [
+    {
+      "id": "SP-A101",
+      "label": "A101",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "Foyer",
+      "area_m2": 17.936,
+      "adjacent_elements": [
+        "CLG-004",
+        "D-001",
+        "D-003",
+        "SLB-004",
+        "SLB-010",
+        "W-008",
+        "W-010"
+      ],
+      "adjacent_spaces": [
+        "SP-A102",
+        "SP-A103",
+        "SP-A104",
+        "SP-A105",
+        "SP-B102",
+        "SP-B103"
+      ]
+    },
+    {
+      "id": "SP-A102",
+      "label": "A102",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "HabitableRoom",
+      "area_m2": 30.142,
+      "adjacent_elements": [
+        "D-006",
+        "SLB-004",
+        "SLB-010",
+        "W-008",
+        "WIN-002",
+        "WIN-004"
+      ],
+      "adjacent_spaces": [
+        "SP-A101",
+        "SP-A103",
+        "SP-B101",
+        "SP-B105"
+      ]
+    },
+    {
+      "id": "SP-A103",
+      "label": "A103",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "Kitchen",
+      "area_m2": 13.898,
+      "adjacent_elements": [
+        "CLG-004",
+        "SLB-004",
+        "SLB-009",
+        "W-002",
+        "W-009",
+        "W-010",
+        "WIN-004"
+      ],
+      "adjacent_spaces": [
+        "SP-A101",
+        "SP-A102",
+        "SP-A104",
+        "SP-B101",
+        "SP-B105"
+      ]
+    },
+    {
+      "id": "SP-A104",
+      "label": "A104",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "Bathroom",
+      "area_m2": 3.998,
+      "adjacent_elements": [
+        "CLG-003",
+        "D-003",
+        "SLB-004",
+        "SLB-007",
+        "W-001",
+        "W-009",
+        "W-010"
+      ],
+      "adjacent_spaces": [
+        "SP-A101",
+        "SP-A103",
+        "SP-A105"
+      ]
+    },
+    {
+      "id": "SP-A105",
+      "label": "A105",
+      "type": "StairSpace",
+      "storey_ref": "S-L1",
+      "usage": "CirculationUsage",
+      "area_m2": 4.922,
+      "adjacent_elements": [
+        "CLG-004",
+        "CLG-009",
+        "SLB-010",
+        "SLB-012"
+      ],
+      "adjacent_spaces": [
+        "SP-A101",
+        "SP-A104",
+        "SP-B102",
+        "SP-B103"
+      ]
+    },
+    {
+      "id": "SP-B101",
+      "label": "B101",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "Foyer",
+      "area_m2": 17.936,
+      "adjacent_elements": [
+        "CLG-005",
+        "D-002",
+        "D-004",
+        "SLB-003",
+        "SLB-006",
+        "W-013",
+        "W-014"
+      ],
+      "adjacent_spaces": [
+        "SP-A102",
+        "SP-A103",
+        "SP-B102",
+        "SP-B103",
+        "SP-B104",
+        "SP-B105"
+      ]
+    },
+    {
+      "id": "SP-B102",
+      "label": "B102",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "HabitableRoom",
+      "area_m2": 30.142,
+      "adjacent_elements": [
+        "CLG-005",
+        "D-005",
+        "SLB-003",
+        "SLB-006",
+        "W-014",
+        "WIN-001",
+        "WIN-003"
+      ],
+      "adjacent_spaces": [
+        "SP-A101",
+        "SP-A105",
+        "SP-B101",
+        "SP-B103"
+      ]
+    },
+    {
+      "id": "SP-B103",
+      "label": "B103",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "Kitchen",
+      "area_m2": 13.898,
+      "adjacent_elements": [
+        "CLG-005",
+        "SLB-003",
+        "SLB-005",
+        "W-003",
+        "W-005",
+        "W-013",
+        "WIN-003"
+      ],
+      "adjacent_spaces": [
+        "SP-A101",
+        "SP-A105",
+        "SP-B101",
+        "SP-B102",
+        "SP-B104"
+      ]
+    },
+    {
+      "id": "SP-B104",
+      "label": "B104",
+      "type": "RoomSpace",
+      "storey_ref": "S-L1",
+      "usage": "Bathroom",
+      "area_m2": 3.998,
+      "adjacent_elements": [
+        "CLG-001",
+        "CLG-002",
+        "CLG-005",
+        "D-004",
+        "SLB-003",
+        "SLB-008",
+        "W-004",
+        "W-005",
+        "W-013"
+      ],
+      "adjacent_spaces": [
+        "SP-B101",
+        "SP-B103",
+        "SP-B105"
+      ]
+    },
+    {
+      "id": "SP-B105",
+      "label": "B105",
+      "type": "StairSpace",
+      "storey_ref": "S-L1",
+      "usage": "CirculationUsage",
+      "area_m2": 4.922,
+      "adjacent_elements": [
+        "CLG-005",
+        "CLG-011",
+        "SLB-006",
+        "SLB-011"
+      ],
+      "adjacent_spaces": [
+        "SP-A102",
+        "SP-A103",
+        "SP-B101",
+        "SP-B104"
+      ]
+    },
+    {
+      "id": "SP-A201",
+      "label": "A201",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "Hall",
+      "area_m2": 7.8,
+      "adjacent_elements": [
+        "CLG-009",
+        "D-008",
+        "D-009",
+        "D-012",
+        "D-014",
+        "SLB-012",
+        "SLB-015",
+        "W-011",
+        "W-019",
+        "W-020"
+      ],
+      "adjacent_spaces": [
+        "SP-A202",
+        "SP-A203",
+        "SP-A204",
+        "SP-A205"
+      ]
+    },
+    {
+      "id": "SP-A202",
+      "label": "A202",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "HabitableRoom",
+      "area_m2": 26.119,
+      "adjacent_elements": [
+        "CLG-007",
+        "D-014",
+        "SLB-012",
+        "SLB-020",
+        "W-019",
+        "W-020",
+        "W-022",
+        "WIN-017",
+        "WIN-020"
+      ],
+      "adjacent_spaces": [
+        "SP-A201",
+        "SP-A203",
+        "SP-A204",
+        "SP-A205",
+        "SP-B202",
+        "SP-B203"
+      ]
+    },
+    {
+      "id": "SP-A203",
+      "label": "A203",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "HabitableRoom",
+      "area_m2": 26.178,
+      "adjacent_elements": [
+        "CLG-013",
+        "D-009",
+        "SLB-012",
+        "SLB-018",
+        "W-011",
+        "W-020",
+        "W-021",
+        "WIN-006",
+        "WIN-009",
+        "WIN-015"
+      ],
+      "adjacent_spaces": [
+        "SP-A201",
+        "SP-A202",
+        "SP-A204",
+        "SP-A205",
+        "SP-B202",
+        "SP-B203"
+      ]
+    },
+    {
+      "id": "SP-A204",
+      "label": "A204",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "Bathroom",
+      "area_m2": 5.416,
+      "adjacent_elements": [
+        "CLG-008",
+        "D-008",
+        "D-012",
+        "SLB-012",
+        "SLB-013",
+        "W-016",
+        "W-017",
+        "W-020",
+        "W-021"
+      ],
+      "adjacent_spaces": [
+        "SP-A201",
+        "SP-A202",
+        "SP-A203",
+        "SP-A205"
+      ]
+    },
+    {
+      "id": "SP-A205",
+      "label": "A205",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "ServiceUsage",
+      "area_m2": 1.754,
+      "adjacent_elements": [
+        "CLG-008",
+        "D-008",
+        "SLB-012",
+        "SLB-013",
+        "W-016",
+        "W-017",
+        "W-020",
+        "W-022"
+      ],
+      "adjacent_spaces": [
+        "SP-A201",
+        "SP-A202",
+        "SP-A203",
+        "SP-A204"
+      ]
+    },
+    {
+      "id": "SP-B201",
+      "label": "B201",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "Hall",
+      "area_m2": 7.8,
+      "adjacent_elements": [
+        "CLG-011",
+        "D-010",
+        "D-011",
+        "D-013",
+        "SLB-011",
+        "SLB-017",
+        "W-012",
+        "W-023",
+        "W-024"
+      ],
+      "adjacent_spaces": [
+        "SP-B202",
+        "SP-B203",
+        "SP-B204",
+        "SP-B205"
+      ]
+    },
+    {
+      "id": "SP-B202",
+      "label": "B202",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "HabitableRoom",
+      "area_m2": 26.119,
+      "adjacent_elements": [
+        "CLG-012",
+        "D-011",
+        "SLB-011",
+        "SLB-016",
+        "W-023",
+        "W-024",
+        "W-025",
+        "WIN-013",
+        "WIN-021"
+      ],
+      "adjacent_spaces": [
+        "SP-A202",
+        "SP-A203",
+        "SP-B201",
+        "SP-B203",
+        "SP-B204",
+        "SP-B205"
+      ]
+    },
+    {
+      "id": "SP-B203",
+      "label": "B203",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "HabitableRoom",
+      "area_m2": 26.178,
+      "adjacent_elements": [
+        "CLG-006",
+        "D-010",
+        "SLB-011",
+        "SLB-019",
+        "W-012",
+        "W-023",
+        "W-026",
+        "WIN-008",
+        "WIN-010",
+        "WIN-014"
+      ],
+      "adjacent_spaces": [
+        "SP-A202",
+        "SP-A203",
+        "SP-B201",
+        "SP-B202",
+        "SP-B204",
+        "SP-B205"
+      ]
+    },
+    {
+      "id": "SP-B204",
+      "label": "B204",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "Bathroom",
+      "area_m2": 5.441,
+      "adjacent_elements": [
+        "CLG-010",
+        "D-007",
+        "D-013",
+        "SLB-011",
+        "SLB-014",
+        "W-015",
+        "W-018",
+        "W-023",
+        "W-026"
+      ],
+      "adjacent_spaces": [
+        "SP-B201",
+        "SP-B202",
+        "SP-B203",
+        "SP-B205"
+      ]
+    },
+    {
+      "id": "SP-B205",
+      "label": "B205",
+      "type": "RoomSpace",
+      "storey_ref": "S-L2",
+      "usage": "ServiceUsage",
+      "area_m2": 1.728,
+      "adjacent_elements": [
+        "CLG-010",
+        "D-007",
+        "SLB-011",
+        "SLB-014",
+        "W-015",
+        "W-018",
+        "W-023",
+        "W-025"
+      ],
+      "adjacent_spaces": [
+        "SP-B201",
+        "SP-B202",
+        "SP-B203",
+        "SP-B204"
+      ]
+    },
+    {
+      "id": "SP-R301",
+      "label": "R301",
+      "type": "RoofSpace",
+      "storey_ref": "S-ROOF",
+      "usage": "ServiceUsage",
+      "area_m2": 145.722,
+      "adjacent_elements": [],
+      "adjacent_spaces": []
+    }
+  ],
+  "elements": [
+    {
+      "id": "W-001",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 30,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.152,
+      "length_m": 2.508,
+      "area_m2": 6.415,
+      "sub_elements": []
+    },
+    {
+      "id": "W-002",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 20,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.152,
+      "length_m": 4.485,
+      "area_m2": 11.742,
+      "sub_elements": []
+    },
+    {
+      "id": "W-003",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.152,
+      "length_m": 4.485,
+      "area_m2": 12.167,
+      "sub_elements": []
+    },
+    {
+      "id": "W-004",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 30,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.152,
+      "length_m": 2.508,
+      "area_m2": 6.643,
+      "sub_elements": []
+    },
+    {
+      "id": "W-005",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 30,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 1.594,
+      "area_m2": 4.07,
+      "sub_elements": []
+    },
+    {
+      "id": "W-006",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 3.812,
+      "area_m2": 1.696,
+      "sub_elements": []
+    },
+    {
+      "id": "W-007",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 3.812,
+      "area_m2": 1.696,
+      "sub_elements": []
+    },
+    {
+      "id": "W-008",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 3.791,
+      "area_m2": 10.014,
+      "sub_elements": []
+    },
+    {
+      "id": "W-009",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 1.594,
+      "area_m2": 4.07,
+      "sub_elements": []
+    },
+    {
+      "id": "W-010",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 3.195,
+      "area_m2": 6.613,
+      "sub_elements": []
+    },
+    {
+      "id": "W-011",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 2.235,
+      "area_m2": 5.322,
+      "sub_elements": []
+    },
+    {
+      "id": "W-012",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 2.236,
+      "area_m2": 5.322,
+      "sub_elements": []
+    },
+    {
+      "id": "W-013",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 3.195,
+      "area_m2": 6.613,
+      "sub_elements": []
+    },
+    {
+      "id": "W-014",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 3.791,
+      "area_m2": 10.014,
+      "sub_elements": []
+    },
+    {
+      "id": "W-015",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.152,
+      "length_m": 4.314,
+      "area_m2": 10.795,
+      "sub_elements": []
+    },
+    {
+      "id": "W-016",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.152,
+      "length_m": 4.314,
+      "area_m2": 10.795,
+      "sub_elements": []
+    },
+    {
+      "id": "W-017",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 30,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 1.662,
+      "area_m2": 2.871,
+      "sub_elements": []
+    },
+    {
+      "id": "W-018",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 1.662,
+      "area_m2": 2.871,
+      "sub_elements": []
+    },
+    {
+      "id": "W-019",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 2.235,
+      "area_m2": 3.943,
+      "sub_elements": []
+    },
+    {
+      "id": "W-020",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 5.424,
+      "area_m2": 13.974,
+      "sub_elements": []
+    },
+    {
+      "id": "W-021",
+      "label": "Internal plumbing wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.184,
+      "length_m": 1.956,
+      "area_m2": 4.695,
+      "sub_elements": []
+    },
+    {
+      "id": "W-022",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 1.956,
+      "area_m2": 4.695,
+      "sub_elements": []
+    },
+    {
+      "id": "W-023",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 15,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 5.424,
+      "area_m2": 13.974,
+      "sub_elements": []
+    },
+    {
+      "id": "W-024",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 15,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 2.235,
+      "area_m2": 3.943,
+      "sub_elements": []
+    },
+    {
+      "id": "W-025",
+      "label": "Internal partition wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 15,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.124,
+      "length_m": 1.956,
+      "area_m2": 4.695,
+      "sub_elements": []
+    },
+    {
+      "id": "W-026",
+      "label": "Internal plumbing wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 45,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.184,
+      "length_m": 1.956,
+      "area_m2": 4.695,
+      "sub_elements": []
+    },
+    {
+      "id": "W-027",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 20,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.135,
+      "area_m2": 0.327,
+      "sub_elements": []
+    },
+    {
+      "id": "W-028",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.083,
+      "area_m2": 0.312,
+      "sub_elements": []
+    },
+    {
+      "id": "W-029",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.083,
+      "area_m2": 0.312,
+      "sub_elements": []
+    },
+    {
+      "id": "W-030",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.135,
+      "area_m2": 0.327,
+      "sub_elements": []
+    },
+    {
+      "id": "W-031",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 20,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.083,
+      "area_m2": 0.312,
+      "sub_elements": []
+    },
+    {
+      "id": "W-032",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.135,
+      "area_m2": 0.327,
+      "sub_elements": []
+    },
+    {
+      "id": "W-033",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.083,
+      "area_m2": 0.312,
+      "sub_elements": []
+    },
+    {
+      "id": "W-034",
+      "label": "Internal furring wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 20,
+      "is_external": false,
+      "is_load_bearing": false,
+      "width_m": 0.054,
+      "length_m": 1.135,
+      "area_m2": 0.327,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-001",
+      "label": "Concrete slab on grade",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 45,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.15,
+      "area_m2": 25.42,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-002",
+      "label": "Concrete slab on grade",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 45,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.15,
+      "area_m2": 25.42,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-003",
+      "label": "Concrete slab on grade",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.127,
+      "area_m2": 64.78,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-004",
+      "label": "Concrete slab on grade",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.127,
+      "area_m2": 64.906,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-005",
+      "label": "Floor finish (ceramic tile)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.013,
+      "area_m2": 12.954,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-006",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 47.15,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-007",
+      "label": "Floor finish (ceramic tile)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.013,
+      "area_m2": 3.161,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-008",
+      "label": "Floor finish (ceramic tile)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.013,
+      "area_m2": 3.161,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-009",
+      "label": "Floor finish (ceramic tile)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.013,
+      "area_m2": 12.954,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-010",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 47.15,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-011",
+      "label": "Timber floor (wood joist with subflooring)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 20,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.305,
+      "area_m2": 59.229,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-012",
+      "label": "Timber floor (wood joist with subflooring)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 60,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.305,
+      "area_m2": 59.334,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-013",
+      "label": "Floor finish (ceramic tile)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 20,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.013,
+      "area_m2": 6.34,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-014",
+      "label": "Floor finish (ceramic tile)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 25,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.013,
+      "area_m2": 6.34,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-015",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 15,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 7.211,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-016",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 30,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 22.043,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-017",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 7.211,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-018",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 22.069,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-019",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 22.043,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-020",
+      "label": "Floor finish (timber)",
+      "type": "FloorSlab",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": false,
+      "is_load_bearing": true,
+      "thickness_m": 0.019,
+      "area_m2": 22.043,
+      "sub_elements": []
+    },
+    {
+      "id": "SLB-021",
+      "label": "Flat roof deck (wood joist)",
+      "type": "RoofSlab",
+      "storey_ref": "S-ROOF",
+      "rei": null,
+      "is_external": false,
+      "is_load_bearing": null,
+      "thickness_m": 0.457,
+      "area_m2": 132.926,
+      "sub_elements": []
+    },
+    {
+      "id": "D-001",
+      "label": "Single flush doorset (1250 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L1",
+      "rei": null,
+      "is_external": true,
+      "is_obscured": false,
+      "width_m": 1.25,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-002",
+      "label": "Single flush doorset (1250 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L1",
+      "rei": null,
+      "is_external": true,
+      "is_obscured": false,
+      "width_m": 1.25,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-003",
+      "label": "Single flush doorset (762 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L1",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": true,
+      "width_m": 0.762,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-004",
+      "label": "Single flush doorset (762 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L1",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.762,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-005",
+      "label": "Single glazed doorset",
+      "type": "Doorset",
+      "storey_ref": "S-L1",
+      "rei": null,
+      "is_external": true,
+      "is_obscured": false,
+      "width_m": 0.813,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-006",
+      "label": "Single glazed doorset",
+      "type": "Doorset",
+      "storey_ref": "S-L1",
+      "rei": null,
+      "is_external": true,
+      "is_obscured": false,
+      "width_m": 0.813,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-007",
+      "label": "Single flush doorset (762 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.762,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-008",
+      "label": "Single flush doorset (762 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.762,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-009",
+      "label": "Single flush doorset (864 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.864,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-010",
+      "label": "Single flush doorset (864 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.864,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-011",
+      "label": "Single flush doorset (864 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.864,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-012",
+      "label": "Single flush doorset (864 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.864,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-013",
+      "label": "Single flush doorset (864 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.864,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "D-014",
+      "label": "Single flush doorset (864 mm wide)",
+      "type": "Doorset",
+      "storey_ref": "S-L2",
+      "rei": null,
+      "is_external": false,
+      "is_obscured": false,
+      "width_m": 0.864,
+      "thickness_m": 0.051
+    },
+    {
+      "id": "WIN-001",
+      "label": "Fixed window (4835mm x 2420mm)",
+      "type": "Window",
+      "storey_ref": "S-L1",
+      "is_external": true,
+      "width_m": 4.835
+    },
+    {
+      "id": "WIN-002",
+      "label": "Fixed window (4835mm x 2420mm)",
+      "type": "Window",
+      "storey_ref": "S-L1",
+      "is_external": true,
+      "width_m": 4.835
+    },
+    {
+      "id": "WIN-003",
+      "label": "Fixed window (750mm x 2200mm)",
+      "type": "Window",
+      "storey_ref": "S-L1",
+      "is_external": true,
+      "width_m": 0.75
+    },
+    {
+      "id": "WIN-004",
+      "label": "Fixed window (750mm x 2200mm)",
+      "type": "Window",
+      "storey_ref": "S-L1",
+      "is_external": true,
+      "width_m": 0.75
+    },
+    {
+      "id": "WIN-005",
+      "label": "Casement window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-006",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-007",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-008",
+      "label": "Fixed window (2800mm x 2410mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 2.8
+    },
+    {
+      "id": "WIN-009",
+      "label": "Fixed window (2800mm x 2410mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 2.8
+    },
+    {
+      "id": "WIN-010",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-011",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-012",
+      "label": "Casement window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-013",
+      "label": "Fixed window (2800mm x 2410mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 2.8
+    },
+    {
+      "id": "WIN-014",
+      "label": "Fixed window (750mm x 2200mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.75
+    },
+    {
+      "id": "WIN-015",
+      "label": "Fixed window (750mm x 2200mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.75
+    },
+    {
+      "id": "WIN-016",
+      "label": "Casement window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-017",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-018",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-019",
+      "label": "Casement window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-020",
+      "label": "Fixed window (2800mm x 2410mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 2.8
+    },
+    {
+      "id": "WIN-021",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-022",
+      "label": "Fixed window (819mm x 759mm)",
+      "type": "Window",
+      "storey_ref": "S-L2",
+      "is_external": true,
+      "width_m": 0.819
+    },
+    {
+      "id": "WIN-023",
+      "label": "Skylight (1180 x 1170mm)",
+      "type": "Window",
+      "storey_ref": "S-ROOF",
+      "is_external": false,
+      "width_m": 1.118
+    },
+    {
+      "id": "WIN-024",
+      "label": "Skylight (1180 x 1170mm)",
+      "type": "Window",
+      "storey_ref": "S-ROOF",
+      "is_external": false,
+      "width_m": 1.118
+    },
+    {
+      "id": "CLG-001",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L1",
+      "area_m2": 3.176,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-002",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L1",
+      "area_m2": 3.176,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-003",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L1",
+      "area_m2": 3.367,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-004",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L1",
+      "area_m2": 56.458,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-005",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L1",
+      "area_m2": 57.034,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-006",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 22.043,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-007",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 22.043,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-008",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 6.735,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-009",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 9.302,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-010",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 6.735,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-011",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 9.302,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-012",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 22.043,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "CLG-013",
+      "label": "Gypsum board ceiling",
+      "type": "Ceiling",
+      "storey_ref": "S-L2",
+      "area_m2": 22.043,
+      "thickness_m": 0.057
+    },
+    {
+      "id": "BM-001",
+      "label": "Steel beam (W410X60)",
+      "type": "Beam",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 6.182
+    },
+    {
+      "id": "BM-002",
+      "label": "Steel beam (W410X60)",
+      "type": "Beam",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 6.182
+    },
+    {
+      "id": "BM-003",
+      "label": "Steel beam (W310X60)",
+      "type": "Beam",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 7.523
+    },
+    {
+      "id": "BM-004",
+      "label": "Steel beam (W310X60)",
+      "type": "Beam",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 7.523
+    },
+    {
+      "id": "BM-005",
+      "label": "Steel beam (W410X60)",
+      "type": "Beam",
+      "storey_ref": "S-L2",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 4.121
+    },
+    {
+      "id": "BM-006",
+      "label": "Steel beam (W410X60)",
+      "type": "Beam",
+      "storey_ref": "S-L2",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 4.1
+    },
+    {
+      "id": "BM-007",
+      "label": "Steel beam (W410X60)",
+      "type": "Beam",
+      "storey_ref": "S-L2",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 4.1
+    },
+    {
+      "id": "BM-008",
+      "label": "Steel beam (W410X60)",
+      "type": "Beam",
+      "storey_ref": "S-L2",
+      "is_external": false,
+      "is_load_bearing": true,
+      "length_m": 4.121
+    },
+    {
+      "id": "FTG-001",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 4.2
+    },
+    {
+      "id": "FTG-002",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 1.765
+    },
+    {
+      "id": "FTG-003",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 4.2
+    },
+    {
+      "id": "FTG-004",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 8.8
+    },
+    {
+      "id": "FTG-005",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 17.383
+    },
+    {
+      "id": "FTG-006",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 8.383
+    },
+    {
+      "id": "FTG-007",
+      "label": "Bearing footing (900 mm wide)",
+      "type": "WallFoundation",
+      "storey_ref": "S-FDN",
+      "width_m": 0.9,
+      "length_m": 16.966
+    },
+    {
+      "id": "SF-001",
+      "label": "Residential stair flight",
+      "type": "StairFlight",
+      "storey_ref": "S-L1"
+    },
+    {
+      "id": "SF-002",
+      "label": "Residential stair flight",
+      "type": "StairFlight",
+      "storey_ref": "S-L1"
+    },
+    {
+      "id": "SF-003",
+      "label": "Residential stair flight",
+      "type": "StairFlight",
+      "storey_ref": "S-L1"
+    },
+    {
+      "id": "SF-004",
+      "label": "Residential stair flight",
+      "type": "StairFlight",
+      "storey_ref": "S-L1"
+    },
+    {
+      "id": "SF-005",
+      "label": "Residential stair flight",
+      "type": "StairFlight",
+      "storey_ref": "S-L1"
+    },
+    {
+      "id": "SF-006",
+      "label": "Residential stair flight",
+      "type": "StairFlight",
+      "storey_ref": "S-L1"
+    },
+    {
+      "id": "RAL-001",
+      "label": "Guard rail (1100 mm)",
+      "type": "Railing",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "length_m": 8.334
+    },
+    {
+      "id": "RAL-002",
+      "label": "Handrail (900 mm)",
+      "type": "Railing",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "length_m": 4.744
+    },
+    {
+      "id": "RAL-003",
+      "label": "Guard rail (1100 mm)",
+      "type": "Railing",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "length_m": 8.334
+    },
+    {
+      "id": "RAL-004",
+      "label": "Handrail (900 mm)",
+      "type": "Railing",
+      "storey_ref": "S-L1",
+      "is_external": false,
+      "length_m": 4.744
+    },
+    {
+      "id": "ALM-001",
+      "label": "Smoke Alarm — Hallway Unit A",
+      "type": "Alarm",
+      "storey_ref": null,
+      "located_in_space": "SP-A102",
+      "is_obscured": false,
+      "service_expiry_date": "2028-01-01"
+    },
+    {
+      "id": "ALM-002",
+      "label": "Smoke Alarm — Hallway Unit B",
+      "type": "Alarm",
+      "storey_ref": null,
+      "located_in_space": "SP-B102",
+      "is_obscured": false,
+      "service_expiry_date": "2028-01-01"
+    },
+    {
+      "id": "ALM-003",
+      "label": "Smoke Alarm — Kitchen Unit A",
+      "type": "Alarm",
+      "storey_ref": null,
+      "located_in_space": "SP-A101",
+      "is_obscured": false,
+      "service_expiry_date": "2028-01-01"
+    },
+    {
+      "id": "ALM-004",
+      "label": "Smoke Alarm — Kitchen Unit B",
+      "type": "Alarm",
+      "storey_ref": null,
+      "located_in_space": "SP-B101",
+      "is_obscured": false,
+      "service_expiry_date": "2028-01-01"
+    },
+    {
+      "id": "FE-001",
+      "label": "Fire Extinguisher — Level 0 Unit A",
+      "type": "FireExtinguisher",
+      "storey_ref": null,
+      "located_in_space": "SP-A101",
+      "is_obscured": false,
+      "is_damaged": false,
+      "service_expiry_date": "2027-06-01"
+    },
+    {
+      "id": "FE-002",
+      "label": "Fire Extinguisher — Level 0 Unit B",
+      "type": "FireExtinguisher",
+      "storey_ref": null,
+      "located_in_space": "SP-B101",
+      "is_obscured": false,
+      "is_damaged": false,
+      "service_expiry_date": "2027-06-01"
+    },
+    {
+      "id": "FE-003",
+      "label": "Fire Extinguisher — Level 1 Unit A",
+      "type": "FireExtinguisher",
+      "storey_ref": null,
+      "located_in_space": "SP-A102",
+      "is_obscured": false,
+      "is_damaged": false,
+      "service_expiry_date": "2027-06-01"
+    },
+    {
+      "id": "FE-004",
+      "label": "Fire Extinguisher — Level 1 Unit B",
+      "type": "FireExtinguisher",
+      "storey_ref": null,
+      "located_in_space": "SP-B102",
+      "is_obscured": false,
+      "is_damaged": true,
+      "service_expiry_date": "2025-01-15"
+    }
+  ],
+  "risk_units": [
+    {
+      "id": "RU-A",
+      "label": "Dwelling Unit A",
+      "covers_spaces": [
+        "SP-A101",
+        "SP-A102",
+        "SP-A103",
+        "SP-A104",
+        "SP-A105",
+        "SP-A201",
+        "SP-A202",
+        "SP-A203",
+        "SP-A204",
+        "SP-A205"
+      ],
+      "installation_status": "UnsprinkleredOrNonCompliant",
+      "is_exposed_to": [
+        "RU-B"
+      ],
+      "declared_exposure_value": 276326.0
+    },
+    {
+      "id": "RU-B",
+      "label": "Dwelling Unit B",
+      "covers_spaces": [
+        "SP-B101",
+        "SP-B102",
+        "SP-B103",
+        "SP-B104",
+        "SP-B105",
+        "SP-B201",
+        "SP-B202",
+        "SP-B203",
+        "SP-B204",
+        "SP-B205"
+      ],
+      "installation_status": "UnsprinkleredOrNonCompliant",
+      "is_exposed_to": [
+        "RU-A"
+      ],
+      "declared_exposure_value": 276324.0
+    },
+    {
+      "id": "RU-ROOF",
+      "label": "Roof Space Unit",
+      "covers_spaces": [
+        "SP-R301"
+      ],
+      "installation_status": null,
+      "is_exposed_to": [],
+      "declared_exposure_value": 29144.0
+    }
+  ],
+  "boundary_assumptions": [
+    {
+      "id": "BA-CAV-A",
+      "label": "CavityBarrierAssumption — Unit A [Unknown]",
+      "assumption_type": "CavityBarrierAssumption",
+      "condition_state": "Unknown",
+      "applies_to_risk_unit": "RU-A",
+      "supported_by_evidence": []
+    },
+    {
+      "id": "BA-CAV-B",
+      "label": "CavityBarrierAssumption — Unit B [Compromised]",
+      "assumption_type": "CavityBarrierAssumption",
+      "condition_state": "Compromised",
+      "applies_to_risk_unit": "RU-B",
+      "supported_by_evidence": [
+        "EV-004"
+      ]
+    },
+    {
+      "id": "BA-COMP-A",
+      "label": "CompartmentationAssumption — Unit A [Effective]",
+      "assumption_type": "CompartmentationAssumption",
+      "condition_state": "Effective",
+      "applies_to_risk_unit": "RU-A",
+      "supported_by_evidence": [
+        "EV-003"
+      ]
+    },
+    {
+      "id": "BA-COMP-B",
+      "label": "CompartmentationAssumption — Unit B [Unknown]",
+      "assumption_type": "CompartmentationAssumption",
+      "condition_state": "Unknown",
+      "applies_to_risk_unit": "RU-B",
+      "supported_by_evidence": []
+    },
+    {
+      "id": "BA-EXT-A",
+      "label": "ExternalSpreadAssumption — Unit A [Unknown]",
+      "assumption_type": "ExternalSpreadAssumption",
+      "condition_state": "Unknown",
+      "applies_to_risk_unit": "RU-A",
+      "supported_by_evidence": []
+    },
+    {
+      "id": "BA-EXT-B",
+      "label": "ExternalSpreadAssumption — Unit B [Unknown]",
+      "assumption_type": "ExternalSpreadAssumption",
+      "condition_state": "Unknown",
+      "applies_to_risk_unit": "RU-B",
+      "supported_by_evidence": []
+    },
+    {
+      "id": "BA-STRUCT-A",
+      "label": "StructuralStabilityAssumption — Unit A [Effective]",
+      "assumption_type": "StructuralStabilityAssumption",
+      "condition_state": "Effective",
+      "applies_to_risk_unit": "RU-A",
+      "supported_by_evidence": [
+        "EV-001"
+      ]
+    },
+    {
+      "id": "BA-STRUCT-B",
+      "label": "StructuralStabilityAssumption — Unit B [Effective]",
+      "assumption_type": "StructuralStabilityAssumption",
+      "condition_state": "Effective",
+      "applies_to_risk_unit": "RU-B",
+      "supported_by_evidence": [
+        "EV-002"
+      ]
+    }
+  ],
+  "evidence_log": [
+    {
+      "id": "EV-001",
+      "type": "DocumentBasis",
+      "label": "Unit A — Structural Fire Design Drawing Rev B",
+      "document_title": "Unit A — Structural Fire Design Drawing Rev B",
+      "document_uri": "file:///docs/UnitA_Structural_FireDesign_RevB.pdf"
+    },
+    {
+      "id": "EV-002",
+      "type": "DocumentBasis",
+      "label": "Unit B — Structural Fire Design Drawing Rev B",
+      "document_title": "Unit B — Structural Fire Design Drawing Rev B",
+      "document_uri": "file:///docs/UnitB_Structural_FireDesign_RevB.pdf"
+    },
+    {
+      "id": "EV-003",
+      "type": "DocumentBasis",
+      "label": "Unit A — Compartmentation Certificate 2023",
+      "document_title": "Unit A — Compartmentation Certificate 2023",
+      "document_uri": "file:///docs/UnitA_Compartmentation_Cert_2023.pdf"
+    },
+    {
+      "id": "EV-004",
+      "type": "ObservedEvidence",
+      "label": "Unit B — Cavity Barrier Survey: gap found at party wall head junction",
+      "document_title": null,
+      "document_uri": null
+    }
+  ],
+  "regulatory_sources": [
+    {
+      "id": "REG-001",
+      "label": "BDM02: Building Disaster Mitigation Assessment Manual (2023)",
+      "document_title": "BDM02: Building Disaster Mitigation Assessment Manual (2023)",
+      "document_uri": null
+    },
+    {
+      "id": "REG-002",
+      "label": "Approved Document B Volume 1: Dwellings (2019 edition)",
+      "document_title": "Approved Document B Volume 1: Dwellings (2019 edition)",
+      "document_uri": "https://www.gov.uk/government/publications/fire-safety-approved-document-b"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_annual_2024",
+      "label": "Annual Fire Safety Inspection — March 2024",
+      "type": "RoutineTriggerEvent",
+      "triggers_tasks": [
+        "TSK-001",
+        "TSK-002",
+        "TSK-003"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TSK-001",
+      "label": "Compartmentation & REI Compliance Check",
+      "type": "ComplianceCheckingTask",
+      "planned_start_time": "2024-03-15T09:00:00",
+      "planned_end_time": "2024-03-15T12:00:00",
+      "produces_assessments": [
+        "ASS-001",
+        "ASS-003",
+        "ASS-004"
+      ]
+    },
+    {
+      "id": "TSK-002",
+      "label": "Fire Equipment Service Inspection",
+      "type": "EquipmentInspectionTask",
+      "planned_start_time": "2024-03-15T13:00:00",
+      "planned_end_time": "2024-03-15T15:00:00",
+      "produces_assessments": [
+        "ASS-002"
+      ]
+    },
+    {
+      "id": "TSK-003",
+      "label": "Fire Risk Assessment — All Risk Units",
+      "type": "FireRiskAssessmentTask",
+      "planned_start_time": "2024-03-15T15:00:00",
+      "planned_end_time": "2024-03-15T17:00:00",
+      "produces_assessments": [
+        "ASS-005"
+      ]
+    }
+  ],
+  "assessments": [
+    {
+      "id": "ASS-001",
+      "label": "Doorset Accessibility Assessment",
+      "type": "ComplianceChecking",
+      "based_on_regulation": "REG-002",
+      "has_compliance_result": "CompliantResult",
+      "has_assessment_basis": null
+    },
+    {
+      "id": "ASS-002",
+      "label": "Fire Equipment Operational Assessment",
+      "type": "ComplianceChecking",
+      "based_on_regulation": null,
+      "has_compliance_result": "CompliantResult",
+      "has_assessment_basis": null
+    },
+    {
+      "id": "ASS-003",
+      "label": "Floor/Slab REI Compliance Assessment",
+      "type": "ComplianceChecking",
+      "based_on_regulation": "REG-002",
+      "has_compliance_result": "NonCompliantResult",
+      "has_assessment_basis": null
+    },
+    {
+      "id": "ASS-004",
+      "label": "Wall REI Compliance Assessment",
+      "type": "ComplianceChecking",
+      "based_on_regulation": "REG-002",
+      "has_compliance_result": "NonCompliantResult",
+      "has_assessment_basis": "EV-003"
+    },
+    {
+      "id": "ASS-005",
+      "label": "Duplex A Fire Risk Analysis 2024",
+      "type": "RiskAnalysis",
+      "has_scenarios": [
+        "FRS-001",
+        "FRS-002"
+      ],
+      "uses_compliance_result": "NonCompliantResult"
+    }
+  ],
+  "fire_risk_scenarios": [
+    {
+      "id": "FRS-001",
+      "label": "Electrical fault scenario — Unit B",
+      "origin_space": "SP-B203"
+    },
+    {
+      "id": "FRS-002",
+      "label": "Kitchen fire scenario — Unit A",
+      "origin_space": "SP-A103"
+    }
+  ]
+}

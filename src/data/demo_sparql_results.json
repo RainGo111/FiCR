@@ -1,0 +1,2430 @@
+{
+  "A1": {
+    "title": "Building Overview",
+    "columns": [
+      "siteLabel",
+      "buildingType",
+      "purposeGroup",
+      "utilizationPurpose",
+      "storeyCount",
+      "totalSpaceCount"
+    ],
+    "rows": [
+      {
+        "siteLabel": "Default",
+        "buildingType": "MultiStoreyBuilding",
+        "purposeGroup": "PurposeGroup1b",
+        "utilizationPurpose": "Dwellinghouse",
+        "storeyCount": 4,
+        "totalSpaceCount": 21
+      }
+    ],
+    "row_count": 1
+  },
+  "A2": {
+    "title": "Storey Inventory and Typology",
+    "columns": [
+      "storeyLabel",
+      "storeyType",
+      "elevation_m",
+      "storeyHeight_m",
+      "spaceCount"
+    ],
+    "rows": [
+      {
+        "storeyLabel": "Level 1",
+        "storeyType": "GroundAndAboveStorey",
+        "elevation_m": 0.0,
+        "storeyHeight_m": null,
+        "spaceCount": 10
+      },
+      {
+        "storeyLabel": "Level 2",
+        "storeyType": "GroundAndAboveStorey",
+        "elevation_m": 3.1,
+        "storeyHeight_m": null,
+        "spaceCount": 10
+      },
+      {
+        "storeyLabel": "T/FDN",
+        "storeyType": "BasementStorey",
+        "elevation_m": -1.25,
+        "storeyHeight_m": null,
+        "spaceCount": 0
+      },
+      {
+        "storeyLabel": "Roof",
+        "storeyType": "GroundAndAboveStorey",
+        "elevation_m": 6.0,
+        "storeyHeight_m": null,
+        "spaceCount": 1
+      }
+    ],
+    "row_count": 4
+  },
+  "A3": {
+    "title": "Space Ledger (Detail)",
+    "columns": [
+      "storeyLabel",
+      "spaceLabel",
+      "adjacentSpaces",
+      "areaM2",
+      "usageLabel"
+    ],
+    "rows": [
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "A101",
+        "adjacentSpaces": "A102 | A104 | A103 | B103 | B102 | A105",
+        "areaM2": 17.936,
+        "usageLabel": "Foyer"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "A102",
+        "adjacentSpaces": "A101 | A103 | B101 | B105",
+        "areaM2": 30.142,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "A103",
+        "adjacentSpaces": "A102 | A101 | A104 | B101 | B105",
+        "areaM2": 13.898,
+        "usageLabel": "Kitchen"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "A104",
+        "adjacentSpaces": "A101 | A103 | A105",
+        "areaM2": 3.998,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "A105",
+        "adjacentSpaces": "A101 | A104 | B103 | B102",
+        "areaM2": 4.922,
+        "usageLabel": "CirculationUsage"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "B101",
+        "adjacentSpaces": "A102 | A103 | B104 | B103 | B102 | B105",
+        "areaM2": 17.936,
+        "usageLabel": "Foyer"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "B102",
+        "adjacentSpaces": "A101 | B101 | B103 | A105",
+        "areaM2": 30.142,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "B103",
+        "adjacentSpaces": "A101 | B104 | B101 | B102 | A105",
+        "areaM2": 13.898,
+        "usageLabel": "Kitchen"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "B104",
+        "adjacentSpaces": "B101 | B103 | B105",
+        "areaM2": 3.998,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "storeyLabel": "Level 1",
+        "spaceLabel": "B105",
+        "adjacentSpaces": "A102 | A103 | B104 | B101",
+        "areaM2": 4.922,
+        "usageLabel": "CirculationUsage"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "A201",
+        "adjacentSpaces": "A203 | A202 | A204 | A205",
+        "areaM2": 7.8,
+        "usageLabel": "Hall"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "A202",
+        "adjacentSpaces": "A203 | A204 | A201 | B203 | B202 | A205",
+        "areaM2": 26.119,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "A203",
+        "adjacentSpaces": "A202 | A204 | A201 | B203 | B202 | A205",
+        "areaM2": 26.178,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "A204",
+        "adjacentSpaces": "A203 | A202 | A201 | A205",
+        "areaM2": 5.416,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "A205",
+        "adjacentSpaces": "A203 | A202 | A204 | A201",
+        "areaM2": 1.754,
+        "usageLabel": "ServiceUsage"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "B201",
+        "adjacentSpaces": "B203 | B202 | B204 | B205",
+        "areaM2": 7.8,
+        "usageLabel": "Hall"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "B202",
+        "adjacentSpaces": "A203 | A202 | B203 | B204 | B201 | B205",
+        "areaM2": 26.119,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "B203",
+        "adjacentSpaces": "A203 | A202 | B202 | B204 | B201 | B205",
+        "areaM2": 26.178,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "B204",
+        "adjacentSpaces": "B203 | B202 | B201 | B205",
+        "areaM2": 5.441,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "storeyLabel": "Level 2",
+        "spaceLabel": "B205",
+        "adjacentSpaces": "B203 | B202 | B204 | B201",
+        "areaM2": 1.728,
+        "usageLabel": "ServiceUsage"
+      },
+      {
+        "storeyLabel": "Roof",
+        "spaceLabel": "R301",
+        "adjacentSpaces": null,
+        "areaM2": 145.722,
+        "usageLabel": "ServiceUsage"
+      }
+    ],
+    "row_count": 21
+  },
+  "A4": {
+    "title": "Space Usage Distribution",
+    "columns": [
+      "usageType",
+      "count"
+    ],
+    "rows": [
+      {
+        "usageType": "HabitableRoom",
+        "count": 6
+      },
+      {
+        "usageType": "Bathroom",
+        "count": 4
+      },
+      {
+        "usageType": "ServiceUsage",
+        "count": 3
+      },
+      {
+        "usageType": "Hall",
+        "count": 2
+      },
+      {
+        "usageType": "Foyer",
+        "count": 2
+      },
+      {
+        "usageType": "Kitchen",
+        "count": 2
+      },
+      {
+        "usageType": "CirculationUsage",
+        "count": 2
+      }
+    ],
+    "row_count": 7
+  },
+  "A5": {
+    "title": "Fire Safety Element Inventory",
+    "columns": [
+      "elementType",
+      "count"
+    ],
+    "rows": [
+      {
+        "elementType": "Furnishings",
+        "count": 61
+      },
+      {
+        "elementType": "Opening",
+        "count": 50
+      },
+      {
+        "elementType": "Wall",
+        "count": 34
+      },
+      {
+        "elementType": "Window",
+        "count": 24
+      },
+      {
+        "elementType": "FloorSlab/RoofSlab",
+        "count": 21
+      },
+      {
+        "elementType": "Doorset",
+        "count": 14
+      },
+      {
+        "elementType": "Ceiling",
+        "count": 13
+      },
+      {
+        "elementType": "Beam",
+        "count": 8
+      },
+      {
+        "elementType": "WallFoundation",
+        "count": 7
+      },
+      {
+        "elementType": "StairFlight",
+        "count": 6
+      },
+      {
+        "elementType": "Railing",
+        "count": 4
+      },
+      {
+        "elementType": "FireExtinguisher",
+        "count": 4
+      },
+      {
+        "elementType": "Alarm",
+        "count": 4
+      },
+      {
+        "elementType": "Stair",
+        "count": 2
+      }
+    ],
+    "row_count": 14
+  },
+  "A6": {
+    "title": "Per-Space Fire Protection Breakdown",
+    "columns": [
+      "spaceLabel",
+      "category",
+      "itemType",
+      "itemLabel"
+    ],
+    "rows": [
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146596"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150173"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:170352"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139939"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "FireEquipment",
+        "itemType": "Alarm",
+        "itemLabel": "Smoke Alarm — Foyer Unit A"
+      },
+      {
+        "spaceLabel": "A102",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Glass 1:0813 x 2420mm:0813 x 2420mm:171975"
+      },
+      {
+        "spaceLabel": "A102",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:170352"
+      },
+      {
+        "spaceLabel": "A102",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
+      },
+      {
+        "spaceLabel": "A102",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139939"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:170785"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139783"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190933"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "FireEquipment",
+        "itemType": "Alarm",
+        "itemLabel": "Smoke Alarm — Kitchen Unit A"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "FireEquipment",
+        "itemType": "FireExtinguisher",
+        "itemLabel": "Fire Extinguisher — Level 1 Unit A"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150173"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171230"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190774"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139783"
+      },
+      {
+        "spaceLabel": "A105",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:170352"
+      },
+      {
+        "spaceLabel": "A105",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:204034"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160208"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159834"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169701"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144633"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "FireEquipment",
+        "itemType": "FireExtinguisher",
+        "itemLabel": "Fire Extinguisher — Level 2 Unit A"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159834"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169188"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144684"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144633"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169308"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:204034"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160208"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169866"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:204034"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169866"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144684"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146678"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:171292"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):138584"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "FireEquipment",
+        "itemType": "Alarm",
+        "itemLabel": "Smoke Alarm — Foyer Unit B"
+      },
+      {
+        "spaceLabel": "B102",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Glass 1:0813 x 2420mm:0813 x 2420mm:171853"
+      },
+      {
+        "spaceLabel": "B102",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
+      },
+      {
+        "spaceLabel": "B102",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:171292"
+      },
+      {
+        "spaceLabel": "B102",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):138584"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171444"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):189074"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "FireEquipment",
+        "itemType": "Alarm",
+        "itemLabel": "Smoke Alarm — Kitchen Unit B"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "FireEquipment",
+        "itemType": "FireExtinguisher",
+        "itemLabel": "Fire Extinguisher — Level 1 Unit B"
+      },
+      {
+        "spaceLabel": "B104",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257"
+      },
+      {
+        "spaceLabel": "B104",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
+      },
+      {
+        "spaceLabel": "B104",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171261"
+      },
+      {
+        "spaceLabel": "B104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):189901"
+      },
+      {
+        "spaceLabel": "B104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
+      },
+      {
+        "spaceLabel": "B104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
+      },
+      {
+        "spaceLabel": "B105",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
+        "spaceLabel": "B105",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:171292"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159734"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160065"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169395"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143960"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143856"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "FireEquipment",
+        "itemType": "FireExtinguisher",
+        "itemLabel": "Fire Extinguisher — Level 2 Unit B"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159734"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169354"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143960"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169093"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143856"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160065"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
+      }
+    ],
+    "row_count": 125
+  },
+  "B1": {
+    "title": "Compliance Health Score",
+    "columns": [
+      "category",
+      "status",
+      "count"
+    ],
+    "rows": [
+      {
+        "category": "Alarm — Condition",
+        "status": "Compliant",
+        "count": 4
+      },
+      {
+        "category": "Doorset — Access",
+        "status": "Compliant",
+        "count": 13
+      },
+      {
+        "category": "Doorset — Access",
+        "status": "Non-Compliant (Obscured)",
+        "count": 1
+      },
+      {
+        "category": "FireExtinguisher — Condition",
+        "status": "Compliant",
+        "count": 3
+      },
+      {
+        "category": "FireExtinguisher — Condition",
+        "status": "Non-Compliant (Damaged)",
+        "count": 1
+      },
+      {
+        "category": "Floor — REI (Above Ground)",
+        "status": "Compliant",
+        "count": 13
+      },
+      {
+        "category": "Floor — REI (Above Ground)",
+        "status": "Non-Compliant",
+        "count": 5
+      },
+      {
+        "category": "Wall — REI",
+        "status": "Compliant",
+        "count": 22
+      },
+      {
+        "category": "Wall — REI",
+        "status": "Non-Compliant",
+        "count": 12
+      }
+    ],
+    "row_count": 9
+  },
+  "B2": {
+    "title": "Element-Level REI Compliance Detail",
+    "columns": [
+      "assetType",
+      "elementLabel",
+      "spaceLabel",
+      "actualREI",
+      "requiredREI",
+      "complianceStatus",
+      "issue"
+    ],
+    "rows": [
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:141232",
+        "spaceLabel": "B104",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:141232",
+        "spaceLabel": "B101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:141232",
+        "spaceLabel": "B103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:141232",
+        "spaceLabel": "B102",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:143106",
+        "spaceLabel": "A102",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:143106",
+        "spaceLabel": "A101",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:143106",
+        "spaceLabel": "A104",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:143106",
+        "spaceLabel": "A103",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:170785",
+        "spaceLabel": "A103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:171230",
+        "spaceLabel": "A104",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:171261",
+        "spaceLabel": "B104",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:171444",
+        "spaceLabel": "B103",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:169093",
+        "spaceLabel": "B203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:169188",
+        "spaceLabel": "A202",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:169308",
+        "spaceLabel": "A203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:169395",
+        "spaceLabel": "B201",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:170352",
+        "spaceLabel": "A102",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:170352",
+        "spaceLabel": "A101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:170352",
+        "spaceLabel": "A105",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:171292",
+        "spaceLabel": "B101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:171292",
+        "spaceLabel": "B102",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:171292",
+        "spaceLabel": "B105",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A105",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A203",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A202",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A204",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A201",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A205",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:169772",
+        "spaceLabel": "B204",
+        "actualREI": 25.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:169772",
+        "spaceLabel": "B205",
+        "actualREI": 25.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:169866",
+        "spaceLabel": "A204",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Ceramic Tile:169866",
+        "spaceLabel": "A205",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:169354",
+        "spaceLabel": "B202",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Finish Floor - Wood:169701",
+        "spaceLabel": "A201",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B105",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B203",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B202",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B204",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B201",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B205",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):189074",
+        "spaceLabel": "B103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247",
+        "spaceLabel": "A204",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247",
+        "spaceLabel": "A205",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166",
+        "spaceLabel": "B204",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166",
+        "spaceLabel": "B205",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):138584",
+        "spaceLabel": "B101",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):138584",
+        "spaceLabel": "B102",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139143",
+        "spaceLabel": "B104",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139143",
+        "spaceLabel": "B101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139143",
+        "spaceLabel": "B103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139682",
+        "spaceLabel": "A101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139682",
+        "spaceLabel": "A104",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139682",
+        "spaceLabel": "A103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139783",
+        "spaceLabel": "A104",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139783",
+        "spaceLabel": "A103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139939",
+        "spaceLabel": "A102",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139939",
+        "spaceLabel": "A101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143856",
+        "spaceLabel": "B203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143856",
+        "spaceLabel": "B201",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144518",
+        "spaceLabel": "A203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144518",
+        "spaceLabel": "A201",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "spaceLabel": "A203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "spaceLabel": "A202",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "spaceLabel": "A204",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "spaceLabel": "A201",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "spaceLabel": "A205",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144633",
+        "spaceLabel": "A202",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144633",
+        "spaceLabel": "A201",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144684",
+        "spaceLabel": "A202",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144684",
+        "spaceLabel": "A205",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):203347",
+        "spaceLabel": "B204",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):203347",
+        "spaceLabel": "B205",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783",
+        "spaceLabel": "A203",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783",
+        "spaceLabel": "A204",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):189901",
+        "spaceLabel": "B104",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):190774",
+        "spaceLabel": "A104",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Furring (152 mm Stud):190933",
+        "spaceLabel": "A103",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B203",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B202",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B204",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B201",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B205",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143960",
+        "spaceLabel": "B202",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143960",
+        "spaceLabel": "B201",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144301",
+        "spaceLabel": "B202",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144301",
+        "spaceLabel": "B205",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):190140",
+        "spaceLabel": "B104",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):190140",
+        "spaceLabel": "B103",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):203998",
+        "spaceLabel": "A204",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):203998",
+        "spaceLabel": "A205",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138",
+        "spaceLabel": "B203",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138",
+        "spaceLabel": "B204",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      }
+    ],
+    "row_count": 92
+  },
+  "B3": {
+    "title": "OWL-Inferred Classification Audit",
+    "columns": [
+      "definedClassName",
+      "inferredCount",
+      "triggerCondition"
+    ],
+    "rows": [
+      {
+        "definedClassName": "ExternalWall",
+        "inferredCount": 23,
+        "triggerCondition": "Wall AND isExternal = true"
+      },
+      {
+        "definedClassName": "GroundAndAboveStorey",
+        "inferredCount": 3,
+        "triggerCondition": "Storey AND isAboveGround = true"
+      },
+      {
+        "definedClassName": "StairSpace",
+        "inferredCount": 2,
+        "triggerCondition": "Space AND containsElement some Stair"
+      },
+      {
+        "definedClassName": "BasementStorey",
+        "inferredCount": 1,
+        "triggerCondition": "Storey AND isAboveGround = false"
+      }
+    ],
+    "row_count": 4
+  },
+  "C1": {
+    "title": "Risk Unit Inventory and Spatial Membership",
+    "columns": [
+      "ruLabel",
+      "installStatus",
+      "spaceLabel",
+      "areaM2",
+      "usageLabel"
+    ],
+    "rows": [
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A101",
+        "areaM2": 17.936,
+        "usageLabel": "Foyer"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A102",
+        "areaM2": 30.142,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A103",
+        "areaM2": 13.898,
+        "usageLabel": "Kitchen"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A104",
+        "areaM2": 3.998,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A105",
+        "areaM2": 4.922,
+        "usageLabel": "CirculationUsage"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A201",
+        "areaM2": 7.8,
+        "usageLabel": "Hall"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A202",
+        "areaM2": 26.119,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A203",
+        "areaM2": 26.178,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A204",
+        "areaM2": 5.416,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "A205",
+        "areaM2": 1.754,
+        "usageLabel": "ServiceUsage"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B101",
+        "areaM2": 17.936,
+        "usageLabel": "Foyer"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B102",
+        "areaM2": 30.142,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B103",
+        "areaM2": 13.898,
+        "usageLabel": "Kitchen"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B104",
+        "areaM2": 3.998,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B105",
+        "areaM2": 4.922,
+        "usageLabel": "CirculationUsage"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B201",
+        "areaM2": 7.8,
+        "usageLabel": "Hall"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B202",
+        "areaM2": 26.119,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B203",
+        "areaM2": 26.178,
+        "usageLabel": "HabitableRoom"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B204",
+        "areaM2": 5.441,
+        "usageLabel": "Bathroom"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "installStatus": "UnsprinkleredOrNonCompliant",
+        "spaceLabel": "B205",
+        "areaM2": 1.728,
+        "usageLabel": "ServiceUsage"
+      },
+      {
+        "ruLabel": "Roof Space Unit",
+        "installStatus": null,
+        "spaceLabel": "R301",
+        "areaM2": 145.722,
+        "usageLabel": "ServiceUsage"
+      }
+    ],
+    "row_count": 21
+  },
+  "C2": {
+    "title": "Boundary Assumption Condition Distribution",
+    "columns": [
+      "ruLabel",
+      "conditionState",
+      "count"
+    ],
+    "rows": [
+      {
+        "ruLabel": "Dwelling Unit A",
+        "conditionState": "Effective",
+        "count": 2
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "conditionState": "Unknown",
+        "count": 2
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "conditionState": "Compromised",
+        "count": 1
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "conditionState": "Effective",
+        "count": 1
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "conditionState": "Unknown",
+        "count": 2
+      }
+    ],
+    "row_count": 5
+  },
+  "C3": {
+    "title": "Evidence Completeness and Actionable Gaps",
+    "columns": [
+      "ruLabel",
+      "assumptionLabel",
+      "assumptionType",
+      "conditionState",
+      "evidenceType",
+      "docTitle",
+      "gapFlag"
+    ],
+    "rows": [
+      {
+        "ruLabel": "Dwelling Unit A",
+        "assumptionLabel": "CavityBarrierAssumption — Unit A [Unknown]",
+        "assumptionType": "CavityBarrierAssumption",
+        "conditionState": "Unknown",
+        "evidenceType": null,
+        "docTitle": null,
+        "gapFlag": "EVIDENCE GAP"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "assumptionLabel": "CompartmentationAssumption — Unit A [Effective]",
+        "assumptionType": "CompartmentationAssumption",
+        "conditionState": "Effective",
+        "evidenceType": "DocumentBasis",
+        "docTitle": "Unit A — Compartmentation Certificate 2023",
+        "gapFlag": "--"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "assumptionLabel": "ExternalSpreadAssumption — Unit A [Unknown]",
+        "assumptionType": "ExternalSpreadAssumption",
+        "conditionState": "Unknown",
+        "evidenceType": null,
+        "docTitle": null,
+        "gapFlag": "EVIDENCE GAP"
+      },
+      {
+        "ruLabel": "Dwelling Unit A",
+        "assumptionLabel": "StructuralStabilityAssumption — Unit A [Effective]",
+        "assumptionType": "StructuralStabilityAssumption",
+        "conditionState": "Effective",
+        "evidenceType": "DocumentBasis",
+        "docTitle": "Unit A — Structural Fire Design Drawing Rev B",
+        "gapFlag": "--"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "assumptionLabel": "CavityBarrierAssumption — Unit B [Compromised]",
+        "assumptionType": "CavityBarrierAssumption",
+        "conditionState": "Compromised",
+        "evidenceType": "ObservedEvidence",
+        "docTitle": null,
+        "gapFlag": "--"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "assumptionLabel": "CompartmentationAssumption — Unit B [Unknown]",
+        "assumptionType": "CompartmentationAssumption",
+        "conditionState": "Unknown",
+        "evidenceType": null,
+        "docTitle": null,
+        "gapFlag": "EVIDENCE GAP"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "assumptionLabel": "ExternalSpreadAssumption — Unit B [Unknown]",
+        "assumptionType": "ExternalSpreadAssumption",
+        "conditionState": "Unknown",
+        "evidenceType": null,
+        "docTitle": null,
+        "gapFlag": "EVIDENCE GAP"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "assumptionLabel": "StructuralStabilityAssumption — Unit B [Effective]",
+        "assumptionType": "StructuralStabilityAssumption",
+        "conditionState": "Effective",
+        "evidenceType": "DocumentBasis",
+        "docTitle": "Unit B — Structural Fire Design Drawing Rev B",
+        "gapFlag": "--"
+      }
+    ],
+    "row_count": 8
+  },
+  "C4": {
+    "title": "Risk Unit Conservative Confidence Assessment — Worst-First",
+    "columns": [
+      "ruLabel",
+      "totalAssumptions",
+      "unknownCount",
+      "compromisedCount",
+      "evidenceGapCount",
+      "installStatus"
+    ],
+    "rows": [
+      {
+        "ruLabel": "Dwelling Unit A",
+        "totalAssumptions": 4,
+        "unknownCount": 2,
+        "compromisedCount": 0,
+        "evidenceGapCount": 2,
+        "installStatus": "UnsprinkleredOrNonCompliant"
+      },
+      {
+        "ruLabel": "Dwelling Unit B",
+        "totalAssumptions": 4,
+        "unknownCount": 2,
+        "compromisedCount": 1,
+        "evidenceGapCount": 2,
+        "installStatus": "UnsprinkleredOrNonCompliant"
+      }
+    ],
+    "row_count": 2
+  },
+  "D1": {
+    "title": "Inspection Workflow Summary",
+    "columns": [
+      "eventLabel",
+      "taskLabel",
+      "taskType",
+      "startTime",
+      "endTime",
+      "assessmentLabel",
+      "assessmentType"
+    ],
+    "rows": [
+      {
+        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "taskLabel": "Compartmentation & REI Compliance Check",
+        "taskType": "ComplianceCheckingTask",
+        "startTime": "2026-03-15T09:00:00",
+        "endTime": "2026-03-15T12:00:00",
+        "assessmentLabel": "Doorset Accessibility Assessment",
+        "assessmentType": "ComplianceChecking"
+      },
+      {
+        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "taskLabel": "Compartmentation & REI Compliance Check",
+        "taskType": "ComplianceCheckingTask",
+        "startTime": "2026-03-15T09:00:00",
+        "endTime": "2026-03-15T12:00:00",
+        "assessmentLabel": "Floor/Slab REI Compliance Assessment",
+        "assessmentType": "ComplianceChecking"
+      },
+      {
+        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "taskLabel": "Compartmentation & REI Compliance Check",
+        "taskType": "ComplianceCheckingTask",
+        "startTime": "2026-03-15T09:00:00",
+        "endTime": "2026-03-15T12:00:00",
+        "assessmentLabel": "Wall REI Compliance Assessment",
+        "assessmentType": "ComplianceChecking"
+      },
+      {
+        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "taskLabel": "Fire Equipment Service Inspection",
+        "taskType": "EquipmentInspectionTask",
+        "startTime": "2026-03-15T13:00:00",
+        "endTime": "2026-03-15T15:00:00",
+        "assessmentLabel": "Fire Equipment Operational Assessment",
+        "assessmentType": "ComplianceChecking"
+      },
+      {
+        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "taskLabel": "Fire Risk Assessment — All Risk Units",
+        "taskType": "FireRiskAssessmentTask",
+        "startTime": "2026-03-15T15:00:00",
+        "endTime": "2026-03-15T17:00:00",
+        "assessmentLabel": "Duplex A Fire Risk Analysis 2026",
+        "assessmentType": "RiskAnalysis"
+      }
+    ],
+    "row_count": 5
+  },
+  "D2": {
+    "title": "Compliance Assessment Results with Regulatory Basis",
+    "columns": [
+      "assessmentLabel",
+      "resultType",
+      "regulatorySourceLabel",
+      "evidenceLabel"
+    ],
+    "rows": [
+      {
+        "assessmentLabel": "Doorset Accessibility Assessment",
+        "resultType": "CompliantResult",
+        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings (2019 edition)",
+        "evidenceLabel": null
+      },
+      {
+        "assessmentLabel": "Fire Equipment Operational Assessment",
+        "resultType": "CompliantResult",
+        "regulatorySourceLabel": null,
+        "evidenceLabel": null
+      },
+      {
+        "assessmentLabel": "Floor/Slab REI Compliance Assessment",
+        "resultType": "NonCompliantResult",
+        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings (2019 edition)",
+        "evidenceLabel": null
+      },
+      {
+        "assessmentLabel": "Wall REI Compliance Assessment",
+        "resultType": "NonCompliantResult",
+        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings (2019 edition)",
+        "evidenceLabel": "Unit A — Compartmentation Certificate 2023"
+      }
+    ],
+    "row_count": 4
+  }
+}

@@ -1,0 +1,1241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ficr.example.com/schemas/ficr-survey-v1",
+  "title": "FiCR Survey JSON Schema — ficr-survey-v1",
+  "description": "Validates survey JSON produced by LLM #1 or IFC conversion tools for the FiCR fire compliance pipeline.",
+  "type": "object",
+  "required": [
+    "meta",
+    "building",
+    "storeys",
+    "spaces",
+    "elements",
+    "risk_units",
+    "boundary_assumptions",
+    "evidence_log"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "local_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+      "description": "Local identifier used as the last segment of instance IRIs."
+    },
+    "local_id_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to another object's local id within the same survey."
+    },
+    "nullable_local_id_ref": {
+      "description": "A local_id_ref that also accepts null (e.g. storey_ref for elements not tied to a specific storey).",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/local_id_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ficr_space_type": {
+      "enum": [
+        "RoomSpace",
+        "StairSpace",
+        "RoofSpace",
+        "AtriumSpace",
+        "BalconySpace",
+        "CavitySpace",
+        "DuctSpace",
+        "ShaftSpace"
+      ]
+    },
+    "ficr_storey_type": {
+      "enum": [
+        "BasementStorey",
+        "GroundAndAboveStorey"
+      ]
+    },
+    "ficr_building_type": {
+      "enum": [
+        "MultiStoreyBuilding"
+      ]
+    },
+    "ficr_purpose_group": {
+      "enum": [
+        "PurposeGroup1a",
+        "PurposeGroup1b",
+        "PurposeGroup1c",
+        "PurposeGroup2a",
+        "PurposeGroup2b",
+        "PurposeGroup3",
+        "PurposeGroup4",
+        "PurposeGroup5",
+        "PurposeGroup6",
+        "PurposeGroup7a",
+        "PurposeGroup7b"
+      ]
+    },
+    "ficr_space_usage": {
+      "description": "Named individuals from the SpaceUsage hierarchy in ficr_tbox.ttl.",
+      "enum": [
+        "Auditorium",
+        "Bathroom",
+        "BoilerRoom",
+        "CirculationUsage",
+        "Corridor",
+        "EngineRoom",
+        "Foyer",
+        "FuelStorage",
+        "Gallery",
+        "HabitableRoom",
+        "Hall",
+        "Kitchen",
+        "Lobby",
+        "PlaceOfSpecialHazard",
+        "ServiceUsage",
+        "Storage",
+        "SwitchGearRoom",
+        "TransformerRoom",
+        "Warehouse"
+      ]
+    },
+    "ficr_element_type": {
+      "enum": [
+        "Wall",
+        "FloorSlab",
+        "RoofSlab",
+        "Doorset",
+        "Ceiling",
+        "Window",
+        "Beam",
+        "WallFoundation",
+        "StairFlight",
+        "Railing",
+        "Alarm",
+        "FireExtinguisher"
+      ]
+    },
+    "ficr_condition_state": {
+      "enum": [
+        "Effective",
+        "Unknown",
+        "Compromised"
+      ]
+    },
+    "ficr_installation_status": {
+      "enum": [
+        "UnsprinkleredOrNonCompliant",
+        "SprinkleredInFull",
+        "SprinkleredWithExceptions",
+        "Installed"
+      ]
+    },
+    "ficr_assumption_type": {
+      "enum": [
+        "CavityBarrierAssumption",
+        "CompartmentationAssumption",
+        "ExternalSpreadAssumption",
+        "StructuralStabilityAssumption"
+      ]
+    },
+    "ficr_evidence_type": {
+      "enum": [
+        "DocumentBasis",
+        "ObservedEvidence"
+      ]
+    },
+    "ficr_task_type": {
+      "enum": [
+        "ComplianceCheckingTask",
+        "EquipmentInspectionTask",
+        "FireRiskAssessmentTask"
+      ]
+    },
+    "ficr_assessment_type": {
+      "enum": [
+        "ComplianceChecking",
+        "RiskAnalysis"
+      ]
+    },
+    "ficr_compliance_result": {
+      "enum": [
+        "CompliantResult",
+        "NonCompliantResult",
+        "UndeterminedResult"
+      ]
+    },
+    "ficr_element_usage_role": {
+      "description": "ElementFireSafetyRole named individuals from ficr_tbox.ttl.",
+      "enum": [
+        "ActiveFireProtectionRole",
+        "AlternativeExitRole",
+        "DeadEndRole",
+        "EvacuationRole",
+        "ExitPassagewayRole",
+        "FinalExitRole",
+        "FireResistingRole",
+        "FireSeparatingRole",
+        "FirefightingRole",
+        "InnerRoomRole",
+        "MeansOfEscapeRole",
+        "PassiveFireProtectionRole",
+        "StoreyExitRole",
+        "UnprotectedAreaRole"
+      ]
+    },
+    "wall_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Wall"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "rei": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "is_external": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "is_load_bearing": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "area_m2": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "width_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "length_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "thickness_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "height_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sub_elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/local_id_ref"
+          }
+        },
+        "usage_roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ficr_element_usage_role"
+          }
+        }
+      }
+    },
+    "floor_slab_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type",
+        "rei",
+        "is_external",
+        "is_load_bearing",
+        "thickness_m",
+        "area_m2"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "FloorSlab"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "rei": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "is_external": {
+          "type": "boolean"
+        },
+        "is_load_bearing": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "area_m2": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "thickness_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sub_elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/local_id_ref"
+          }
+        }
+      }
+    },
+    "roof_slab_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type",
+        "is_external"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "RoofSlab"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "rei": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "is_external": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "is_load_bearing": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "area_m2": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "thickness_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sub_elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/local_id_ref"
+          }
+        }
+      }
+    },
+    "stair_flight_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "StairFlight"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        }
+      }
+    },
+    "railing_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Railing"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "is_external": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "length_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "alarm_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type",
+        "located_in_space",
+        "is_obscured"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Alarm"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "located_in_space": {
+          "$ref": "#/$defs/local_id_ref"
+        },
+        "is_obscured": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "service_expiry_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "fire_extinguisher_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type",
+        "located_in_space",
+        "is_obscured",
+        "is_damaged"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "FireExtinguisher"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "located_in_space": {
+          "$ref": "#/$defs/local_id_ref"
+        },
+        "is_obscured": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "is_damaged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "service_expiry_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "doorset_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Doorset"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "rei": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "is_external": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "is_obscured": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "width_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "height_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "thickness_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "usage_roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ficr_element_usage_role"
+          }
+        }
+      }
+    },
+    "ceiling_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Ceiling"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "area_m2": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "thickness_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "width_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "window_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Window"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "is_external": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "width_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "beam_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "Beam"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "is_external": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "is_load_bearing": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "length_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "wall_foundation_element": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "const": "WallFoundation"
+        },
+        "storey_ref": {
+          "$ref": "#/$defs/nullable_local_id_ref"
+        },
+        "width_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "length_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "project_slug",
+        "purpose_group",
+        "building_name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "ficr-survey-v1"
+        },
+        "project_slug": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "description": "URL-safe slug used in instance IRIs."
+        },
+        "data_source": {
+          "type": "string"
+        },
+        "purpose_group": {
+          "type": "string",
+          "minLength": 1
+        },
+        "building_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "building": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "type",
+        "purpose_group"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/local_id"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/ficr_building_type"
+        },
+        "purpose_group": {
+          "$ref": "#/$defs/ficr_purpose_group"
+        }
+      }
+    },
+    "storeys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "type",
+          "elevation_m",
+          "building_ref"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/local_id"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/$defs/ficr_storey_type"
+          },
+          "elevation_m": {
+            "type": "number"
+          },
+          "storey_height_m": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "storey_above": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/local_id_ref"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "storey_below": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/local_id_ref"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "building_ref": {
+            "$ref": "#/$defs/local_id_ref"
+          }
+        }
+      }
+    },
+    "spaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "type",
+          "storey_ref"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/local_id"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/$defs/ficr_space_type"
+          },
+          "storey_ref": {
+            "$ref": "#/$defs/local_id_ref"
+          },
+          "usage": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ficr_space_usage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "area_m2": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "adjacent_elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/local_id_ref"
+            }
+          },
+          "adjacent_spaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/local_id_ref"
+            }
+          }
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/wall_element"
+          },
+          {
+            "$ref": "#/$defs/floor_slab_element"
+          },
+          {
+            "$ref": "#/$defs/roof_slab_element"
+          },
+          {
+            "$ref": "#/$defs/doorset_element"
+          },
+          {
+            "$ref": "#/$defs/ceiling_element"
+          },
+          {
+            "$ref": "#/$defs/window_element"
+          },
+          {
+            "$ref": "#/$defs/beam_element"
+          },
+          {
+            "$ref": "#/$defs/wall_foundation_element"
+          },
+          {
+            "$ref": "#/$defs/stair_flight_element"
+          },
+          {
+            "$ref": "#/$defs/railing_element"
+          },
+          {
+            "$ref": "#/$defs/alarm_element"
+          },
+          {
+            "$ref": "#/$defs/fire_extinguisher_element"
+          }
+        ]
+      }
+    },
+    "risk_units": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "covers_spaces"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/local_id"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "covers_spaces": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/local_id_ref"
+            }
+          },
+          "installation_status": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ficr_installation_status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "is_exposed_to": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/local_id_ref"
+            }
+          },
+          "declared_exposure_value": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "boundary_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "assumption_type",
+          "condition_state",
+          "applies_to_risk_unit"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/local_id"
+          },
+          "label": {
+            "type": "string"
+          },
+          "assumption_type": {
+            "$ref": "#/$defs/ficr_assumption_type"
+          },
+          "condition_state": {
+            "$ref": "#/$defs/ficr_condition_state"
+          },
+          "applies_to_risk_unit": {
+            "$ref": "#/$defs/local_id_ref"
+          },
+          "about_element": {
+            "$ref": "#/$defs/local_id_ref"
+          },
+          "supported_by_evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/local_id_ref"
+            }
+          }
+        }
+      }
+    },
+    "evidence_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/local_id"
+          },
+          "type": {
+            "$ref": "#/$defs/ficr_evidence_type"
+          },
+          "label": {
+            "type": "string"
+          },
+          "document_title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "document_uri": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "regulatory_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/local_id" },
+          "label": { "type": "string", "minLength": 1 },
+          "document_title": { "type": ["string", "null"] },
+          "document_uri": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/local_id" },
+          "label": { "type": "string", "minLength": 1 },
+          "type": { "type": "string" },
+          "triggers_tasks": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/local_id_ref" }
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/local_id" },
+          "label": { "type": "string", "minLength": 1 },
+          "type": { "$ref": "#/$defs/ficr_task_type" },
+          "planned_start_time": { "type": ["string", "null"] },
+          "planned_end_time": { "type": ["string", "null"] },
+          "produces_assessments": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/local_id_ref" }
+          }
+        }
+      }
+    },
+    "assessments": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": ["id", "label", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/local_id" },
+              "label": { "type": "string", "minLength": 1 },
+              "type": { "const": "ComplianceChecking" },
+              "based_on_regulation": { "$ref": "#/$defs/nullable_local_id_ref" },
+              "has_compliance_result": { "$ref": "#/$defs/ficr_compliance_result" },
+              "has_assessment_basis": { "$ref": "#/$defs/nullable_local_id_ref" }
+            }
+          },
+          {
+            "type": "object",
+            "required": ["id", "label", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/local_id" },
+              "label": { "type": "string", "minLength": 1 },
+              "type": { "const": "RiskAnalysis" },
+              "has_scenarios": {
+                "type": "array",
+                "items": { "$ref": "#/$defs/local_id_ref" }
+              },
+              "uses_compliance_result": {
+                "oneOf": [
+                  { "$ref": "#/$defs/ficr_compliance_result" },
+                  { "type": "null" }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "fire_risk_scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/local_id" },
+          "label": { "type": "string", "minLength": 1 },
+          "origin_space": { "$ref": "#/$defs/nullable_local_id_ref" }
+        }
+      }
+    }
+  }
+}

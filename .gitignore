@@ -1,0 +1,53 @@
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment files (keep .env.example only)
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Pipeline runtime
+backend/sessions/
+
+# AI development tools
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+
+# Supabase (legacy)
+supabase/
+
+# Versioned ontology copies
+public/ficr_*_0.*.ttl
+
+# Old git history backup
+.git.bak/

@@ -1,0 +1,28 @@
+@prefix ficr: <https://w3id.org/bam/ficr#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/bam/ficr/regulatory_config>
+    a owl:Ontology ;
+    rdfs:comment "FiCR regulatory requirement instances for PurposeGroup1b (BDM02)."@en ;
+    owl:versionInfo "1.0.0" .
+
+ficr:req_pg1b_wall
+    a ficr:RegulatoryRequirement, owl:NamedIndividual ;
+    rdfs:label "BDM02 Wall REI Requirement — PG 1b (all storeys)" ;
+    ficr:appliesToPurposeGroup ficr:PurposeGroup1b ;
+    ficr:hasREI 60 .
+
+ficr:req_pg1b_floor_basement
+    a ficr:RegulatoryRequirement, owl:NamedIndividual ;
+    rdfs:label "BDM02 Floor REI Requirement — PG 1b (basement <10 m)" ;
+    ficr:appliesToPurposeGroup ficr:PurposeGroup1b ;
+    ficr:hasREI 30 .
+
+ficr:req_pg1b_floor_above
+    a ficr:RegulatoryRequirement, owl:NamedIndividual ;
+    rdfs:label "BDM02 Floor REI Requirement — PG 1b (ground and above ≤18 m)" ;
+    ficr:appliesToPurposeGroup ficr:PurposeGroup1b ;
+    ficr:hasREI 60 .
