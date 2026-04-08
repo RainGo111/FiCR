@@ -232,7 +232,7 @@ ficr:hasElementUsage rdf:type owl:ObjectProperty ;
                      owl:inverseOf ficr:isElementUsageOf ;
                      rdfs:domain ficr:PhysicalObject ;
                      rdfs:range ficr:ElementFireSafetyRole ;
-                     rdfs:comment "Links a boundary assumption or impairment state to a physical condition state assessment."@en ;
+                     rdfs:comment "Assigns a fire safety role to a physical element, indicating the element's functional contribution to fire protection (e.g. fire separating, fire resisting, passive fire protection)."@en ;
                      rdfs:label "hasElementUsage"@en .
 
 
@@ -299,14 +299,6 @@ ficr:hasScenario rdf:type owl:ObjectProperty ;
                  rdfs:range ficr:FireRiskScenario ;
                  rdfs:comment "Links a risk assessment to the fire risk scenario(s) it evaluates. Each scenario represents a hypothetical fire origin and its modelled spread, corresponding to the per-room EML calculations in the FiCR risk model."@en ;
                  rdfs:label "hasScenario"@en .
-
-
-###  https://w3id.org/bam/ficr#hasSeparationRecord
-ficr:hasSeparationRecord rdf:type owl:ObjectProperty ;
-                         rdfs:domain ficr:RiskUnit ;
-                         rdfs:comment "Links a risk unit to a separation distance record describing its exposure to an adjacent risk unit."@en ;
-                         rdfs:label "hasSeparationRecord"@en ;
-                         skos:scopeNote "Informational: for future use."@en .
 
 
 ###  https://w3id.org/bam/ficr#hasSpaceUsage
@@ -1049,14 +1041,6 @@ ficr:AutomaticReleaseMechanism rdf:type owl:Class ;
 
 ###  https://w3id.org/bam/ficr#BalconySpace
 ficr:BalconySpace rdf:type owl:Class ;
-                  owl:equivalentClass [ owl:intersectionOf ( bot:Space
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty ficr:isExternal ;
-                                                               owl:hasValue "true"^^xsd:boolean
-                                                             ]
-                                                           ) ;
-                                        rdf:type owl:Class
-                                      ] ;
                   rdfs:subClassOf bot:Space ;
                   owl:disjointWith ficr:CavitySpace ,
                                    ficr:DuctSpace ,
@@ -2697,7 +2681,7 @@ lbd:ass_risk_analysis rdf:type owl:NamedIndividual ,
                       ficr:hasScenario lbd:frs_electrical_B ,
                                        lbd:frs_kitchen_A ;
                       ficr:usesComplianceResult ficr:NonCompliantResult ;
-                      rdfs:label "Duplex A Fire Risk Analysis 2026"@en .
+                      rdfs:label "Duplex A Fire Risk Analysis"@en .
 
 
 ###  https://lbd.example.com/ass_wall_rei_check
@@ -3212,7 +3196,7 @@ lbd:ev_cert_comp_A rdf:type owl:NamedIndividual ,
                             ficr:DocumentBasis ;
                    ficr:documentTitle "Unit A — Compartmentation Certificate 2023" ;
                    ficr:documentURI "file:///docs/UnitA_Compartmentation_Cert_2023.pdf"^^xsd:anyURI ;
-                   rdfs:label "Unit A — Compartmentation Certificate 2023"@en .
+                   rdfs:label "Unit A — Compartmentation Certificate"@en .
 
 
 ###  https://lbd.example.com/ev_draw_struct_A
@@ -3237,13 +3221,13 @@ lbd:ev_obs_cavity_B rdf:type owl:NamedIndividual ,
                     rdfs:label "Unit B — Cavity Barrier Survey: gap found at party wall head junction"@en .
 
 
-###  https://lbd.example.com/evt_annual_2024
-lbd:evt_annual_2024 rdf:type owl:NamedIndividual ,
+###  https://lbd.example.com/evt_annual_2026
+lbd:evt_annual_2026 rdf:type owl:NamedIndividual ,
                              ficr:RoutineTriggerEvent ;
                     ficr:triggersTask lbd:tsk_comp_check ,
                                       lbd:tsk_equip_inspect ,
                                       lbd:tsk_risk_assess ;
-                    rdfs:label "Annual Fire Safety Inspection — March 2024"@en .
+                    rdfs:label "Annual Fire Safety Inspection"@en .
 
 
 ###  https://lbd.example.com/fe_001
@@ -4814,7 +4798,7 @@ lbd:source_ADB_Vol1 rdf:type owl:NamedIndividual ,
                              ficr:RegulatorySource ;
                     ficr:documentTitle "Approved Document B Volume 1: Dwellings (2019 edition)" ;
                     ficr:documentURI "https://www.gov.uk/government/publications/fire-safety-approved-document-b"^^xsd:anyURI ;
-                    rdfs:label "Approved Document B Volume 1: Dwellings (2019 edition)"@en .
+                    rdfs:label "Approved Document B Volume 1: Dwellings"@en .
 
 
 ###  https://lbd.example.com/source_BDM02
