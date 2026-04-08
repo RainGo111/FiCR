@@ -14,7 +14,7 @@
 @base <https://w3id.org/bam/ficr#> .
 
 <https://w3id.org/bam/ficr> rdf:type owl:Ontology ;
-                             owl:versionIRI <https://w3id.org/bam/ficr/0.16.0> ;
+                             owl:versionIRI <https://w3id.org/bam/ficr/1.0.0> ;
                              rdfs:comment "FiCR, Fire Compliance and Risk Analysis Ontology"@en ,
                                           "FiCR, Fire Compliance and Risk Analysis, is a domain specific semantic model designed to represent fire safety and fire risk relevant physical objects, building elements, equipment, functional roles, and their relationships in existing buildings. It supports a structured and interoperable representation of both passive and active fire protection measures, as well as risk related attributes and performance outcomes, enabling compliance assessment, fire risk analysis, and inspection activities throughout the building operation and maintenance phase. FiCR further provides a semantic foundation for rule based reasoning and fire oriented digital twins that integrate regulatory compliance and risk informed decision making."@en .
 
@@ -223,7 +223,7 @@ schema:rangeIncludes rdf:type owl:AnnotationProperty .
                  owl:inverseOf :isElementUsageOf ;
                  rdfs:domain :PhysicalObject ;
                  rdfs:range :ElementFireSafetyRole ;
-                 rdfs:comment "Links a boundary assumption or impairment state to a physical condition state assessment."@en ;
+                 rdfs:comment "Assigns a fire safety role to a physical element, indicating the element's functional contribution to fire protection (e.g. fire separating, fire resisting, passive fire protection)."@en ;
                  rdfs:label "hasElementUsage"@en .
 
 
@@ -377,6 +377,14 @@ schema:rangeIncludes rdf:type owl:AnnotationProperty .
                     rdfs:label "isFireSafetyRoleOf"@en .
 
 
+###  https://w3id.org/bam/ficr#isLocatedIn
+:isLocatedIn rdf:type owl:ObjectProperty ;
+             rdfs:domain :PhysicalObject ;
+             rdfs:range bot:Zone ;
+             rdfs:comment "describe the location and/or surroundings of a place."@en ;
+             rdfs:label "isLocatedIn"@en .
+
+
 ###  https://w3id.org/bam/ficr#isPurposeGroupOf
 :isPurposeGroupOf rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf :isClassificationOf ;
@@ -425,14 +433,6 @@ schema:rangeIncludes rdf:type owl:AnnotationProperty .
                       rdfs:subPropertyOf :isUsageTypeOf ;
                       rdfs:comment "Inverse of hasZoneFireSafetyRole."@en ;
                       rdfs:label "isZoneFireSafetyRole"@en .
-
-
-###  https://w3id.org/bam/ficr#islocatedIn
-:islocatedIn rdf:type owl:ObjectProperty ;
-             rdfs:domain :PhysicalObject ;
-             rdfs:range bot:Zone ;
-             rdfs:comment "describe the location and/or surroundings of a place."@en ;
-             rdfs:label "islocatedIn"@en .
 
 
 ###  https://w3id.org/bam/ficr#producesAssessment
@@ -1040,14 +1040,6 @@ Enclosed lift wells, enclosed escalator wells, building services ducts and stair
 
 ###  https://w3id.org/bam/ficr#BalconySpace
 :BalconySpace rdf:type owl:Class ;
-              owl:equivalentClass [ owl:intersectionOf ( bot:Space
-                                                         [ rdf:type owl:Restriction ;
-                                                           owl:onProperty :isExternal ;
-                                                           owl:hasValue "true"^^xsd:boolean
-                                                         ]
-                                                       ) ;
-                                    rdf:type owl:Class
-                                  ] ;
               rdfs:subClassOf bot:Space ;
               owl:disjointWith :CavitySpace ,
                                :DuctSpace ,
@@ -1442,7 +1434,7 @@ including a wall that is common to two or more buildings."""@en ;
 :EvacuationLift rdf:type owl:Class ;
                 owl:equivalentClass [ owl:intersectionOf ( :LiftSystem
                                                            [ rdf:type owl:Restriction ;
-                                                             owl:onProperty :hasElementUsage ;
+                                                             owl:onProperty :hasFireSafetyRole ;
                                                              owl:someValuesFrom :EvacuationRole
                                                            ]
                                                          ) ;
@@ -1643,7 +1635,7 @@ including a wall that is common to two or more buildings."""@en ;
 :FireFightingLift rdf:type owl:Class ;
                   owl:equivalentClass [ owl:intersectionOf ( :LiftSystem
                                                              [ rdf:type owl:Restriction ;
-                                                               owl:onProperty :hasElementUsage ;
+                                                               owl:onProperty :hasFireSafetyRole ;
                                                                owl:someValuesFrom :FirefightingRole
                                                              ]
                                                            ) ;
@@ -1708,7 +1700,7 @@ including a wall that is common to two or more buildings."""@en ;
 :FireSprinklerSystem rdf:type owl:Class ;
                      owl:equivalentClass [ owl:intersectionOf ( :PipingSystem
                                                                 [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty :hasElementUsage ;
+                                                                  owl:onProperty :hasFireSafetyRole ;
                                                                   owl:someValuesFrom :ActiveFireProtectionRole
                                                                 ]
                                                               ) ;
@@ -1989,7 +1981,7 @@ including a wall that is common to two or more buildings."""@en ;
 :ProtectedCircuit rdf:type owl:Class ;
                   owl:equivalentClass [ owl:intersectionOf ( :Circuit
                                                              [ rdf:type owl:Restriction ;
-                                                               owl:onProperty :hasElementUsage ;
+                                                               owl:onProperty :hasFireSafetyRole ;
                                                                owl:someValuesFrom :PassiveFireProtectionRole
                                                              ]
                                                            ) ;
@@ -2278,7 +2270,7 @@ including a wall that is common to two or more buildings."""@en ;
 
 ###  https://w3id.org/bam/ficr#Rooflight
 :Rooflight rdf:type owl:Class ;
-           rdfs:subClassOf :ElectricalSystem ;
+           rdfs:subClassOf :Equipment ;
            rdfs:comment "A dome light, lantern light, ridge light."@en ;
            rdfs:label "Rooflight"@en .
 
