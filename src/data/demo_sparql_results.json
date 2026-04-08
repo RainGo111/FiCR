@@ -272,12 +272,12 @@
         "count": 61
       },
       {
-        "elementType": "Opening",
-        "count": 50
+        "elementType": "Wall",
+        "count": 57
       },
       {
-        "elementType": "Wall",
-        "count": 34
+        "elementType": "Opening",
+        "count": 50
       },
       {
         "elementType": "Window",
@@ -363,13 +363,31 @@
         "spaceLabel": "A101",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139939"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138237"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138157"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
       },
       {
         "spaceLabel": "A101",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139939"
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234"
       },
       {
         "spaceLabel": "A101",
@@ -387,13 +405,25 @@
         "spaceLabel": "A102",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:143106"
+        "itemLabel": "Floor:Finish Floor - Wood:170352"
       },
       {
         "spaceLabel": "A102",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:170352"
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
+      },
+      {
+        "spaceLabel": "A102",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138237"
+      },
+      {
+        "spaceLabel": "A102",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138310"
       },
       {
         "spaceLabel": "A102",
@@ -417,6 +447,12 @@
         "spaceLabel": "A103",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190933"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
       },
       {
@@ -429,7 +465,7 @@
         "spaceLabel": "A103",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190933"
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138310"
       },
       {
         "spaceLabel": "A103",
@@ -453,25 +489,31 @@
         "spaceLabel": "A104",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171230"
-      },
-      {
-        "spaceLabel": "A104",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
         "itemLabel": "Floor:127mm Slab on Grade:143106"
       },
       {
         "spaceLabel": "A104",
         "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171230"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190774"
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234"
       },
       {
         "spaceLabel": "A104",
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
+      },
+      {
+        "spaceLabel": "A104",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190774"
       },
       {
         "spaceLabel": "A104",
@@ -492,10 +534,16 @@
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
       },
       {
-        "spaceLabel": "A201",
+        "spaceLabel": "A105",
         "category": "BoundaryElement",
-        "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478"
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138157"
+      },
+      {
+        "spaceLabel": "A105",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234"
       },
       {
         "spaceLabel": "A201",
@@ -518,14 +566,32 @@
       {
         "spaceLabel": "A201",
         "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478"
       },
       {
         "spaceLabel": "A201",
         "category": "BoundaryElement",
         "itemType": "Slab",
         "itemLabel": "Floor:Finish Floor - Wood:169701"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143478"
+      },
+      {
+        "spaceLabel": "A201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
       },
       {
         "spaceLabel": "A201",
@@ -538,12 +604,6 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144633"
-      },
-      {
-        "spaceLabel": "A201",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
       },
       {
         "spaceLabel": "A201",
@@ -561,19 +621,31 @@
         "spaceLabel": "A202",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:169188"
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
       },
       {
         "spaceLabel": "A202",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+        "itemLabel": "Floor:Finish Floor - Wood:169188"
       },
       {
         "spaceLabel": "A202",
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144633"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143410"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239"
       },
       {
         "spaceLabel": "A202",
@@ -586,6 +658,12 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144684"
+      },
+      {
+        "spaceLabel": "A202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143478"
       },
       {
         "spaceLabel": "A203",
@@ -609,7 +687,19 @@
         "spaceLabel": "A203",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143534"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
       },
       {
         "spaceLabel": "A203",
@@ -621,7 +711,19 @@
         "spaceLabel": "A203",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143478"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:204034"
       },
       {
         "spaceLabel": "A204",
@@ -632,12 +734,6 @@
       {
         "spaceLabel": "A204",
         "category": "BoundaryElement",
-        "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:204034"
-      },
-      {
-        "spaceLabel": "A204",
-        "category": "BoundaryElement",
         "itemType": "Slab",
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
       },
@@ -657,6 +753,12 @@
         "spaceLabel": "A204",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
       },
       {
@@ -664,12 +766,6 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
-      },
-      {
-        "spaceLabel": "A204",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
       },
       {
         "spaceLabel": "A205",
@@ -688,18 +784,6 @@
         "category": "BoundaryElement",
         "itemType": "Slab",
         "itemLabel": "Floor:Finish Floor - Ceramic Tile:169866"
-      },
-      {
-        "spaceLabel": "A205",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
-      },
-      {
-        "spaceLabel": "A205",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
       },
       {
         "spaceLabel": "A205",
@@ -714,10 +798,16 @@
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
       },
       {
-        "spaceLabel": "B101",
+        "spaceLabel": "A205",
         "category": "BoundaryElement",
-        "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257"
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
       },
       {
         "spaceLabel": "B101",
@@ -728,8 +818,8 @@
       {
         "spaceLabel": "B101",
         "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:141232"
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257"
       },
       {
         "spaceLabel": "B101",
@@ -740,14 +830,38 @@
       {
         "spaceLabel": "B101",
         "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138310"
       },
       {
         "spaceLabel": "B101",
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):138584"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138062"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
       },
       {
         "spaceLabel": "B101",
@@ -765,13 +879,25 @@
         "spaceLabel": "B102",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:171292"
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
       },
       {
         "spaceLabel": "B102",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:141232"
+        "itemLabel": "Floor:Finish Floor - Wood:171292"
+      },
+      {
+        "spaceLabel": "B102",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138157"
+      },
+      {
+        "spaceLabel": "B102",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138062"
       },
       {
         "spaceLabel": "B102",
@@ -795,13 +921,19 @@
         "spaceLabel": "B103",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
+      },
+      {
+        "spaceLabel": "B103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
       },
       {
         "spaceLabel": "B103",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139143"
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138157"
       },
       {
         "spaceLabel": "B103",
@@ -858,10 +990,10 @@
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
       },
       {
-        "spaceLabel": "B105",
+        "spaceLabel": "B104",
         "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:171292"
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347"
       },
       {
         "spaceLabel": "B105",
@@ -870,10 +1002,22 @@
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
       },
       {
-        "spaceLabel": "B201",
+        "spaceLabel": "B105",
         "category": "BoundaryElement",
-        "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:171292"
+      },
+      {
+        "spaceLabel": "B105",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:138310"
+      },
+      {
+        "spaceLabel": "B105",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347"
       },
       {
         "spaceLabel": "B201",
@@ -886,6 +1030,12 @@
         "category": "BoundaryElement",
         "itemType": "Doorset",
         "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160065"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378"
       },
       {
         "spaceLabel": "B201",
@@ -903,7 +1053,13 @@
         "spaceLabel": "B201",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143960"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B201",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143590"
       },
       {
         "spaceLabel": "B201",
@@ -915,7 +1071,7 @@
         "spaceLabel": "B201",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143960"
       },
       {
         "spaceLabel": "B201",
@@ -933,19 +1089,13 @@
         "spaceLabel": "B202",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
-      },
-      {
-        "spaceLabel": "B202",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
         "itemLabel": "Floor:Finish Floor - Wood:169354"
       },
       {
         "spaceLabel": "B202",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
       },
       {
         "spaceLabel": "B202",
@@ -957,7 +1107,31 @@
         "spaceLabel": "B202",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143534"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143590"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
       },
       {
         "spaceLabel": "B203",
@@ -981,19 +1155,43 @@
         "spaceLabel": "B203",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143856"
-      },
-      {
-        "spaceLabel": "B203",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
       },
       {
         "spaceLabel": "B203",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143590"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143856"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:143410"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138"
+      },
+      {
+        "spaceLabel": "B203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
       },
       {
         "spaceLabel": "B204",
@@ -1004,26 +1202,14 @@
       {
         "spaceLabel": "B204",
         "category": "BoundaryElement",
-        "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
-      },
-      {
-        "spaceLabel": "B204",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
-      },
-      {
-        "spaceLabel": "B204",
-        "category": "BoundaryElement",
         "itemType": "Slab",
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
       },
       {
         "spaceLabel": "B204",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
       },
       {
         "spaceLabel": "B204",
@@ -1035,13 +1221,19 @@
         "spaceLabel": "B204",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
+        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138"
       },
       {
         "spaceLabel": "B204",
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
       },
       {
         "spaceLabel": "B205",
@@ -1053,13 +1245,19 @@
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
       },
       {
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
       },
       {
         "spaceLabel": "B205",
@@ -1071,22 +1269,40 @@
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
-      },
-      {
-        "spaceLabel": "B205",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
       },
       {
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
+      },
+      {
+        "spaceLabel": "R301",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:185014"
+      },
+      {
+        "spaceLabel": "R301",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:185064"
+      },
+      {
+        "spaceLabel": "R301",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:184944"
+      },
+      {
+        "spaceLabel": "R301",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Exterior - Brick on Block:185101"
       }
     ],
-    "row_count": 125
+    "row_count": 161
   },
   "B1": {
     "title": "Compliance Health Score",
@@ -1134,12 +1350,12 @@
       {
         "category": "Wall — REI",
         "status": "Compliant",
-        "count": 22
+        "count": 35
       },
       {
         "category": "Wall — REI",
         "status": "Non-Compliant",
-        "count": 12
+        "count": 22
       }
     ],
     "row_count": 9
@@ -1168,6 +1384,15 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:127mm Slab on Grade:141232",
+        "spaceLabel": "B102",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:127mm Slab on Grade:141232",
         "spaceLabel": "B101",
         "actualREI": 60.0,
         "requiredREI": 60.0,
@@ -1185,9 +1410,9 @@
       },
       {
         "assetType": "Slab (Above Ground)",
-        "elementLabel": "Floor:127mm Slab on Grade:141232",
-        "spaceLabel": "B102",
-        "actualREI": 60.0,
+        "elementLabel": "Floor:127mm Slab on Grade:143106",
+        "spaceLabel": "A104",
+        "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
         "issue": "--"
@@ -1205,15 +1430,6 @@
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:127mm Slab on Grade:143106",
         "spaceLabel": "A101",
-        "actualREI": 90.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Compliant",
-        "issue": "--"
-      },
-      {
-        "assetType": "Slab (Above Ground)",
-        "elementLabel": "Floor:127mm Slab on Grade:143106",
-        "spaceLabel": "A104",
         "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1330,7 +1546,7 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:Finish Floor - Wood:171292",
-        "spaceLabel": "B101",
+        "spaceLabel": "B102",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1339,7 +1555,7 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:Finish Floor - Wood:171292",
-        "spaceLabel": "B102",
+        "spaceLabel": "B101",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1366,25 +1582,16 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
-        "spaceLabel": "A203",
-        "actualREI": 60.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Compliant",
-        "issue": "--"
-      },
-      {
-        "assetType": "Slab (Above Ground)",
-        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
-        "spaceLabel": "A202",
-        "actualREI": 60.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Compliant",
-        "issue": "--"
-      },
-      {
-        "assetType": "Slab (Above Ground)",
-        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
         "spaceLabel": "A204",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A205",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1402,7 +1609,16 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
-        "spaceLabel": "A205",
+        "spaceLabel": "A203",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144872",
+        "spaceLabel": "A202",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1474,25 +1690,16 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
-        "spaceLabel": "B203",
-        "actualREI": 20.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Non-Compliant",
-        "issue": "Slab REI Deficit"
-      },
-      {
-        "assetType": "Slab (Above Ground)",
-        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
-        "spaceLabel": "B202",
-        "actualREI": 20.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Non-Compliant",
-        "issue": "Slab REI Deficit"
-      },
-      {
-        "assetType": "Slab (Above Ground)",
-        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
         "spaceLabel": "B204",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B205",
         "actualREI": 20.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
@@ -1510,11 +1717,119 @@
       {
         "assetType": "Slab (Above Ground)",
         "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
-        "spaceLabel": "B205",
+        "spaceLabel": "B202",
         "actualREI": 20.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
         "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Slab (Above Ground)",
+        "elementLabel": "Floor:Residential - Wood Joist with Subflooring:144800",
+        "spaceLabel": "B203",
+        "actualREI": 20.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Slab REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138062",
+        "spaceLabel": "B102",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138062",
+        "spaceLabel": "B101",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138157",
+        "spaceLabel": "B102",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138157",
+        "spaceLabel": "A101",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138157",
+        "spaceLabel": "B103",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138157",
+        "spaceLabel": "A105",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138237",
+        "spaceLabel": "A102",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138237",
+        "spaceLabel": "A101",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143534",
+        "spaceLabel": "A203",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143534",
+        "spaceLabel": "B202",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:185101",
+        "spaceLabel": "R301",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
       },
       {
         "assetType": "Wall",
@@ -1564,7 +1879,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):138584",
-        "spaceLabel": "B101",
+        "spaceLabel": "B102",
         "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1573,7 +1888,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):138584",
-        "spaceLabel": "B102",
+        "spaceLabel": "B101",
         "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1609,7 +1924,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139682",
-        "spaceLabel": "A101",
+        "spaceLabel": "A104",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1618,7 +1933,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):139682",
-        "spaceLabel": "A104",
+        "spaceLabel": "A101",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1672,15 +1987,6 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143856",
-        "spaceLabel": "B203",
-        "actualREI": 90.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Compliant",
-        "issue": "--"
-      },
-      {
-        "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143856",
         "spaceLabel": "B201",
         "actualREI": 90.0,
         "requiredREI": 60.0,
@@ -1689,8 +1995,8 @@
       },
       {
         "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144518",
-        "spaceLabel": "A203",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143856",
+        "spaceLabel": "B203",
         "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1707,17 +2013,8 @@
       },
       {
         "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144518",
         "spaceLabel": "A203",
-        "actualREI": 90.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Compliant",
-        "issue": "--"
-      },
-      {
-        "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
-        "spaceLabel": "A202",
         "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1735,6 +2032,15 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
+        "spaceLabel": "A205",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
         "spaceLabel": "A201",
         "actualREI": 90.0,
         "requiredREI": 60.0,
@@ -1744,7 +2050,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
-        "spaceLabel": "A205",
+        "spaceLabel": "A203",
         "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1752,7 +2058,7 @@
       },
       {
         "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144633",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144586",
         "spaceLabel": "A202",
         "actualREI": 90.0,
         "requiredREI": 60.0,
@@ -1770,9 +2076,9 @@
       },
       {
         "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144684",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144633",
         "spaceLabel": "A202",
-        "actualREI": 60.0,
+        "actualREI": 90.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
         "issue": "--"
@@ -1781,6 +2087,15 @@
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144684",
         "spaceLabel": "A205",
+        "actualREI": 60.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144684",
+        "spaceLabel": "A202",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1807,7 +2122,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783",
-        "spaceLabel": "A203",
+        "spaceLabel": "A204",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
@@ -1816,11 +2131,209 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783",
-        "spaceLabel": "A204",
+        "spaceLabel": "A203",
         "actualREI": 60.0,
         "requiredREI": 60.0,
         "complianceStatus": "Compliant",
         "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234",
+        "spaceLabel": "A104",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234",
+        "spaceLabel": "A101",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139234",
+        "spaceLabel": "A105",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239",
+        "spaceLabel": "A203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239",
+        "spaceLabel": "A202",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239",
+        "spaceLabel": "B202",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:143239",
+        "spaceLabel": "B203",
+        "actualREI": 90.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Compliant",
+        "issue": "--"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138310",
+        "spaceLabel": "A102",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138310",
+        "spaceLabel": "B101",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138310",
+        "spaceLabel": "A103",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:138310",
+        "spaceLabel": "B105",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143410",
+        "spaceLabel": "A202",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143410",
+        "spaceLabel": "B203",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143478",
+        "spaceLabel": "A201",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143478",
+        "spaceLabel": "A203",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143478",
+        "spaceLabel": "A202",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143590",
+        "spaceLabel": "B201",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143590",
+        "spaceLabel": "B202",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:143590",
+        "spaceLabel": "B203",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:184944",
+        "spaceLabel": "R301",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:185014",
+        "spaceLabel": "R301",
+        "actualREI": 30.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Exterior - Brick on Block:185064",
+        "spaceLabel": "R301",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
       },
       {
         "assetType": "Wall",
@@ -1852,24 +2365,6 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
-        "spaceLabel": "B203",
-        "actualREI": 15.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Non-Compliant",
-        "issue": "Wall REI Deficit"
-      },
-      {
-        "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
-        "spaceLabel": "B202",
-        "actualREI": 15.0,
-        "requiredREI": 60.0,
-        "complianceStatus": "Non-Compliant",
-        "issue": "Wall REI Deficit"
-      },
-      {
-        "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
         "spaceLabel": "B204",
         "actualREI": 15.0,
         "requiredREI": 60.0,
@@ -1879,6 +2374,15 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B205",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
         "spaceLabel": "B201",
         "actualREI": 15.0,
         "requiredREI": 60.0,
@@ -1888,7 +2392,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
-        "spaceLabel": "B205",
+        "spaceLabel": "B202",
         "actualREI": 15.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
@@ -1896,8 +2400,8 @@
       },
       {
         "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143960",
-        "spaceLabel": "B202",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143921",
+        "spaceLabel": "B203",
         "actualREI": 15.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
@@ -1914,7 +2418,7 @@
       },
       {
         "assetType": "Wall",
-        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144301",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):143960",
         "spaceLabel": "B202",
         "actualREI": 15.0,
         "requiredREI": 60.0,
@@ -1925,6 +2429,15 @@
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144301",
         "spaceLabel": "B205",
+        "actualREI": 15.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Interior - Partition (92mm Stud):144301",
+        "spaceLabel": "B202",
         "actualREI": 15.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
@@ -1969,7 +2482,7 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138",
-        "spaceLabel": "B203",
+        "spaceLabel": "B204",
         "actualREI": 45.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
@@ -1978,14 +2491,41 @@
       {
         "assetType": "Wall",
         "elementLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138",
-        "spaceLabel": "B204",
+        "spaceLabel": "B203",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347",
+        "spaceLabel": "B104",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347",
+        "spaceLabel": "B101",
+        "actualREI": 45.0,
+        "requiredREI": 60.0,
+        "complianceStatus": "Non-Compliant",
+        "issue": "Wall REI Deficit"
+      },
+      {
+        "assetType": "Wall",
+        "elementLabel": "Basic Wall:Party Wall - CMU Residential Unit Dimising Wall:139347",
+        "spaceLabel": "B105",
         "actualREI": 45.0,
         "requiredREI": 60.0,
         "complianceStatus": "Non-Compliant",
         "issue": "Wall REI Deficit"
       }
     ],
-    "row_count": 92
+    "row_count": 128
   },
   "B3": {
     "title": "OWL-Inferred Classification Audit",
