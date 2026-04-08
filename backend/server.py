@@ -97,6 +97,12 @@ PROVIDER_CONFIG = {
         "default": "glm-4-flash",
         "label": "Zhipu GLM",
     },
+    "minimax": {
+        "env_var": "MINIMAX_API_KEY",
+        "models": ["MiniMax-M2.7", "MiniMax-M2.5", "MiniMax-M2.1"],
+        "default": "MiniMax-M2.7",
+        "label": "MiniMax",
+    },
 }
 
 

@@ -85,6 +85,7 @@
         "CirculationUsage",
         "Corridor",
         "EngineRoom",
+        "EntranceHall",
         "Foyer",
         "FuelStorage",
         "Gallery",
@@ -94,7 +95,6 @@
         "Lobby",
         "PlaceOfSpecialHazard",
         "ServiceUsage",
-        "Storage",
         "SwitchGearRoom",
         "TransformerRoom",
         "Warehouse"
@@ -166,10 +166,13 @@
       ]
     },
     "ficr_element_usage_role": {
-      "description": "ElementFireSafetyRole named individuals from ficr_tbox.ttl.",
+      "description": "Fire safety role individuals from ficr_tbox.ttl (ElementFireSafetyRole + ZoneFireSafetyRole leaves).",
       "enum": [
+        "AccessRoomRole",
         "ActiveFireProtectionRole",
+        "AlternativeEscapeRouteRole",
         "AlternativeExitRole",
+        "CirculationSpaceRole",
         "DeadEndRole",
         "EvacuationRole",
         "ExitPassagewayRole",

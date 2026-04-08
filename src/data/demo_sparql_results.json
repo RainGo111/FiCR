@@ -339,25 +339,25 @@
         "spaceLabel": "A101",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146596"
-      },
-      {
-        "spaceLabel": "A101",
-        "category": "BoundaryElement",
-        "itemType": "Doorset",
         "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150173"
       },
       {
         "spaceLabel": "A101",
         "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:143106"
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146596"
       },
       {
         "spaceLabel": "A101",
         "category": "BoundaryElement",
         "itemType": "Slab",
         "itemLabel": "Floor:Finish Floor - Wood:170352"
+      },
+      {
+        "spaceLabel": "A101",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
       },
       {
         "spaceLabel": "A101",
@@ -417,6 +417,12 @@
         "spaceLabel": "A103",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
+      },
+      {
+        "spaceLabel": "A103",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139783"
       },
       {
@@ -424,12 +430,6 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190933"
-      },
-      {
-        "spaceLabel": "A103",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139682"
       },
       {
         "spaceLabel": "A103",
@@ -453,13 +453,13 @@
         "spaceLabel": "A104",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171230"
+        "itemLabel": "Floor:127mm Slab on Grade:143106"
       },
       {
         "spaceLabel": "A104",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:143106"
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:171230"
       },
       {
         "spaceLabel": "A104",
@@ -471,25 +471,25 @@
         "spaceLabel": "A104",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190774"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139783"
       },
       {
         "spaceLabel": "A104",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):139783"
-      },
-      {
-        "spaceLabel": "A105",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:170352"
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):190774"
       },
       {
         "spaceLabel": "A105",
         "category": "BoundaryElement",
         "itemType": "Slab",
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
+      },
+      {
+        "spaceLabel": "A105",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:170352"
       },
       {
         "spaceLabel": "A201",
@@ -501,7 +501,7 @@
         "spaceLabel": "A201",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160208"
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478"
       },
       {
         "spaceLabel": "A201",
@@ -513,7 +513,7 @@
         "spaceLabel": "A201",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150478"
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160208"
       },
       {
         "spaceLabel": "A201",
@@ -531,13 +531,13 @@
         "spaceLabel": "A201",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
       },
       {
         "spaceLabel": "A201",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
       },
       {
         "spaceLabel": "A201",
@@ -573,13 +573,13 @@
         "spaceLabel": "A202",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144684"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144633"
       },
       {
         "spaceLabel": "A202",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144633"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144684"
       },
       {
         "spaceLabel": "A202",
@@ -597,19 +597,13 @@
         "spaceLabel": "A203",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
-      },
-      {
-        "spaceLabel": "A203",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
         "itemLabel": "Floor:Finish Floor - Wood:169308"
       },
       {
         "spaceLabel": "A203",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
       },
       {
         "spaceLabel": "A203",
@@ -622,6 +616,12 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144518"
+      },
+      {
+        "spaceLabel": "A203",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
       },
       {
         "spaceLabel": "A204",
@@ -651,12 +651,6 @@
         "spaceLabel": "A204",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783"
-      },
-      {
-        "spaceLabel": "A204",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
       },
       {
@@ -664,6 +658,12 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
+      },
+      {
+        "spaceLabel": "A204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144783"
       },
       {
         "spaceLabel": "A204",
@@ -681,25 +681,13 @@
         "spaceLabel": "A205",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169866"
-      },
-      {
-        "spaceLabel": "A205",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144872"
       },
       {
         "spaceLabel": "A205",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
-      },
-      {
-        "spaceLabel": "A205",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169866"
       },
       {
         "spaceLabel": "A205",
@@ -711,19 +699,31 @@
         "spaceLabel": "A205",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144586"
+      },
+      {
+        "spaceLabel": "A205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):193247"
       },
       {
-        "spaceLabel": "B101",
+        "spaceLabel": "A205",
         "category": "BoundaryElement",
-        "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257"
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203998"
       },
       {
         "spaceLabel": "B101",
         "category": "BoundaryElement",
         "itemType": "Doorset",
         "itemLabel": "M_Single-Flush:1250mm x 2010mm:1250mm x 2010mm:146678"
+      },
+      {
+        "spaceLabel": "B101",
+        "category": "BoundaryElement",
+        "itemType": "Doorset",
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:150257"
       },
       {
         "spaceLabel": "B101",
@@ -765,13 +765,13 @@
         "spaceLabel": "B102",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:141232"
+        "itemLabel": "Floor:Finish Floor - Wood:171292"
       },
       {
         "spaceLabel": "B102",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:171292"
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
       },
       {
         "spaceLabel": "B102",
@@ -795,13 +795,13 @@
         "spaceLabel": "B103",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):189074"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
       },
       {
         "spaceLabel": "B103",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):189074"
       },
       {
         "spaceLabel": "B103",
@@ -831,19 +831,13 @@
         "spaceLabel": "B104",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:127mm Slab on Grade:141232"
-      },
-      {
-        "spaceLabel": "B104",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
         "itemLabel": "Floor:Finish Floor - Ceramic Tile:171261"
       },
       {
         "spaceLabel": "B104",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):189901"
+        "itemType": "Slab",
+        "itemLabel": "Floor:127mm Slab on Grade:141232"
       },
       {
         "spaceLabel": "B104",
@@ -855,13 +849,13 @@
         "spaceLabel": "B104",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):189901"
       },
       {
-        "spaceLabel": "B105",
+        "spaceLabel": "B104",
         "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):190140"
       },
       {
         "spaceLabel": "B105",
@@ -870,10 +864,16 @@
         "itemLabel": "Floor:Finish Floor - Wood:171292"
       },
       {
+        "spaceLabel": "B105",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
+      },
+      {
         "spaceLabel": "B201",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159734"
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378"
       },
       {
         "spaceLabel": "B201",
@@ -885,7 +885,7 @@
         "spaceLabel": "B201",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:150378"
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:159734"
       },
       {
         "spaceLabel": "B201",
@@ -909,13 +909,13 @@
         "spaceLabel": "B201",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143960"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143856"
       },
       {
         "spaceLabel": "B201",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143856"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143960"
       },
       {
         "spaceLabel": "B201",
@@ -933,19 +933,13 @@
         "spaceLabel": "B202",
         "category": "BoundaryElement",
         "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Wood:169354"
-      },
-      {
-        "spaceLabel": "B202",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
         "itemLabel": "Floor:Residential - Wood Joist with Subflooring:144800"
       },
       {
         "spaceLabel": "B202",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Wood:169354"
       },
       {
         "spaceLabel": "B202",
@@ -958,6 +952,12 @@
         "category": "BoundaryElement",
         "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
+      },
+      {
+        "spaceLabel": "B202",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
       },
       {
         "spaceLabel": "B203",
@@ -999,13 +999,19 @@
         "spaceLabel": "B204",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
+        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160065"
       },
       {
         "spaceLabel": "B204",
         "category": "BoundaryElement",
         "itemType": "Doorset",
-        "itemLabel": "M_Single-Flush:0864 x 2032mm:0864 x 2032mm:160065"
+        "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
       },
       {
         "spaceLabel": "B204",
@@ -1016,8 +1022,20 @@
       {
         "spaceLabel": "B204",
         "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
+      },
+      {
+        "spaceLabel": "B204",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
       },
       {
         "spaceLabel": "B204",
@@ -1026,34 +1044,10 @@
         "itemLabel": "Basic Wall:Interior - Plumbing (152mm Stud):144138"
       },
       {
-        "spaceLabel": "B204",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
-      },
-      {
-        "spaceLabel": "B204",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Furring (152 mm Stud):194166"
-      },
-      {
-        "spaceLabel": "B204",
-        "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
-      },
-      {
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Doorset",
         "itemLabel": "M_Single-Flush:0762 x 2032mm:0762 x 2032mm:203720"
-      },
-      {
-        "spaceLabel": "B205",
-        "category": "BoundaryElement",
-        "itemType": "Slab",
-        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
       },
       {
         "spaceLabel": "B205",
@@ -1064,8 +1058,8 @@
       {
         "spaceLabel": "B205",
         "category": "BoundaryElement",
-        "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
+        "itemType": "Slab",
+        "itemLabel": "Floor:Finish Floor - Ceramic Tile:169772"
       },
       {
         "spaceLabel": "B205",
@@ -1077,13 +1071,19 @@
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Wall",
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
+      },
+      {
+        "spaceLabel": "B205",
+        "category": "BoundaryElement",
+        "itemType": "Wall",
         "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):203347"
       },
       {
         "spaceLabel": "B205",
         "category": "BoundaryElement",
         "itemType": "Wall",
-        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):144301"
+        "itemLabel": "Basic Wall:Interior - Partition (92mm Stud):143921"
       }
     ],
     "row_count": 125
@@ -2344,7 +2344,7 @@
     ],
     "rows": [
       {
-        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "eventLabel": "Annual Fire Safety Inspection",
         "taskLabel": "Compartmentation & REI Compliance Check",
         "taskType": "ComplianceCheckingTask",
         "startTime": "2026-03-15T09:00:00",
@@ -2353,7 +2353,7 @@
         "assessmentType": "ComplianceChecking"
       },
       {
-        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "eventLabel": "Annual Fire Safety Inspection",
         "taskLabel": "Compartmentation & REI Compliance Check",
         "taskType": "ComplianceCheckingTask",
         "startTime": "2026-03-15T09:00:00",
@@ -2362,7 +2362,7 @@
         "assessmentType": "ComplianceChecking"
       },
       {
-        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "eventLabel": "Annual Fire Safety Inspection",
         "taskLabel": "Compartmentation & REI Compliance Check",
         "taskType": "ComplianceCheckingTask",
         "startTime": "2026-03-15T09:00:00",
@@ -2371,7 +2371,7 @@
         "assessmentType": "ComplianceChecking"
       },
       {
-        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "eventLabel": "Annual Fire Safety Inspection",
         "taskLabel": "Fire Equipment Service Inspection",
         "taskType": "EquipmentInspectionTask",
         "startTime": "2026-03-15T13:00:00",
@@ -2380,12 +2380,12 @@
         "assessmentType": "ComplianceChecking"
       },
       {
-        "eventLabel": "Annual Fire Safety Inspection — March 2024",
+        "eventLabel": "Annual Fire Safety Inspection",
         "taskLabel": "Fire Risk Assessment — All Risk Units",
         "taskType": "FireRiskAssessmentTask",
         "startTime": "2026-03-15T15:00:00",
         "endTime": "2026-03-15T17:00:00",
-        "assessmentLabel": "Duplex A Fire Risk Analysis 2026",
+        "assessmentLabel": "Duplex A Fire Risk Analysis",
         "assessmentType": "RiskAnalysis"
       }
     ],
@@ -2403,7 +2403,7 @@
       {
         "assessmentLabel": "Doorset Accessibility Assessment",
         "resultType": "CompliantResult",
-        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings (2019 edition)",
+        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings",
         "evidenceLabel": null
       },
       {
@@ -2415,14 +2415,14 @@
       {
         "assessmentLabel": "Floor/Slab REI Compliance Assessment",
         "resultType": "NonCompliantResult",
-        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings (2019 edition)",
+        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings",
         "evidenceLabel": null
       },
       {
         "assessmentLabel": "Wall REI Compliance Assessment",
         "resultType": "NonCompliantResult",
-        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings (2019 edition)",
-        "evidenceLabel": "Unit A — Compartmentation Certificate 2023"
+        "regulatorySourceLabel": "Approved Document B Volume 1: Dwellings",
+        "evidenceLabel": "Unit A — Compartmentation Certificate"
       }
     ],
     "row_count": 4

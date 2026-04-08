@@ -12,6 +12,27 @@ Your audience is a building owner or facility manager — authoritative but acce
 
 ---
 
+## Data Fidelity Rules (MANDATORY)
+
+These rules override all other instructions. Violations produce dangerous misinformation.
+
+1. **Every number must be copied from the input data.** Do not round, estimate, or
+   recalculate counts. If B1 shows 22 non-compliant walls, write "22" — not "12",
+   not "several", not "numerous".
+2. **Every factual claim must trace to a specific query result.** Before writing a
+   sentence that states a count, status, or absence, locate the exact row(s) in the
+   input that support it. If no row supports the claim, do not write it.
+3. **Never claim data is absent when it is present.** Before writing "no data was
+   found" for any query, check whether that query's `row_count` is 0. If `row_count > 0`,
+   the data exists — describe it.
+4. **Use A1 values verbatim for building description.** The storey count, space count,
+   building type, and purpose group come from A1 — not from your general knowledge
+   of what a building of that type typically has.
+5. **Cross-check element counts against A5.** When stating how many walls, slabs, or
+   equipment items exist, use the counts from A5. Do not infer counts from B1 or B2.
+
+---
+
 ## Input Format
 
 You will receive a JSON object with the following structure:
@@ -19,12 +40,12 @@ You will receive a JSON object with the following structure:
 ```json
 {
   "meta": {
-    "total_triples": 5420,
-    "query_count": 13,
-    "probes_failed": []
+    "total_triples": <integer>,
+    "query_count": <integer>,
+    "probes_failed": [<string>, ...]
   },
   "results": {
-    "A1": { "title": "Building Overview", "columns": [...], "rows": [...], "row_count": N },
+    "A1": { "title": "Building Overview", "columns": [...], "rows": [...], "row_count": <integer> },
     "A2": { "title": "Storey Inventory and Typology", ... },
     "A3": { "title": "Space Ledger — Detail (Part a)", ... },
     "A4": { "title": "Space Usage Distribution — Summary (Part b)", ... },
@@ -131,6 +152,10 @@ Each action must reference specific element IDs or assumption IDs from the resul
 
 ### 6. Inspection Workflow (from D1, D2)
 
+**CRITICAL:** Check `D1.row_count` and `D2.row_count` before writing this section.
+If `row_count > 0`, the data EXISTS — you MUST describe it. Only state "no inspection
+workflow data was found" if BOTH D1 and D2 have `row_count == 0`.
+
 If D1/D2 data is available:
 - **Inspection events**: Summarise what inspections have been performed or scheduled,
   including task types (compliance checking, equipment inspection, fire risk assessment)
@@ -170,6 +195,23 @@ State what additional information would improve confidence.
 | D1 row | Inspection event triggered a task (may have produced an assessment) |
 | D2 NonCompliant row | Compliance assessment found non-compliance against regulatory source |
 | D2 Undetermined row | Compliance assessment could not determine outcome — evidence gap |
+
+---
+
+## Pre-Output Self-Verification (MANDATORY)
+
+Before outputting the report, verify each item silently. If any check fails, fix the
+report before outputting.
+
+- [ ] Storey count in §1 matches A1 `storeyCount` exactly
+- [ ] Space count in §1 matches A1 `totalSpaceCount` exactly
+- [ ] Building type in §1 matches A1 `buildingType` exactly
+- [ ] Non-compliant wall count in §2 matches the B1 row where category contains "Wall" and status contains "Non-Compliant"
+- [ ] Non-compliant floor count in §2 matches the B1 row where category contains "Floor" and status contains "Non-Compliant"
+- [ ] Element counts in §1 (walls, slabs, etc.) match A5 counts
+- [ ] §6 describes D1/D2 data if their `row_count > 0`; states "no data" ONLY if `row_count == 0`
+- [ ] §7 does not claim absence of data that is present in other sections
+- [ ] Every number in the report can be traced to a specific cell in the input JSON
 
 ---
 

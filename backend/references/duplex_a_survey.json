@@ -1898,19 +1898,19 @@
     },
     {
       "id": "ALM-001",
-      "label": "Smoke Alarm — Hallway Unit A",
+      "label": "Smoke Alarm — Foyer Unit A",
       "type": "Alarm",
       "storey_ref": null,
-      "located_in_space": "SP-A102",
+      "located_in_space": "SP-A101",
       "is_obscured": false,
       "service_expiry_date": "2028-01-01"
     },
     {
       "id": "ALM-002",
-      "label": "Smoke Alarm — Hallway Unit B",
+      "label": "Smoke Alarm — Foyer Unit B",
       "type": "Alarm",
       "storey_ref": null,
-      "located_in_space": "SP-B102",
+      "located_in_space": "SP-B101",
       "is_obscured": false,
       "service_expiry_date": "2028-01-01"
     },
@@ -1919,7 +1919,7 @@
       "label": "Smoke Alarm — Kitchen Unit A",
       "type": "Alarm",
       "storey_ref": null,
-      "located_in_space": "SP-A101",
+      "located_in_space": "SP-A103",
       "is_obscured": false,
       "service_expiry_date": "2028-01-01"
     },
@@ -1928,46 +1928,46 @@
       "label": "Smoke Alarm — Kitchen Unit B",
       "type": "Alarm",
       "storey_ref": null,
-      "located_in_space": "SP-B101",
+      "located_in_space": "SP-B103",
       "is_obscured": false,
       "service_expiry_date": "2028-01-01"
     },
     {
       "id": "FE-001",
-      "label": "Fire Extinguisher — Level 0 Unit A",
+      "label": "Fire Extinguisher — Level 1 Unit A",
       "type": "FireExtinguisher",
       "storey_ref": null,
-      "located_in_space": "SP-A101",
-      "is_obscured": false,
+      "located_in_space": "SP-A103",
+      "is_obscured": true,
       "is_damaged": false,
       "service_expiry_date": "2027-06-01"
     },
     {
       "id": "FE-002",
-      "label": "Fire Extinguisher — Level 0 Unit B",
+      "label": "Fire Extinguisher — Level 1 Unit B",
       "type": "FireExtinguisher",
       "storey_ref": null,
-      "located_in_space": "SP-B101",
+      "located_in_space": "SP-B103",
       "is_obscured": false,
       "is_damaged": false,
       "service_expiry_date": "2027-06-01"
     },
     {
       "id": "FE-003",
-      "label": "Fire Extinguisher — Level 1 Unit A",
+      "label": "Fire Extinguisher — Level 2 Unit A",
       "type": "FireExtinguisher",
       "storey_ref": null,
-      "located_in_space": "SP-A102",
+      "located_in_space": "SP-A201",
       "is_obscured": false,
       "is_damaged": false,
       "service_expiry_date": "2027-06-01"
     },
     {
       "id": "FE-004",
-      "label": "Fire Extinguisher — Level 1 Unit B",
+      "label": "Fire Extinguisher — Level 2 Unit B",
       "type": "FireExtinguisher",
       "storey_ref": null,
-      "located_in_space": "SP-B102",
+      "located_in_space": "SP-B201",
       "is_obscured": false,
       "is_damaged": true,
       "service_expiry_date": "2025-01-15"
@@ -2053,7 +2053,7 @@
       "condition_state": "Effective",
       "applies_to_risk_unit": "RU-A",
       "supported_by_evidence": [
-        "EV-003"
+        "EV-001"
       ]
     },
     {
@@ -2087,7 +2087,7 @@
       "condition_state": "Effective",
       "applies_to_risk_unit": "RU-A",
       "supported_by_evidence": [
-        "EV-001"
+        "EV-002"
       ]
     },
     {
@@ -2097,7 +2097,7 @@
       "condition_state": "Effective",
       "applies_to_risk_unit": "RU-B",
       "supported_by_evidence": [
-        "EV-002"
+        "EV-003"
       ]
     }
   ],
@@ -2105,23 +2105,23 @@
     {
       "id": "EV-001",
       "type": "DocumentBasis",
+      "label": "Unit A — Compartmentation Certificate",
+      "document_title": "Unit A — Compartmentation Certificate 2023",
+      "document_uri": "file:///docs/UnitA_Compartmentation_Cert_2023.pdf"
+    },
+    {
+      "id": "EV-002",
+      "type": "DocumentBasis",
       "label": "Unit A — Structural Fire Design Drawing Rev B",
       "document_title": "Unit A — Structural Fire Design Drawing Rev B",
       "document_uri": "file:///docs/UnitA_Structural_FireDesign_RevB.pdf"
     },
     {
-      "id": "EV-002",
+      "id": "EV-003",
       "type": "DocumentBasis",
       "label": "Unit B — Structural Fire Design Drawing Rev B",
       "document_title": "Unit B — Structural Fire Design Drawing Rev B",
       "document_uri": "file:///docs/UnitB_Structural_FireDesign_RevB.pdf"
-    },
-    {
-      "id": "EV-003",
-      "type": "DocumentBasis",
-      "label": "Unit A — Compartmentation Certificate 2023",
-      "document_title": "Unit A — Compartmentation Certificate 2023",
-      "document_uri": "file:///docs/UnitA_Compartmentation_Cert_2023.pdf"
     },
     {
       "id": "EV-004",
@@ -2134,21 +2134,21 @@
   "regulatory_sources": [
     {
       "id": "REG-001",
-      "label": "BDM02: Building Disaster Mitigation Assessment Manual (2023)",
-      "document_title": "BDM02: Building Disaster Mitigation Assessment Manual (2023)",
-      "document_uri": null
+      "label": "Approved Document B Volume 1: Dwellings",
+      "document_title": "Approved Document B Volume 1: Dwellings (2019 edition)",
+      "document_uri": "https://www.gov.uk/government/publications/fire-safety-approved-document-b"
     },
     {
       "id": "REG-002",
-      "label": "Approved Document B Volume 1: Dwellings (2019 edition)",
-      "document_title": "Approved Document B Volume 1: Dwellings (2019 edition)",
-      "document_uri": "https://www.gov.uk/government/publications/fire-safety-approved-document-b"
+      "label": "BDM02: Building Disaster Mitigation Assessment Manual (2023)",
+      "document_title": "BDM02: Building Disaster Mitigation Assessment Manual (2023)",
+      "document_uri": null
     }
   ],
   "events": [
     {
-      "id": "evt_annual_2024",
-      "label": "Annual Fire Safety Inspection — March 2024",
+      "id": "evt_annual_2026",
+      "label": "Annual Fire Safety Inspection",
       "type": "RoutineTriggerEvent",
       "triggers_tasks": [
         "TSK-001",
@@ -2162,8 +2162,8 @@
       "id": "TSK-001",
       "label": "Compartmentation & REI Compliance Check",
       "type": "ComplianceCheckingTask",
-      "planned_start_time": "2024-03-15T09:00:00",
-      "planned_end_time": "2024-03-15T12:00:00",
+      "planned_start_time": "2026-03-15T09:00:00",
+      "planned_end_time": "2026-03-15T12:00:00",
       "produces_assessments": [
         "ASS-001",
         "ASS-003",
@@ -2174,8 +2174,8 @@
       "id": "TSK-002",
       "label": "Fire Equipment Service Inspection",
       "type": "EquipmentInspectionTask",
-      "planned_start_time": "2024-03-15T13:00:00",
-      "planned_end_time": "2024-03-15T15:00:00",
+      "planned_start_time": "2026-03-15T13:00:00",
+      "planned_end_time": "2026-03-15T15:00:00",
       "produces_assessments": [
         "ASS-002"
       ]
@@ -2184,8 +2184,8 @@
       "id": "TSK-003",
       "label": "Fire Risk Assessment — All Risk Units",
       "type": "FireRiskAssessmentTask",
-      "planned_start_time": "2024-03-15T15:00:00",
-      "planned_end_time": "2024-03-15T17:00:00",
+      "planned_start_time": "2026-03-15T15:00:00",
+      "planned_end_time": "2026-03-15T17:00:00",
       "produces_assessments": [
         "ASS-005"
       ]
@@ -2196,7 +2196,7 @@
       "id": "ASS-001",
       "label": "Doorset Accessibility Assessment",
       "type": "ComplianceChecking",
-      "based_on_regulation": "REG-002",
+      "based_on_regulation": "REG-001",
       "has_compliance_result": "CompliantResult",
       "has_assessment_basis": null
     },
@@ -2212,7 +2212,7 @@
       "id": "ASS-003",
       "label": "Floor/Slab REI Compliance Assessment",
       "type": "ComplianceChecking",
-      "based_on_regulation": "REG-002",
+      "based_on_regulation": "REG-001",
       "has_compliance_result": "NonCompliantResult",
       "has_assessment_basis": null
     },
@@ -2220,13 +2220,13 @@
       "id": "ASS-004",
       "label": "Wall REI Compliance Assessment",
       "type": "ComplianceChecking",
-      "based_on_regulation": "REG-002",
+      "based_on_regulation": "REG-001",
       "has_compliance_result": "NonCompliantResult",
-      "has_assessment_basis": "EV-003"
+      "has_assessment_basis": "EV-001"
     },
     {
       "id": "ASS-005",
-      "label": "Duplex A Fire Risk Analysis 2024",
+      "label": "Duplex A Fire Risk Analysis",
       "type": "RiskAnalysis",
       "has_scenarios": [
         "FRS-001",

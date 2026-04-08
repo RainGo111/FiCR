@@ -79,13 +79,36 @@ def convert(survey: dict) -> Graph:
         if value is not None:
             g.add((subject, predicate, Literal(value, datatype=XSD.boolean)))
 
+    # ── Site (required by SPARQL A1) ────────────────────────────────
+    site_iri = iri("site-default")
+    add_typed(site_iri, BOT.Site, "Default")
+
     # ── Building ──────────────────────────────────────────────────────
     bld = survey["building"]
     bld_iri = iri(bld["id"])
     add_typed(bld_iri, _resolve(bld["type"]), bld.get("label"))
     g.add((bld_iri, FICR.hasID, Literal(bld["id"], datatype=XSD.string)))
+    g.add((site_iri, BOT.hasBuilding, bld_iri))
     if bld.get("purpose_group"):
         g.add((bld_iri, FICR.hasPurposeGroup, _resolve(bld["purpose_group"])))
+        # Derive utilization purpose from purpose group for A1 query
+        _PG_TO_UP = {
+            "PurposeGroup1a": "Flat",
+            "PurposeGroup1b": "Dwellinghouse",
+            "PurposeGroup1c": "Flat",
+            "PurposeGroup2a": "Hospital",
+            "PurposeGroup2b": "Hotel",
+            "PurposeGroup3": "Office",
+            "PurposeGroup4": "Shop",
+            "PurposeGroup5": "Factory",
+            "PurposeGroup6": "AssemblyPlace",
+            "PurposeGroup7a": "Storage",
+            "PurposeGroup7b": "CarParking",
+        }
+        pg = bld["purpose_group"].replace("ficr:", "")
+        up = _PG_TO_UP.get(pg)
+        if up:
+            g.add((bld_iri, FICR.hasUtilizationPurpose, FICR[up]))
 
     # ── Storeys ───────────────────────────────────────────────────────
     storeys_sorted = sorted(
@@ -96,15 +119,16 @@ def convert(survey: dict) -> Graph:
 
     for s in storeys_sorted:
         s_iri = iri(s["id"])
-        # Assert only bot:Storey; let Pellet infer the ficr subclass
+        # Assert bot:Storey + concrete ficr subclass (no Pellet needed)
         add_typed(s_iri, BOT.Storey, s.get("label"))
-        opt_decimal(s_iri, FICR.hasElevation, s.get("elevation_m"))
-        # Provide the data property so OWL reasoning can classify the subclass
         stype = s["type"].replace("ficr:", "")
+        if stype in ("BasementStorey", "GroundAndAboveStorey"):
+            g.add((s_iri, RDF.type, FICR[stype]))
         if stype == "BasementStorey":
             g.add((s_iri, FICR.isAboveGround, Literal(False, datatype=XSD.boolean)))
         elif stype == "GroundAndAboveStorey":
             g.add((s_iri, FICR.isAboveGround, Literal(True, datatype=XSD.boolean)))
+        opt_decimal(s_iri, FICR.hasElevation, s.get("elevation_m"))
         g.add((bld_iri, BOT.hasStorey, s_iri))
         storey_info.append((s_iri, s["elevation_m"]))
 

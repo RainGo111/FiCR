@@ -82,6 +82,9 @@ class LLMAdapter:
         self.provider = provider.lower()
         self.model = model
         self.temperature = temperature
+        # DeepSeek caps max_tokens at 8192
+        if self.provider == "deepseek" and max_tokens > 8192:
+            max_tokens = 8192
         self.max_tokens = max_tokens
         self._api_key = api_key
         self._base_url = base_url
@@ -130,6 +133,10 @@ class LLMAdapter:
             self._init_openai_compat(
                 "GLM_API_KEY",
                 "https://open.bigmodel.cn/api/paas/v4")
+        elif self.provider == "minimax":
+            self._init_openai_compat(
+                "MINIMAX_API_KEY",
+                "https://api.minimaxi.com/v1")
         elif self.provider == "gemini":
             self._init_gemini()
         else:
@@ -329,7 +336,14 @@ def stage_convert(survey: dict) -> str:
     # Create project-specific directory
     project_dir = OUTPUT_DIR / slug
     project_dir.mkdir(parents=True, exist_ok=True)
-    
+
+    # Save input survey JSON
+    survey_path = project_dir / "survey.json"
+    with open(survey_path, "w", encoding="utf-8") as f:
+        json.dump(survey, f, indent=2, ensure_ascii=False)
+    print(f"  [JSON]  survey → {survey_path.relative_to(_HERE)}")
+
+    # Save output RDF
     out_path = project_dir / "abox.ttl"
     g.serialize(destination=str(out_path), format="turtle")
     print(f"  [RDF]   {len(g)} triples → {out_path.relative_to(_HERE)}")
@@ -351,6 +365,13 @@ def stage_sparql(abox_path: str,
           f"{m['query_count']} queries executed")
     if m["probes_failed"]:
         print(f"  [SPARQL] Probe warnings: {m['probes_failed']}")
+
+    # Save SPARQL results alongside abox.ttl
+    abox = Path(abox_path)
+    results_path = abox.parent / "sparql_results.json"
+    with open(results_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print(f"  [SPARQL] results → {results_path.relative_to(_HERE)}")
     return data
 
 
