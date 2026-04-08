@@ -164,6 +164,11 @@ class LLMAdapter:
         )
         return resp.content[0].text
 
+    @staticmethod
+    def _strip_think(text: str) -> str:
+        """Remove <think>...</think> blocks (e.g. DeepSeek reasoning traces)."""
+        return re.sub(r'<think>[\s\S]*?</think>\s*', '', text)
+
     def _chat_openai(self, system: str, user: str) -> str:
         resp = self._client.chat.completions.create(
             model=self.model,
@@ -174,7 +179,7 @@ class LLMAdapter:
                 {"role": "user", "content": user},
             ],
         )
-        return resp.choices[0].message.content
+        return self._strip_think(resp.choices[0].message.content)
 
     def _chat_gemini(self, system: str, user: str) -> str:
         model = self._client.GenerativeModel(

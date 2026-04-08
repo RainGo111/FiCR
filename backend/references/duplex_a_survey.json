@@ -69,8 +69,11 @@
         "D-003",
         "SLB-004",
         "SLB-010",
-        "W-008",
-        "W-010"
+        "W-015",
+        "W-019",
+        "W-023",
+        "W-026",
+        "W-027"
       ],
       "adjacent_spaces": [
         "SP-A102",
@@ -92,7 +95,9 @@
         "D-006",
         "SLB-004",
         "SLB-010",
-        "W-008",
+        "W-015",
+        "W-024",
+        "W-027",
         "WIN-002",
         "WIN-004"
       ],
@@ -114,9 +119,10 @@
         "CLG-004",
         "SLB-004",
         "SLB-009",
-        "W-002",
         "W-009",
-        "W-010",
+        "W-016",
+        "W-019",
+        "W-024",
         "WIN-004"
       ],
       "adjacent_spaces": [
@@ -139,9 +145,10 @@
         "D-003",
         "SLB-004",
         "SLB-007",
-        "W-001",
-        "W-009",
-        "W-010"
+        "W-008",
+        "W-016",
+        "W-019",
+        "W-023"
       ],
       "adjacent_spaces": [
         "SP-A101",
@@ -160,7 +167,9 @@
         "CLG-004",
         "CLG-009",
         "SLB-010",
-        "SLB-012"
+        "SLB-012",
+        "W-023",
+        "W-026"
       ],
       "adjacent_spaces": [
         "SP-A101",
@@ -182,8 +191,11 @@
         "D-004",
         "SLB-003",
         "SLB-006",
-        "W-013",
-        "W-014"
+        "W-018",
+        "W-022",
+        "W-024",
+        "W-025",
+        "W-028"
       ],
       "adjacent_spaces": [
         "SP-A102",
@@ -206,7 +218,9 @@
         "D-005",
         "SLB-003",
         "SLB-006",
-        "W-014",
+        "W-025",
+        "W-026",
+        "W-028",
         "WIN-001",
         "WIN-003"
       ],
@@ -228,9 +242,10 @@
         "CLG-005",
         "SLB-003",
         "SLB-005",
-        "W-003",
-        "W-005",
-        "W-013",
+        "W-010",
+        "W-012",
+        "W-022",
+        "W-026",
         "WIN-003"
       ],
       "adjacent_spaces": [
@@ -255,9 +270,10 @@
         "D-004",
         "SLB-003",
         "SLB-008",
-        "W-004",
-        "W-005",
-        "W-013"
+        "W-011",
+        "W-012",
+        "W-018",
+        "W-022"
       ],
       "adjacent_spaces": [
         "SP-B101",
@@ -276,7 +292,9 @@
         "CLG-005",
         "CLG-011",
         "SLB-006",
-        "SLB-011"
+        "SLB-011",
+        "W-018",
+        "W-024"
       ],
       "adjacent_spaces": [
         "SP-A102",
@@ -300,9 +318,10 @@
         "D-014",
         "SLB-012",
         "SLB-015",
-        "W-011",
-        "W-019",
-        "W-020"
+        "W-020",
+        "W-034",
+        "W-035",
+        "W-045"
       ],
       "adjacent_spaces": [
         "SP-A202",
@@ -323,9 +342,12 @@
         "D-014",
         "SLB-012",
         "SLB-020",
-        "W-019",
-        "W-020",
-        "W-022",
+        "W-033",
+        "W-034",
+        "W-035",
+        "W-037",
+        "W-044",
+        "W-045",
         "WIN-017",
         "WIN-020"
       ],
@@ -350,9 +372,12 @@
         "D-009",
         "SLB-012",
         "SLB-018",
-        "W-011",
         "W-020",
-        "W-021",
+        "W-033",
+        "W-035",
+        "W-036",
+        "W-042",
+        "W-045",
         "WIN-006",
         "WIN-009",
         "WIN-015"
@@ -379,10 +404,10 @@
         "D-012",
         "SLB-012",
         "SLB-013",
-        "W-016",
-        "W-017",
-        "W-020",
-        "W-021"
+        "W-030",
+        "W-031",
+        "W-035",
+        "W-036"
       ],
       "adjacent_spaces": [
         "SP-A201",
@@ -403,10 +428,10 @@
         "D-008",
         "SLB-012",
         "SLB-013",
-        "W-016",
-        "W-017",
-        "W-020",
-        "W-022"
+        "W-030",
+        "W-031",
+        "W-035",
+        "W-037"
       ],
       "adjacent_spaces": [
         "SP-A201",
@@ -429,9 +454,10 @@
         "D-013",
         "SLB-011",
         "SLB-017",
-        "W-012",
-        "W-023",
-        "W-024"
+        "W-021",
+        "W-038",
+        "W-039",
+        "W-043"
       ],
       "adjacent_spaces": [
         "SP-B202",
@@ -452,9 +478,12 @@
         "D-011",
         "SLB-011",
         "SLB-016",
-        "W-023",
-        "W-024",
-        "W-025",
+        "W-033",
+        "W-038",
+        "W-039",
+        "W-040",
+        "W-042",
+        "W-043",
         "WIN-013",
         "WIN-021"
       ],
@@ -479,9 +508,12 @@
         "D-010",
         "SLB-011",
         "SLB-019",
-        "W-012",
-        "W-023",
-        "W-026",
+        "W-021",
+        "W-033",
+        "W-038",
+        "W-041",
+        "W-043",
+        "W-044",
         "WIN-008",
         "WIN-010",
         "WIN-014"
@@ -508,10 +540,10 @@
         "D-013",
         "SLB-011",
         "SLB-014",
-        "W-015",
-        "W-018",
-        "W-023",
-        "W-026"
+        "W-029",
+        "W-032",
+        "W-038",
+        "W-041"
       ],
       "adjacent_spaces": [
         "SP-B201",
@@ -532,10 +564,10 @@
         "D-007",
         "SLB-011",
         "SLB-014",
-        "W-015",
-        "W-018",
-        "W-023",
-        "W-025"
+        "W-029",
+        "W-032",
+        "W-038",
+        "W-040"
       ],
       "adjacent_spaces": [
         "SP-B201",
@@ -551,13 +583,109 @@
       "storey_ref": "S-ROOF",
       "usage": "ServiceUsage",
       "area_m2": 145.722,
-      "adjacent_elements": [],
+      "adjacent_elements": [
+        "W-054",
+        "W-055",
+        "W-056",
+        "W-057"
+      ],
       "adjacent_spaces": []
     }
   ],
   "elements": [
     {
       "id": "W-001",
+      "label": "Foundation concrete wall (435 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 30,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.435,
+      "length_m": 4.191,
+      "area_m2": 5.251,
+      "sub_elements": []
+    },
+    {
+      "id": "W-002",
+      "label": "Foundation concrete wall (435 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.435,
+      "length_m": 2.2,
+      "area_m2": 1.982,
+      "sub_elements": []
+    },
+    {
+      "id": "W-003",
+      "label": "Foundation concrete wall (435 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.435,
+      "length_m": 4.191,
+      "area_m2": 5.251,
+      "sub_elements": []
+    },
+    {
+      "id": "W-004",
+      "label": "Foundation concrete wall (417 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 90,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 11.0,
+      "sub_elements": []
+    },
+    {
+      "id": "W-005",
+      "label": "Foundation concrete wall (417 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 20,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 21.729,
+      "sub_elements": []
+    },
+    {
+      "id": "W-006",
+      "label": "Foundation concrete wall (417 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 21.207,
+      "sub_elements": []
+    },
+    {
+      "id": "W-007",
+      "label": "Foundation concrete wall (417 mm)",
+      "type": "Wall",
+      "storey_ref": "S-FDN",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": true,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 10.479,
+      "sub_elements": []
+    },
+    {
+      "id": "W-008",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -570,7 +698,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-002",
+      "id": "W-009",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -583,7 +711,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-003",
+      "id": "W-010",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -596,7 +724,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-004",
+      "id": "W-011",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -609,7 +737,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-005",
+      "id": "W-012",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -622,7 +750,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-006",
+      "id": "W-013",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -635,7 +763,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-007",
+      "id": "W-014",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -648,7 +776,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-008",
+      "id": "W-015",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -661,7 +789,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-009",
+      "id": "W-016",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -674,7 +802,33 @@
       "sub_elements": []
     },
     {
-      "id": "W-010",
+      "id": "W-017",
+      "label": "Party wall (CMU blockwork)",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.55,
+      "length_m": 2.2,
+      "area_m2": null,
+      "sub_elements": []
+    },
+    {
+      "id": "W-018",
+      "label": "Party wall (CMU blockwork)",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 45,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.55,
+      "length_m": 4.191,
+      "area_m2": 11.742,
+      "sub_elements": []
+    },
+    {
+      "id": "W-019",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -687,7 +841,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-011",
+      "id": "W-020",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -700,7 +854,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-012",
+      "id": "W-021",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -713,7 +867,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-013",
+      "id": "W-022",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -726,7 +880,33 @@
       "sub_elements": []
     },
     {
-      "id": "W-014",
+      "id": "W-023",
+      "label": "Party wall (CMU blockwork)",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.55,
+      "length_m": 4.191,
+      "area_m2": 11.742,
+      "sub_elements": []
+    },
+    {
+      "id": "W-024",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 15,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 48.432,
+      "sub_elements": []
+    },
+    {
+      "id": "W-025",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L1",
@@ -739,7 +919,46 @@
       "sub_elements": []
     },
     {
-      "id": "W-015",
+      "id": "W-026",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 49.725,
+      "sub_elements": []
+    },
+    {
+      "id": "W-027",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 12.319,
+      "sub_elements": []
+    },
+    {
+      "id": "W-028",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L1",
+      "rei": 90,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 13.612,
+      "sub_elements": []
+    },
+    {
+      "id": "W-029",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -752,7 +971,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-016",
+      "id": "W-030",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -765,7 +984,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-017",
+      "id": "W-031",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -778,7 +997,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-018",
+      "id": "W-032",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -791,7 +1010,20 @@
       "sub_elements": []
     },
     {
-      "id": "W-019",
+      "id": "W-033",
+      "label": "Party wall (CMU blockwork)",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 90,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.55,
+      "length_m": 17.383,
+      "area_m2": 38.406,
+      "sub_elements": []
+    },
+    {
+      "id": "W-034",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -804,7 +1036,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-020",
+      "id": "W-035",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -817,7 +1049,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-021",
+      "id": "W-036",
       "label": "Internal plumbing wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -830,7 +1062,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-022",
+      "id": "W-037",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -843,7 +1075,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-023",
+      "id": "W-038",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -856,7 +1088,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-024",
+      "id": "W-039",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -869,7 +1101,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-025",
+      "id": "W-040",
       "label": "Internal partition wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -882,7 +1114,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-026",
+      "id": "W-041",
       "label": "Internal plumbing wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -895,7 +1127,59 @@
       "sub_elements": []
     },
     {
-      "id": "W-027",
+      "id": "W-042",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 16.907,
+      "sub_elements": []
+    },
+    {
+      "id": "W-043",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 15,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 41.357,
+      "sub_elements": []
+    },
+    {
+      "id": "W-044",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 45,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 16.907,
+      "sub_elements": []
+    },
+    {
+      "id": "W-045",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-L2",
+      "rei": 15,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 41.357,
+      "sub_elements": []
+    },
+    {
+      "id": "W-046",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -908,7 +1192,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-028",
+      "id": "W-047",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -921,7 +1205,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-029",
+      "id": "W-048",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -934,7 +1218,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-030",
+      "id": "W-049",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -947,7 +1231,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-031",
+      "id": "W-050",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -960,7 +1244,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-032",
+      "id": "W-051",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -973,7 +1257,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-033",
+      "id": "W-052",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -986,7 +1270,7 @@
       "sub_elements": []
     },
     {
-      "id": "W-034",
+      "id": "W-053",
       "label": "Internal furring wall",
       "type": "Wall",
       "storey_ref": "S-L2",
@@ -996,6 +1280,58 @@
       "width_m": 0.054,
       "length_m": 1.135,
       "area_m2": 0.327,
+      "sub_elements": []
+    },
+    {
+      "id": "W-054",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-ROOF",
+      "rei": 45,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 5.359,
+      "sub_elements": []
+    },
+    {
+      "id": "W-055",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-ROOF",
+      "rei": 15,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 8.383,
+      "area_m2": 5.105,
+      "sub_elements": []
+    },
+    {
+      "id": "W-056",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-ROOF",
+      "rei": 30,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 10.586,
+      "sub_elements": []
+    },
+    {
+      "id": "W-057",
+      "label": "External brick cavity wall",
+      "type": "Wall",
+      "storey_ref": "S-ROOF",
+      "rei": 60,
+      "is_external": true,
+      "is_load_bearing": false,
+      "width_m": 0.417,
+      "length_m": 17.383,
+      "area_m2": 10.332,
       "sub_elements": []
     },
     {

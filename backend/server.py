@@ -128,7 +128,11 @@ def _stream_anthropic(client, model: str, system: str, messages: list[dict]):
 
 
 def _stream_openai(client, model: str, system: str, messages: list[dict]):
-    """Yield text chunks from OpenAI-compatible streaming API."""
+    """Yield text chunks from OpenAI-compatible streaming API.
+
+    Filters out <think>...</think> reasoning traces (e.g. from DeepSeek)
+    so they never reach the client.
+    """
     formatted = [{"role": "system", "content": system}] + messages
     resp = client.chat.completions.create(
         model=model,
@@ -137,9 +141,31 @@ def _stream_openai(client, model: str, system: str, messages: list[dict]):
         stream=True,
         messages=formatted,
     )
+    buf = ""
+    in_think = False
     for chunk in resp:
-        if chunk.choices and chunk.choices[0].delta.content:
-            yield chunk.choices[0].delta.content
+        if not chunk.choices or not chunk.choices[0].delta.content:
+            continue
+        text = chunk.choices[0].delta.content
+        for ch in text:
+            if in_think:
+                buf += ch
+                if buf.endswith("</think>"):
+                    in_think = False
+                    buf = ""
+            else:
+                buf += ch
+                if buf.endswith("<think>"):
+                    in_think = True
+                    buf = ""
+                elif "<think>"[:len(buf)] == buf:
+                    # partial match — keep buffering
+                    pass
+                else:
+                    yield buf
+                    buf = ""
+    if buf and not in_think:
+        yield buf
 
 
 def _stream_gemini(client, model_name: str, system: str, messages: list[dict]):

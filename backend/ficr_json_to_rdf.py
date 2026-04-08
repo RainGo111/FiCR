@@ -180,6 +180,8 @@ def convert(survey: dict) -> Graph:
         if e_type == "Wall":
             opt_integer(e_iri, FICR.hasREI, elem.get("rei"))
             opt_boolean(e_iri, FICR.isExternal, elem.get("is_external"))
+            if elem.get("is_external") is True:
+                g.add((e_iri, RDF.type, FICR.ExternalWall))
             opt_boolean(e_iri, FICR.isLoadBearing, elem.get("is_load_bearing"))
             opt_decimal(e_iri, FICR.hasArea, elem.get("area_m2"))
             opt_decimal(e_iri, FICR.hasWidth, elem.get("width_m"))
